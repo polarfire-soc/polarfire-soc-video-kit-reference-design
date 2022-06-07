@@ -1,4 +1,4 @@
-# PolarFire&reg; SoC Sev Kit Reference Design Generation Tcl Scripts - Libero&reg; SoC v2021.2
+# PolarFire&reg; SoC Sev Kit Reference Design Generation Tcl Scripts - Libero&reg; SoC v2022.1
 
 ## Description
 
@@ -6,7 +6,7 @@ This repository can be used to generate a reference design for the PolarFire SoC
 
 A Libero SoC Tcl script is provided to generate the reference design using Libero SoC along with device specific I/O constraints.
 
-This repository supports Libero SoC v2021.2, which is available for download [here](https://www.microsemi.com/product-directory/design-resources/1750-libero-soc#downloads).
+This repository supports Libero SoC v2022.1, which is available for download [here](https://www.microsemi.com/product-directory/design-resources/1750-libero-soc#downloads).
 
 ## Using the reference design generation Tcl script
 
@@ -15,9 +15,9 @@ This repository supports Libero SoC v2021.2, which is available for download [he
 To generate the standard reference design which is capable of running the majority of bare metal example applications and run Linux&reg; the following flow can be used:
 
 1. Clone or download the repository
-2. Open Libero v2021.2
+2. Open Libero v2022.1
 3. Open the execute script dialog (CTRL + U)
-4. Execute the "PFSoC_SEV_OpenVX.tcl" script
+4. Execute the "SEVPFSOC_H264.tcl" script
 5. Configure the design if required
 6. Run the Libero SoC design flow to program a device
 
@@ -36,22 +36,13 @@ This software tool takes user inputs and generates an MSS configuration file (.x
 The XML file is used by the PolarFire SoC Configuration Generator to generate configuration header files for bare metal applications.
 The MSS component file can be imported into a Libero SoC design and used in the FPGA design flow.
 
-A saved configuration for the PolarFire SoC MSS Configurator is available in the "script_support" folder and can be opened by the PolarFire SoC MSS Configurator. These configurations will match the MSS configuration used in the design and can be used to regenerate XML and a Libero component. For argument based designs, MSS configuration files will be generated in the script_support/additional_configurations/[configuration name] directory when a design is generated.
+A saved configuration for the PolarFire SoC MSS Configurator is available in the "src" folder and can be opened by the PolarFire SoC MSS Configurator. These configurations will match the MSS configuration used in the design and can be used to regenerate XML and a Libero component. For argument based designs, MSS configuration files will be generated in the src/MSS_SEV/[configuration name] directory when a design is generated.
 
 ## XML
 
 The Microcontroller Subsystem (MSS) configuration is captured in an XML file that is then used by the PolarFire SoC Configuration Generator to generate configuration header files. These header files are compiled as part of the MPFS HAL startup code to configure the system at power on.
 
 XML generated for all available configurations is provided in the "XML" folder.
-
-## BFM Simulation
-
-A SmartDesign test bench can be generated along with the SmartDesign containing the reference design by passing the "BFM_SIMULATION" argument when generating the design. This test bench will allow the user to run BFM simulations of the PolarFire SoC MSS. A custom wave.do file is imported to add signals and updated BFM scripts are also imported. To run a BFM simulation:
-1. Open the "Stimulus Hierarchy" in Libero SoC
-2. Right click on "Test_bench" from the hierarchy
-3. Select "Simulate Pre-Synth Design" and "Open Interactively"
-
-Commands for BFM simulations can be updated by editing the ".vec" files in the Simulation folder which is accessible under the "Files" tab of Libero SoC.
 
 ## Setting the boot mode and programming the eNVM
 

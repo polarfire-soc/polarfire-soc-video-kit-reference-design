@@ -1,0 +1,7 @@
+*.job
+*.digest
+*.patch
+src/MSS_SEV/*.html
+src/MSS_SEV/*.xml
+src/MSS_SEV/*.cxz
+src/components/MSS_SEV/

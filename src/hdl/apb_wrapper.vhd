@@ -122,21 +122,8 @@ architecture apb3_if of apb3_if is
 
   constant C_ID_ROM_3_0_ADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"500";
   constant C_ID_ROM_7_4_ADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"504";
-  constant C_ID_ROM_11_8_ADDR  : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"508";
-  constant C_ID_ROM_15_12_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"50c";
-  constant C_ID_ROM_19_16_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"510";
-  constant C_ID_ROM_23_20_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"514";
-  constant C_ID_ROM_27_24_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"518";
-  constant C_ID_ROM_31_28_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"51c";
-  constant C_ID_ROM_35_32_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"520";
-  constant C_ID_ROM_39_36_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"524";
-  constant C_ID_ROM_43_40_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"528";
-  constant C_ID_ROM_47_44_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"52c";
-  constant C_ID_ROM_51_48_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"530";
-  constant C_ID_ROM_55_52_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"534";
-  constant C_ID_ROM_59_56_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"538";
-  constant C_ID_ROM_63_60_ADDR : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"53c";
 
+  -- quant for mjpeg
   constant C_C_QUANT_3_0_ADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"140";
   constant C_C_QUANT_7_4_ADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"144";
   constant C_C_QUANT_11_8_ADDR  : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"148";
@@ -159,10 +146,7 @@ architecture apb3_if of apb3_if is
   signal s_horiz_resl       : std_logic_vector(15 downto 0);
   signal s_vert_resl        : std_logic_vector(15 downto 0);
 
---  signal s_signature : std_logic_vector(127 downto 0) := x"4D 43 48 50 5F 4F 56 58 5F 53 4F 42 45 4C 5F 76 31 2E 30 0A";
---  signal s_signature : std_logic_vector(159 downto 0) := x"4D_43_48_50_5F_4F_56_58_5F_53_4F_42_45_4C_5F_76_31_2E_30_0A";  
---  signal s_signature : std_logic_vector(159 downto 0) := x"4D_43_48_50_5F_4D_4A_50_45_47_5F_76_31_2E_30_0a_00_00_00_0a";--mjpeg  
-  signal s_signature : std_logic_vector(159 downto 0) := x"4D_43_48_50_5F_48_2E_32_36_34_5F_76_31_2E_30_0A_00_00_00_0a";--h264  
+  signal s_signature : std_logic_vector(63 downto 0) := x"48_32_36_34_00_00_00_01";--h264 0001 
   
 begin
 
@@ -262,67 +246,13 @@ s_frame_valid_re <= frame_valid_i AND (NOT s_frame_valid_dly1);
 -- C_ID_ROM_3_0_ADDR
 --------------------
       when C_ID_ROM_3_0_ADDR =>
-        prdata_o(g_APB3_IF_DATA_WIDTH-1 downto 0) <= s_signature(159 downto 128);
+        prdata_o(g_APB3_IF_DATA_WIDTH-1 downto 0) <= s_signature(63 downto 32);
 
 --------------------
 -- C_ID_ROM_7_4_ADDR
 --------------------
       when C_ID_ROM_7_4_ADDR =>
-        prdata_o(g_APB3_IF_DATA_WIDTH-1 downto 0) <= s_signature(127 downto 96);        
-
---------------------
--- C_ID_ROM_11_8_ADDR
---------------------
-      when C_ID_ROM_11_8_ADDR =>
-        prdata_o(g_APB3_IF_DATA_WIDTH-1 downto 0) <= s_signature(95 downto 64);                
-
---------------------
--- C_ID_ROM_15_12_ADDR
---------------------
-      when C_ID_ROM_15_12_ADDR =>
-        prdata_o(g_APB3_IF_DATA_WIDTH-1 downto 0) <= s_signature(63 downto 32);                        
-
---------------------
--- C_ID_ROM_19_16_ADDR
---------------------
-      when C_ID_ROM_19_16_ADDR =>
-        prdata_o(g_APB3_IF_DATA_WIDTH-1 downto 0) <= s_signature(31 downto 0);                        
-
--- 4D 43 48 50
--- 5F 4F 56 58
--- 5F 53 4F 42
--- 45 4C 5F 76
--- 31 2E 30 0A
-
---------------------
--- C_GGAIN_ADDR
---------------------
---            WHEN C_GGAIN1_ADDR =>
---                prdata_o(7 DOWNTO 0)                  <= g_gain_1_i;
---                prdata_o(g_APB3_IF_DATA_WIDTH-1 DOWNTO 8)
---                                        <= (OTHERS=>'0');
-
---------------------
--- C_BGAIN_ADDR
---------------------
---            WHEN C_BGAIN1_ADDR =>
---                prdata_o(7 DOWNTO 0)                  <= b_gain_1_i;
---                prdata_o(g_APB3_IF_DATA_WIDTH-1 DOWNTO 8)
---                                        <= (OTHERS=>'0');
---------------------
--- C_CONTRAST_ADDR
---------------------
---            WHEN C_CONTRAST1_ADDR =>
---                prdata_o(7 DOWNTO 0)                  <= contrast_1_i;
---                prdata_o(g_APB3_IF_DATA_WIDTH-1 DOWNTO 8)
---                                        <= (OTHERS=>'0');
---------------------
--- C_BRIGHTNESS_ADDR
---------------------
---            WHEN C_BRIGHTNESS1_ADDR =>
---                prdata_o(7 DOWNTO 0)                  <= brightness_1_i;
---                prdata_o(g_APB3_IF_DATA_WIDTH-1 DOWNTO 8)
---                                        <= (OTHERS=>'0');
+        prdata_o(g_APB3_IF_DATA_WIDTH-1 downto 0) <= s_signature(31 downto 0);                         
 
 --------------------
 -- OTHERS
@@ -453,22 +383,6 @@ s_frame_valid_re <= frame_valid_i AND (NOT s_frame_valid_dly1);
 --------------------
           when C_H264DDRLSB_ADDR =>
             h264_ddrlsb_addr_o  <= pwdata_i;
-
---------------------
--- C_RCONST1_REG_ADDR
---------------------
---                    WHEN C_RCONST1_REG_ADDR =>
---                        rconst_1_o <= pwdata_i(9 DOWNTO 0);
---------------------
--- C_GCONST1_REG_ADDR
---------------------
---                    WHEN C_GCONST1_REG_ADDR =>
---                        gconst_1_o <= pwdata_i(9 DOWNTO 0);
---------------------
--- C_BCONST1_REG_ADDR
---------------------
---                    WHEN C_BCONST1_REG_ADDR =>
---                        bconst_1_o <= pwdata_i(9 DOWNTO 0);
 
 --------------------
 -- OTHERS

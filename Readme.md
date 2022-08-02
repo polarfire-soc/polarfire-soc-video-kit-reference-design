@@ -17,7 +17,7 @@ To generate the standard reference design which is capable of running the majori
 1. Clone or download the repository
 2. Open Libero v2022.1
 3. Open the execute script dialog (CTRL + U)
-4. Execute the "SEVPFSOC_H264.tcl" script
+4. Execute the "MPFS_SEV_KIT_REFERENCE_DESIGN.tcl" script
 5. Configure the design if required
 6. Run the Libero SoC design flow to program a device
 
@@ -36,7 +36,7 @@ This software tool takes user inputs and generates an MSS configuration file (.x
 The XML file is used by the PolarFire SoC Configuration Generator to generate configuration header files for bare metal applications.
 The MSS component file can be imported into a Libero SoC design and used in the FPGA design flow.
 
-A saved configuration for the PolarFire SoC MSS Configurator is available in the "src" folder and can be opened by the PolarFire SoC MSS Configurator. These configurations will match the MSS configuration used in the design and can be used to regenerate XML and a Libero component. For argument based designs, MSS configuration files will be generated in the src/MSS_SEV/[configuration name] directory when a design is generated.
+A saved configuration for the PolarFire SoC MSS Configurator is available in the "script_support" folder and can be opened by the PolarFire SoC MSS Configurator. These configurations will match the MSS configuration used in the design and can be used to regenerate XML and a Libero component. For argument based designs, MSS configuration files will be generated in the script_support/MSS_SEV/[configuration name] directory when a design is generated.
 
 ## XML
 

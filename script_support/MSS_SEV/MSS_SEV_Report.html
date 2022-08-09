@@ -54,7 +54,7 @@
 </tr>
 <tr>
  <td>Date</td>
- <td>Thu Jul 21 18:51:00 2022
+ <td>Mon Aug  8 19:42:54 2022
 </td>
 </tr>
 </table>
@@ -115,7 +115,7 @@
 </tr>
 <tr>
  <td>SD/SDIO</td>
- <td>UNUSED</td>
+ <td>MSSIO_B4</td>
 </tr>
 <tr>
  <td>Gigabit Ethernet MAC_0</td>
@@ -854,51 +854,59 @@
  <td>INOUT</td>
 </tr>
 <tr>
- <td>EMMC_CLK</td>
+ <td>SD_CLK_EMMC_CLK</td>
  <td>OUTPUT</td>
 </tr>
 <tr>
- <td>EMMC_CMD</td>
+ <td>SD_CMD_EMMC_CMD</td>
  <td>INOUT</td>
 </tr>
 <tr>
- <td>EMMC_DATA0</td>
+ <td>SD_DATA0_EMMC_DATA0</td>
  <td>INOUT</td>
 </tr>
 <tr>
- <td>EMMC_DATA1</td>
+ <td>SD_DATA1_EMMC_DATA1</td>
  <td>INOUT</td>
 </tr>
 <tr>
- <td>EMMC_DATA2</td>
+ <td>SD_DATA2_EMMC_DATA2</td>
  <td>INOUT</td>
 </tr>
 <tr>
- <td>EMMC_DATA3</td>
+ <td>SD_DATA3_EMMC_DATA3</td>
  <td>INOUT</td>
 </tr>
 <tr>
- <td>EMMC_DATA4</td>
- <td>INOUT</td>
-</tr>
-<tr>
- <td>EMMC_DATA5</td>
- <td>INOUT</td>
-</tr>
-<tr>
- <td>EMMC_DATA6</td>
- <td>INOUT</td>
-</tr>
-<tr>
- <td>EMMC_DATA7</td>
- <td>INOUT</td>
-</tr>
-<tr>
- <td>EMMC_STRB</td>
+ <td>SD_CD_EMMC_STRB</td>
  <td>INPUT</td>
 </tr>
 <tr>
- <td>EMMC_RSTN</td>
+ <td>SD_WP_EMMC_RSTN</td>
+ <td>INPUT</td>
+</tr>
+<tr>
+ <td>SD_POW_EMMC_DATA4</td>
+ <td>OUTPUT</td>
+</tr>
+<tr>
+ <td>SD_VOLT_SEL_EMMC_DATA5</td>
+ <td>OUTPUT</td>
+</tr>
+<tr>
+ <td>SD_VOLT_EN_EMMC_DATA6</td>
+ <td>OUTPUT</td>
+</tr>
+<tr>
+ <td>SD_VOLT_CMD_DIR_EMMC_DATA7</td>
+ <td>OUTPUT</td>
+</tr>
+<tr>
+ <td>SD_VOLT_DIR_0_EMMC_UNUSED</td>
+ <td>OUTPUT</td>
+</tr>
+<tr>
+ <td>SD_VOLT_DIR_1_3_EMMC_UNUSED</td>
  <td>OUTPUT</td>
 </tr>
 <tr>
@@ -1038,7 +1046,7 @@
  <th>Low Power Mode Output Buffer</th>
 </tr>
 <tr>
- <td>EMMC_CLK</td>
+ <td>SD_CLK_EMMC_CLK</td>
  <td>MSSIO0</td>
  <td>AA8</td>
  <td>OUTPUT</td>
@@ -1052,7 +1060,7 @@
  <td>OFF</td>
 </tr>
 <tr>
- <td>EMMC_CMD</td>
+ <td>SD_CMD_EMMC_CMD</td>
  <td>MSSIO1</td>
  <td>AA9</td>
  <td>INOUT</td>
@@ -1066,7 +1074,7 @@
  <td>OFF</td>
 </tr>
 <tr>
- <td>EMMC_DATA0</td>
+ <td>SD_DATA0_EMMC_DATA0</td>
  <td>MSSIO2</td>
  <td>AA7</td>
  <td>INOUT</td>
@@ -1080,7 +1088,7 @@
  <td>OFF</td>
 </tr>
 <tr>
- <td>EMMC_DATA1</td>
+ <td>SD_DATA1_EMMC_DATA1</td>
  <td>MSSIO3</td>
  <td>Y6</td>
  <td>INOUT</td>
@@ -1094,7 +1102,7 @@
  <td>OFF</td>
 </tr>
 <tr>
- <td>EMMC_DATA2</td>
+ <td>SD_DATA2_EMMC_DATA2</td>
  <td>MSSIO4</td>
  <td>AA10</td>
  <td>INOUT</td>
@@ -1108,7 +1116,7 @@
  <td>OFF</td>
 </tr>
 <tr>
- <td>EMMC_DATA3</td>
+ <td>SD_DATA3_EMMC_DATA3</td>
  <td>MSSIO5</td>
  <td>AA13</td>
  <td>INOUT</td>
@@ -1122,7 +1130,7 @@
  <td>OFF</td>
 </tr>
 <tr>
- <td>EMMC_STRB</td>
+ <td>SD_CD_EMMC_STRB</td>
  <td>MSSIO6</td>
  <td>Y10</td>
  <td>INPUT</td>
@@ -1136,9 +1144,23 @@
  <td>--</td>
 </tr>
 <tr>
- <td>EMMC_RSTN</td>
+ <td>SD_WP_EMMC_RSTN</td>
  <td>MSSIO7</td>
  <td>Y7</td>
+ <td>INPUT</td>
+ <td>UP</td>
+ <td>OFF</td>
+ <td>OFF</td>
+ <td>OFF</td>
+ <td>OFF</td>
+ <td>OFF</td>
+ <td>--</td>
+ <td>--</td>
+</tr>
+<tr>
+ <td>SD_POW_EMMC_DATA4</td>
+ <td>MSSIO8</td>
+ <td>Y14</td>
  <td>OUTPUT</td>
  <td>UP</td>
  <td>OFF</td>
@@ -1150,58 +1172,72 @@
  <td>OFF</td>
 </tr>
 <tr>
- <td>EMMC_DATA4</td>
- <td>MSSIO8</td>
- <td>Y14</td>
- <td>INOUT</td>
- <td>UP</td>
- <td>OFF</td>
- <td>OFF</td>
- <td>OFF</td>
- <td>OFF</td>
- <td>OFF</td>
- <td>8</td>
- <td>OFF</td>
-</tr>
-<tr>
- <td>EMMC_DATA5</td>
+ <td>SD_VOLT_SEL_EMMC_DATA5</td>
  <td>MSSIO9</td>
  <td>Y13</td>
- <td>INOUT</td>
+ <td>OUTPUT</td>
  <td>UP</td>
  <td>OFF</td>
  <td>OFF</td>
  <td>OFF</td>
- <td>OFF</td>
- <td>OFF</td>
+ <td>--</td>
+ <td>--</td>
  <td>8</td>
  <td>OFF</td>
 </tr>
 <tr>
- <td>EMMC_DATA6</td>
+ <td>SD_VOLT_EN_EMMC_DATA6</td>
  <td>MSSIO10</td>
  <td>Y8</td>
- <td>INOUT</td>
+ <td>OUTPUT</td>
  <td>UP</td>
  <td>OFF</td>
  <td>OFF</td>
  <td>OFF</td>
- <td>OFF</td>
- <td>OFF</td>
+ <td>--</td>
+ <td>--</td>
  <td>8</td>
  <td>OFF</td>
 </tr>
 <tr>
- <td>EMMC_DATA7</td>
+ <td>SD_VOLT_CMD_DIR_EMMC_DATA7</td>
  <td>MSSIO11</td>
  <td>Y11</td>
- <td>INOUT</td>
+ <td>OUTPUT</td>
  <td>UP</td>
  <td>OFF</td>
  <td>OFF</td>
  <td>OFF</td>
+ <td>--</td>
+ <td>--</td>
+ <td>8</td>
+ <td>OFF</td>
+</tr>
+<tr>
+ <td>SD_VOLT_DIR_0_EMMC_UNUSED</td>
+ <td>MSSIO12</td>
+ <td>AA12</td>
+ <td>OUTPUT</td>
+ <td>UP</td>
  <td>OFF</td>
  <td>OFF</td>
+ <td>OFF</td>
+ <td>--</td>
+ <td>--</td>
+ <td>8</td>
+ <td>OFF</td>
+</tr>
+<tr>
+ <td>SD_VOLT_DIR_1_3_EMMC_UNUSED</td>
+ <td>MSSIO13</td>
+ <td>Y12</td>
+ <td>OUTPUT</td>
+ <td>UP</td>
+ <td>OFF</td>
+ <td>OFF</td>
+ <td>OFF</td>
+ <td>--</td>
+ <td>--</td>
  <td>8</td>
  <td>OFF</td>
 </tr>

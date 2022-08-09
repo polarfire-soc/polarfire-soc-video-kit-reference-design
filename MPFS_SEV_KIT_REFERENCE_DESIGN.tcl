@@ -122,7 +122,7 @@ build_design_hierarchy
 
 #Sourcing the Tcl files in which HDL+ core definitions are created for HDL modules
 source ${src_path}/components/video_fifo.tcl 
-source ${src_path}/components/H264/apb3_if.tcl
+source ${src_path}/components/apb3_if.tcl
 source ${src_path}/components/H264/data_packer_h264.tcl
 build_design_hierarchy
 
@@ -144,21 +144,21 @@ source ${src_path}/components/PF_CCC_C0.tcl
 source ${src_path}/components/PF_CCC_C2.tcl
 source ${src_path}/components/PF_CLK_DIV_C0.tcl
 source ${src_path}/components/PF_OSC_C0.tcl
-source ${src_path}/components/RGBtoYCbCr_C0.tcl
+source ${src_path}/components/H264/RGBtoYCbCr_C0.tcl
 source ${src_path}/components/PF_XCVR_REF_CLK_C0.tcl
 source ${src_path}/components/CLOCKS_AND_RESETS.tcl
 source ${src_path}/components/PF_IOD_GENERIC_RX_C0.tcl
-source ${src_path}/components/FIC_CONVERTER.tcl
+source ${src_path}/components/H264/FIC_CONVERTER.tcl
 source ${src_path}/components/CAM_IOD_TIP_TOP.tcl
 source ${src_path}/components/IMX334_IF_TOP.tcl
 source ${src_path}/components/H264/H264_Iframe_Encoder_C0.tcl
 source ${src_path}/components/H264/H264_DDR_WRITE.tcl
 source ${src_path}/components/H264/h264_top.tcl
-source ${src_path}/components/H264/video_processing.tcl
+source ${src_path}/components/video_processing.tcl
 source ${src_path}/components/H264/Video_Pipeline.tcl
 source ${src_path}/components/H264/SEVPFSOC_H264.tcl
 build_design_hierarchy
-set_root -module {SEVPFSOC_H264::work}
+set_root -module {SEVPFSOC_TOP::work}
 #
 # // Derive timing constraints
 #
@@ -192,25 +192,29 @@ set_as_target -type {sdc} -file "${constraint_path}/user.sdc"
 #
 # // Associate imported constraints with the design flow
 #
-
+organize_tool_files -tool {SYNTHESIZE} \
+  -file "${project_dir}/constraint/SEVPFSOC_TOP_derived_constraints.sdc" \
+  -module {SEVPFSOC_TOP::work} \
+  -input_type {constraint} 
+  
 organize_tool_files -tool {PLACEROUTE} \
     -file "${project_dir}/constraint/io/SEV_MAC.pdc" \
     -file "${project_dir}/constraint/io/SEV_MMUART0.pdc" \
     -file "${project_dir}/constraint/io/SEV_MMUART1.pdc" \
     -file "${project_dir}/constraint/io/user.pdc" \
-    -file "${project_dir}/constraint/SEVPFSOC_H264_derived_constraints.sdc" \
+    -file "${project_dir}/constraint/SEVPFSOC_TOP_derived_constraints.sdc" \
     -file "${project_dir}/constraint/user.sdc" \
     -file "${project_dir}/constraint/fp/user.pdc" \
-    -module {SEVPFSOC_H264::work} \
+    -module {SEVPFSOC_TOP::work} \
     -input_type {constraint}
 
 set_as_target -type {io_pdc} -file "${project_dir}/constraint/io/user.pdc"
 save_project
 
 organize_tool_files -tool {VERIFYTIMING} \
-    -file "${project_dir}/constraint/SEVPFSOC_H264_derived_constraints.sdc" \
+    -file "${project_dir}/constraint/SEVPFSOC_TOP_derived_constraints.sdc" \
     -file "${project_dir}/constraint/user.sdc" \
-    -module {SEVPFSOC_H264::work} \
+    -module {SEVPFSOC_TOP::work} \
     -input_type {constraint}
 
 #

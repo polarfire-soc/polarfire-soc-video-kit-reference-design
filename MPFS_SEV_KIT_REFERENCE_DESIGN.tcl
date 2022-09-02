@@ -4,10 +4,10 @@
 # // Check Libero version and path lenth to verify project can be created
 #
 
-if {[string compare [string range [get_libero_version] 0 end-3] "2022.1.0"]==0} {
-	puts "Libero v2022.1 detected."
+if {[string compare [string range [get_libero_version] 0 end-3] "2022.2.0"]==0} {
+	puts "Libero v2022.2 detected."
 } else {
-	error "Incorrect Libero version. Please use Libero v2022.1 to run these scripts."
+	error "Incorrect Libero version. Please use Libero v2022.2 to run these scripts."
 }
 
 if { [lindex $tcl_platform(os) 0]  == "Windows" } {
@@ -48,7 +48,7 @@ set mss_config_loc "$install_loc/bin64/pfsoc_mss"
 set local_dir [pwd]
 set src_path ./script_support
 set constraint_path ./script_support/constraint
-set release_tag "2022.1"
+set release_tag "2022.2"
 set project_name "SEVPFSOC_H264"
 set project_dir "$local_dir/$project_name"
 
@@ -95,11 +95,11 @@ download_core -vlnv {Actel:DirectCore:CORERXIODBITALIGN:2.2.100} -location {www.
 download_core -vlnv {Microsemi:SolutionCore:Gamma_Correction:4.2.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microsemi:SolutionCore:Image_Enhancement:4.3.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microsemi:SolutionCore:IMAGE_SCALER:4.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
-download_core -vlnv {Microsemi:SgCore:PFSOC_INIT_MONITOR:1.0.302} -location {www.microchip-ip.com/repositories/SgCore}
+download_core -vlnv {Microsemi:SgCore:PFSOC_INIT_MONITOR:1.0.304} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Microsemi:SolutionCore:mipicsi2rxdecoderPF:4.4.0} -location {www.microchip-ip.com/repositories/DirectCore}
-download_core -vlnv {Actel:SgCore:PF_CCC:2.2.100} -location {www.microchip-ip.com/repositories/SgCore}
+download_core -vlnv {Actel:SgCore:PF_CCC:2.2.214} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_CLK_DIV:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
-download_core -vlnv {Actel:SystemBuilder:PF_IOD_GENERIC_RX:2.1.106} -location {www.microchip-ip.com/repositories/SgCore}
+download_core -vlnv {Actel:SystemBuilder:PF_IOD_GENERIC_RX:2.1.109} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_OSC:1.0.102} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Microsemi:SolutionCore:RGBtoYCbCr:4.4.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:SgCore:PF_XCVR_REF_CLK:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
@@ -110,7 +110,7 @@ download_core -vlnv {Microchip:SolutionCore:H264_Iframe_Encoder:1.3.0} -location
 #
 # // Generate base design
 #
-exec $mss_config_loc -CONFIGURATION_FILE:$src_path/MSS_SEV/MSS_SEV.cfg -OUTPUT_DIR:${src_path}/MSS_SEV
+exec $mss_config_loc -GENERATE -CONFIGURATION_FILE:$src_path/MSS_SEV/MSS_SEV.cfg -OUTPUT_DIR:${src_path}/MSS_SEV
 import_mss_component -file "$src_path/MSS_SEV/MSS_SEV.cxz"
 
 

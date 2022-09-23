@@ -52,6 +52,7 @@ set release_tag "2022.2"
 set project_name "SEVPFSOC_H264"
 set project_dir "$local_dir/$project_name"
 
+source ./script_support/additional_configurations/functions.tcl
 #
 # // Create Libero project
 #
@@ -232,21 +233,36 @@ if {[info exists PLACEROUTE]} {
     run_tool -name {VERIFYTIMING}
 }
 
-save_project
+if {[info exists HSS_UPDATE]} {
+  if !{[file exists "./script_support/hss-envm-wrapper.mpfs-sev-kit.hex"]} {
+      if {[catch    {exec wget https://github.com/polarfire-soc/hart-software-services/releases/latest/download/hss-envm-wrapper.mpfs-sev-kit.hex -P ./script_support/} issue]} {
+      }
+     }
+  
+  create_eNVM_config "$local_dir/script_support/MSS_SEV/ENVM.cfg" "$local_dir/script_support/hss-envm-wrapper.mpfs-sev-kit.hex"
+  run_tool -name {GENERATEPROGRAMMINGDATA}
+  configure_envm -cfg_file {script_support/MSS_SEV/ENVM.cfg}
+}
 
 if {[info exists GENERATE_PROGRAMMING_DATA]} {
     run_tool -name {GENERATEPROGRAMMINGDATA} 
-    configure_envm -cfg_file "${src_path}/ENVM.cfg"
 }  elseif {[info exists PROGRAM]} {
     run_tool -name {GENERATEPROGRAMMINGDATA} 
-    configure_envm -cfg_file "${src_path}/ENVM.cfg"
     run_tool -name {PROGRAMDEVICE}
 } elseif {[info exists EXPORT_FPE]} {   
-    run_tool -name {GENERATEPROGRAMMINGDATA} 
-    configure_envm -cfg_file "${src_path}/ENVM.cfg" 
-    if {$EXPORT_FPE == 1} {
-        export_prog_job -job_file_name $project_name -export_dir $local_dir -bitstream_file_components "ENVM FABRIC_SNVM"
+    if {[info exists HSS_UPDATE]} {
+        if {$EXPORT_FPE == 1} {
+            export_fpe_job $project_name $local_dir "ENVM FABRIC_SNVM"
+        } else {
+            export_fpe_job $project_name $EXPORT_FPE "ENVM FABRIC_SNVM"
+        }
     } else {
-        export_prog_job -job_file_name $project_name -export_dir $EXPORT_FPE -bitstream_file_components "ENVM FABRIC_SNVM"
-    }    
+        if {$EXPORT_FPE == 1} {
+            export_fpe_job $project_name $local_dir "FABRIC_SNVM"
+        } else {
+            export_fpe_job $project_name $EXPORT_FPE "FABRIC_SNVM"
+        }
+    }
 }
+
+save_project

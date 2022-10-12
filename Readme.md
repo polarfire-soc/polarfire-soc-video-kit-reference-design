@@ -27,7 +27,8 @@ Once the script has completed the design can be configured further if needed and
 
 ## Board configuration
 
-For Sev Kit jumper configurations used by this design and Linux images for eMMC and SD Cards see:[Updating PolarFire SoC Sev Kit FPGA Design and Linux Image](https://bitbucket.microchip.com/projects/FPGA_PFSOC_SEV_SOLUTIONS/repos/polarfire-soc-documentation/browse/boards/mpfs-sev-kit-es/updating-sev-kit/updating-sev-kit-design-and-linux.md).
+Setting up the jumpers on the SEV Kit, refer to the [SEV Kit user's guide](https://mi-v-ecosystem.github.io/redirects/boards-mpfs-sev-kit-sev-kit-user-guide).
+The latest Linux images for the SEV Kit are available from the releases section of the [Meta PolarFire SoC Yocto BSP](https://mi-v-ecosystem.github.io/redirects/releases-meta-polarfire-soc-yocto-bsp) repository.  
 
 ## MSS Configuration
 

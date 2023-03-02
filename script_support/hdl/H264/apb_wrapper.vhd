@@ -101,7 +101,10 @@ entity apb3_if is
     frame_tcount_o : out std_logic_vector(3 downto 0) ;
     h264_en_o      : out std_logic;
     h264_ddrlsb_addr_o : out std_logic_vector(31 downto 0);
-    h264_clr_intr_o: out std_logic
+    h264_clr_intr_o: out std_logic;
+    text_color_o         : out std_logic_vector(23 downto 0);   
+    text_coordinates_o   : out std_logic_vector(31 downto 0);   
+    disp_digits_o        : out std_logic_vector(11 downto 0)
     );
 end apb3_if;
 
@@ -149,6 +152,11 @@ architecture apb3_if of apb3_if is
   constant C_H264START_ADDR    : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"084";
   constant C_H264DDRLSB_ADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"088";
   constant C_H264DDRMSB_ADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"08C";
+  constant C_TEXT_COORDI_ADDR  : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"100";
+  constant C_TEXT_COLOR_ADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"104";
+  constant C_DIGITS_ADDR       : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"108";
+  constant C_HORIZ_RESL_RADDR  : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"10C";
+  constant C_VERT_RESL_RADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"110";
 
   constant C_ID_ROM_3_0_ADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"500";
   constant C_ID_ROM_7_4_ADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"504";
@@ -249,6 +257,18 @@ s_frame_valid_re <= frame_valid_i AND (NOT s_frame_valid_dly1);
           <= (others => '0');
           
 --------------------
+-- C_HORIZ_RESL_RADDR
+--------------------
+      when C_HORIZ_RESL_RADDR =>
+        prdata_o(g_APB3_IF_DATA_WIDTH-1 downto 0) <= x"0000" & s_horiz_resl;  
+          
+--------------------
+-- C_VERT_RESL_RADDR
+--------------------
+      when C_VERT_RESL_RADDR =>
+        prdata_o(g_APB3_IF_DATA_WIDTH-1 downto 0) <= x"0000" & s_vert_resl;   
+        
+--------------------
 -- C_FRM_BYTES_ADDR
 --------------------
       when C_FRM_BYTES_ADDR =>
@@ -316,6 +336,9 @@ s_frame_valid_re <= frame_valid_i AND (NOT s_frame_valid_dly1);
       s_horiz_resl   <= x"0500" ;
       s_vert_resl    <= x"02D0" ;
       quality_o      <= x"1E" ;
+      text_color_o       <= x"FFFFFF";
+      text_coordinates_o <= x"00100010";
+      disp_digits_o      <= x"000";
       h264_ddrlsb_addr_o <= x"AE000000";
       h264_en_o      <= '0';
     elsif (pclk_i'event and pclk_i = '1') then
@@ -383,6 +406,23 @@ s_frame_valid_re <= frame_valid_i AND (NOT s_frame_valid_dly1);
 --------------------
           when C_VERT_RESL_ADDR =>
             s_vert_resl  <= pwdata_i(15 downto 0);
+--------------------
+-- C_TEXT_COLOR_ADDR
+--------------------
+          when C_TEXT_COLOR_ADDR =>
+            text_color_o        <= pwdata_i(23 downto 0);
+            
+--------------------
+-- C_TEXT_COORDI_ADDR
+--------------------
+          when C_TEXT_COORDI_ADDR =>
+            text_coordinates_o  <= pwdata_i(31 downto 0);
+            
+--------------------
+-- C_DIGITS_ADDR
+--------------------
+          when C_DIGITS_ADDR =>
+            disp_digits_o       <= pwdata_i(11 downto 0);
             
 --------------------
 -- C_H264START_ADDR

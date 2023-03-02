@@ -1,14 +1,7 @@
 # Microsemi I/O Physical Design Constraints file
 
 # User I/O Constraints file 
-
-# Version: 2022.1 2022.1.0.10
-
-# Family: PolarFireSoC , Die: MPFS250T_ES , Package: FCG1152
-
-# Date generated: Mon May 30 18:07:58 2022 
-
-
+# Family: PolarFireSoC , Die: MPFS250TS , Package: FCG1152
 # 
 # User Locked I/O Bank Settings
 # 

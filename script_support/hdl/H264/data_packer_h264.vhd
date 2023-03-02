@@ -55,7 +55,7 @@ use IEEE.math_real."log2";
 entity data_packer_h264 is
   generic(
 -- Generic list
-    g_IP_DW          : integer := 8; -- input data width should be powers of 2
+    g_IP_DW          : integer := 16; -- input data width should be powers of 2
     g_OP_DW          : integer := 512   -- output data width 
     );
   port(
@@ -77,6 +77,8 @@ entity data_packer_h264 is
 
     -- Data Enable
     data_valid_o  : out std_logic;
+    -- Frame end output
+    frame_end_o : out std_logic;
 
     -- Data output
     data_o        : out std_logic_vector(g_OP_DW-1 downto 0)
@@ -108,7 +110,7 @@ architecture data_packer_h264 of data_packer_h264 is
   signal s_data_arr	        : DATA_ARRAY;
   signal s_counter          : std_logic_vector(C_CW-1 downto 0); -- input data count
   signal s_data_pack        : std_logic_vector(g_OP_DW-1 downto 0);  
-  signal s_frame_end_sr     : std_logic_vector(5 downto 0);  
+  signal s_frame_end_sr     : std_logic_vector(15 downto 0);  
   signal s_frame_end_re     : std_logic;
   signal s_frame_end_re_dly : std_logic;
   signal s_buf_wr_done_dly1 : std_logic;
@@ -123,6 +125,7 @@ begin
 --=================================================================================================
   data_o           <= s_data_pack;
   data_valid_o     <= s_data_valid_out;
+  frame_end_o   <= s_frame_end_re_dly;
 --=================================================================================================
 -- Generate blocks
 --=================================================================================================
@@ -153,7 +156,7 @@ END GENERATE GENERATE_DATA_PACK;
 --=================================================================================================
 -- Asynchronous blocks
 --=================================================================================================
-  s_frame_end_re <= s_frame_end_sr(4) and not(s_frame_end_sr(5));
+  s_frame_end_re <= s_frame_end_sr(14) and not(s_frame_end_sr(15));
   s_ones         <= (others => '1');
 --=================================================================================================
 -- Synchronous blocks
@@ -169,7 +172,7 @@ END GENERATE GENERATE_DATA_PACK;
       s_frame_end_sr <= (others => '0');
       s_frame_end_re_dly <= '0';
     elsif rising_edge(SYS_CLK_I) then
-      s_frame_end_sr     <= s_frame_end_sr(4 downto 0) & frame_end_i;
+      s_frame_end_sr     <= s_frame_end_sr(14 downto 0) & frame_end_i;
       s_frame_end_re_dly <= s_frame_end_re;
     end if;
   end process;

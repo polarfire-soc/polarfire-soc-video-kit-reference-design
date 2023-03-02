@@ -1,10 +1,10 @@
   <mss xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="mpfs_hw_description.xsd">
     <design_information>
-      <libero_version>2022.2</libero_version>
-      <design_name>MSS_SEV</design_name>
-      <mpfs_part_no>MPFS250T_ES</mpfs_part_no>
+      <libero_version>2022.3</libero_version>
+      <design_name>MSS_VIDEO_KIT</design_name>
+      <mpfs_part_no>MPFS250TS</mpfs_part_no>
       <mpfs_package>FCG1152</mpfs_package>
-      <creation_date_time>08-25-2022_14:48:05</creation_date_time>
+      <creation_date_time>03-02-2023_12:55:15</creation_date_time>
       <xml_format_version>0.6.5</xml_format_version>
     </design_information>
     <mss_memory_map>
@@ -1938,7 +1938,7 @@
             <field Type="RSVD" name="RESERVE01" offset="20" width="12">0x0</field>
           </register>
           <register address="0x00000008" description="Need to be set by software in all modes but OFF mode. Decoding options should follow ODT_STR table, depends on drive STR setting" name="RPC_ODT_DQ">
-            <field Type="RW" name="RPC_ODT_DQ" offset="0" width="32">0x6</field>
+            <field Type="RW" name="RPC_ODT_DQ" offset="0" width="32">0x3</field>
           </register>
           <register address="0x00000012" description="Need to be set by software in all modes but OFF mode. Decoding options should follow ODT_STR table, depends on drive STR setting" name="RPC_ODT_DQS">
             <field Type="RW" name="RPC_ODT_DQS" offset="0" width="32">0x6</field>
@@ -2289,7 +2289,7 @@
             <field Type="RW" name="MSS_DDR_DM4" offset="6" width="1">0x1</field>
           </register>
           <register address="0x00000064" description="Sets starting DQDQS start training window offset. It should default to 1." name="RPC_156_VALUE">
-            <field Type="RW" name="VALUE" offset="0" width="32">0x1</field>
+            <field Type="RW" name="VALUE" offset="0" width="32">0x6</field>
           </register>
         </registers>
       </io_bank>
@@ -3136,7 +3136,7 @@
             <field Type="RW" name="CFG_RD_POSTAMBLE" offset="0" width="32">0x0</field>
           </register>
           <register address="0x00004274" description="IP Blk = MC_BASE2 Access=RW " name="CFG_PU_CAL">
-            <field Type="RW" name="CFG_PU_CAL" offset="0" width="32">0x1</field>
+            <field Type="RW" name="CFG_PU_CAL" offset="0" width="32">0x0</field>
           </register>
           <register address="0x00004278" description="IP Blk = MC_BASE2 Access=RW " name="CFG_DQ_ODT">
             <field Type="RW" name="CFG_DQ_ODT" offset="0" width="32">0x2</field>

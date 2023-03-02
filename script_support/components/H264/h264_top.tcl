@@ -16,6 +16,7 @@ sd_create_scalar_port -sd_name ${sd_name} -port_name {eof_i} -port_direction {IN
 sd_create_scalar_port -sd_name ${sd_name} -port_name {fic_clk} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {frame_valid_i} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {h264_encoder_en} -port_direction {IN}
+sd_create_scalar_port -sd_name ${sd_name} -port_name {pclk_i} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {read_reset_i} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {resetn_i} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {rlast} -port_direction {IN}
@@ -148,6 +149,7 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_DDR_WRITE_64:data_valid_i"
 sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_DDR_WRITE_64:frame_end_i" "H264_Iframe_Encoder_C0_0:FRAME_END_I" "eof_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_DDR_WRITE_64:frm_interrupt_o" "frm_interrupt_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_DDR_WRITE_64:h264_clk_i" "H264_Iframe_Encoder_C0_0:PIX_CLK" "sys_clk_i" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_DDR_WRITE_64:pclk_i" "pclk_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_Iframe_Encoder_C0_0:DATA_VALID_I" "data_valid_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_Iframe_Encoder_C0_0:FRAME_START_I" "frame_valid_i" }
 

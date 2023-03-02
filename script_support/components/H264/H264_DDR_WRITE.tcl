@@ -12,6 +12,7 @@ sd_create_scalar_port -sd_name ${sd_name} -port_name {ddr_clk_i} -port_direction
 sd_create_scalar_port -sd_name ${sd_name} -port_name {frame_end_i} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {h264_clk_i} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {h264_encoder_en_i} -port_direction {IN}
+sd_create_scalar_port -sd_name ${sd_name} -port_name {pclk_i} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {reset_i} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {write_ackn_i} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {write_done_i} -port_direction {IN}
@@ -22,7 +23,7 @@ sd_create_scalar_port -sd_name ${sd_name} -port_name {write_req_o} -port_directi
 
 
 # Create top level Bus Ports
-sd_create_bus_port -sd_name ${sd_name} -port_name {data_i} -port_direction {IN} -port_range {[7:0]}
+sd_create_bus_port -sd_name ${sd_name} -port_name {data_i} -port_direction {IN} -port_range {[15:0]}
 sd_create_bus_port -sd_name ${sd_name} -port_name {frame_ddr_addr_i} -port_direction {IN} -port_range {[9:0]}
 
 sd_create_bus_port -sd_name ${sd_name} -port_name {frame_bytes_o} -port_direction {OUT} -port_range {[31:0]}
@@ -32,6 +33,8 @@ sd_create_bus_port -sd_name ${sd_name} -port_name {write_length_o} -port_directi
 sd_create_bus_port -sd_name ${sd_name} -port_name {write_start_addr_o} -port_direction {OUT} -port_range {[31:0]}
 
 
+sd_create_pin_slices -sd_name ${sd_name} -pin_name {data_i} -pin_slices {[15:8]}
+sd_create_pin_slices -sd_name ${sd_name} -pin_name {data_i} -pin_slices {[7:0]}
 # Add AND2_1 instance
 sd_instantiate_macro -sd_name ${sd_name} -macro_name {AND2} -instance_name {AND2_1}
 
@@ -41,14 +44,20 @@ sd_instantiate_macro -sd_name ${sd_name} -macro_name {AND2} -instance_name {AND2
 sd_instantiate_hdl_core -sd_name ${sd_name} -hdl_core_name {data_packer_h264} -instance_name {data_packer_h264_0}
 # Exporting Parameters of instance data_packer_h264_0
 sd_configure_core_instance -sd_name ${sd_name} -instance_name {data_packer_h264_0} -params {\
-"g_IP_DW:8" \
+"g_IP_DW:16" \
 "g_OP_DW:64" }\
 -validate_rules 0
 sd_save_core_instance_config -sd_name ${sd_name} -instance_name {data_packer_h264_0}
 sd_update_instance -sd_name ${sd_name} -instance_name {data_packer_h264_0}
+sd_create_pin_slices -sd_name ${sd_name} -pin_name {data_packer_h264_0:data_i} -pin_slices {[15:8]}
+sd_create_pin_slices -sd_name ${sd_name} -pin_name {data_packer_h264_0:data_i} -pin_slices {[7:0]}
+
+
 
 # Add ddr_write_controller_enc_0 instance
 sd_instantiate_hdl_module -sd_name ${sd_name} -hdl_module_name {ddr_write_controller_enc} -hdl_file {hdl\ddr_write_controller_enc.v} -instance_name {ddr_write_controller_enc_0}
+
+
 
 # Add video_fifo_0 instance
 sd_instantiate_hdl_core -sd_name ${sd_name} -hdl_core_name {video_fifo} -instance_name {video_fifo_0}
@@ -76,11 +85,13 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"AND2_1:Y" "video_fifo_0:rresetn
 sd_connect_pins -sd_name ${sd_name} -pin_names {"clr_intr_i" "ddr_write_controller_enc_0:clr_intr_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"data_packer_h264_0:data_valid_i" "data_valid_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"data_packer_h264_0:data_valid_o" "video_fifo_0:wen_i" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"data_packer_h264_0:frame_end_i" "ddr_write_controller_enc_0:eof_i" "frame_end_i" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"data_packer_h264_0:frame_end_i" "frame_end_i" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"data_packer_h264_0:frame_end_o" "ddr_write_controller_enc_0:eof_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"data_packer_h264_0:reset_i" "ddr_write_controller_enc_0:encoder_en_i" "h264_encoder_en_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"data_packer_h264_0:sys_clk_i" "ddr_write_controller_enc_0:wrclk_i" "h264_clk_i" "video_fifo_0:wclock_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"ddr_clk_i" "ddr_write_controller_enc_0:sys_clk_i" "video_fifo_0:rclock_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"ddr_write_controller_enc_0:frm_interrupt_o" "frm_interrupt_o" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"ddr_write_controller_enc_0:pclk_i" "pclk_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"ddr_write_controller_enc_0:read_fifo_o" "video_fifo_0:ren_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"ddr_write_controller_enc_0:write_ackn_i" "write_ackn_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"ddr_write_controller_enc_0:write_done_i" "write_done_i" }
@@ -88,7 +99,8 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"ddr_write_controller_enc_0:writ
 sd_connect_pins -sd_name ${sd_name} -pin_names {"rdata_rdy_o" "video_fifo_0:rdata_rdy_o" }
 
 # Add bus net connections
-sd_connect_pins -sd_name ${sd_name} -pin_names {"data_i" "data_packer_h264_0:data_i" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"data_i[15:8]" "data_packer_h264_0:data_i[7:0]" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"data_i[7:0]" "data_packer_h264_0:data_i[15:8]" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"data_packer_h264_0:data_o" "video_fifo_0:wdata_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"ddr_write_controller_enc_0:fifo_count_i" "video_fifo_0:rdata_count_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"ddr_write_controller_enc_0:frame_ddr_addr_i" "frame_ddr_addr_i" }

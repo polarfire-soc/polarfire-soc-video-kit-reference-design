@@ -6,4 +6,5 @@ import_files -library work -hdl_source script_support/hdl/frame_controls_gen.v
 import_files -library work -hdl_source script_support/hdl/intensity_average.vhd
 import_files -library work -hdl_source script_support/hdl/ram2port.vhd
 import_files -library work -hdl_source script_support/hdl/video_fifo.vhd
+import_files -library work -hdl_source script_support/hdl/CR_OSD.v
 

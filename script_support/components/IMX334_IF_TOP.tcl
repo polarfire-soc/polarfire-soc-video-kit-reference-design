@@ -56,13 +56,16 @@ sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CORERESET_PF_C2_0:PLL_POWERD
 
 # Add CSI2_RXDecoder_0 instance
 sd_instantiate_component -sd_name ${sd_name} -component_name {mipicsi2rxdecoderPF_C0} -instance_name {CSI2_RXDecoder_0}
-sd_create_pin_slices -sd_name ${sd_name} -pin_name {CSI2_RXDecoder_0:data_out_o} -pin_slices {[9:2]}
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:frame_end_o}
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:line_end_o}
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:line_start_o}
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:ecc_error_o}
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:data_type_o}
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:word_count_o}
+sd_create_pin_slices -sd_name ${sd_name} -pin_name {CSI2_RXDecoder_0:DATA_O} -pin_slices {[9:2]}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:FRAME_END_O}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:LINE_START_O}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:LINE_END_O}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:ECC_ERROR_O}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:CRC_ERROR_O}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:EBD_VALID_O}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:VIRTUAL_CHANNEL_O}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:DATA_TYPE_O}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CSI2_RXDecoder_0:WORD_COUNT_O}
 
 
 
@@ -73,12 +76,12 @@ sd_instantiate_component -sd_name ${sd_name} -component_name {PF_CCC_C2} -instan
 
 # Add PF_IOD_GENERIC_RX_C0_0 instance
 sd_instantiate_component -sd_name ${sd_name} -component_name {CAM_IOD_TIP_TOP} -instance_name {PF_IOD_GENERIC_RX_C0_0}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:SKIP_TRNG} -value {GND}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:RESTART_TRNG} -value {GND}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:HS_SEL} -value {VCC}
 sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:HS_IO_CLK_PAUSE} -value {GND}
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:CLK_TRAIN_ERROR}
+sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:HS_SEL} -value {VCC}
+sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:RESTART_TRNG} -value {GND}
+sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:SKIP_TRNG} -value {GND}
 sd_mark_pins_unused -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:CLK_TRAIN_DONE}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:CLK_TRAIN_ERROR}
 
 
 
@@ -94,7 +97,9 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"CAMERA_CLK" "CORERESET_PF_C2_0:
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C1_0:CLK" "CSI2_RXDecoder_0:PARALLEL_CLOCK_I" "PARALLEL_CLOCK" "PF_CCC_C2_0:OUT0_FABCLK_0" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C1_0:EXT_RST_N" "CORERESET_PF_C2_0:EXT_RST_N" "PF_IOD_GENERIC_RX_C0_0:training_done_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C1_0:INIT_DONE" "CORERESET_PF_C2_0:INIT_DONE" "INIT_DONE" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C2_0:FABRIC_RESET_N" "CSI2_RXDecoder_0:RESET_n_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C2_0:FABRIC_RESET_N" "CSI2_RXDecoder_0:RESET_N_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:FRAME_START_O" "c1_frame_start_o" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:FRAME_VALID_O" "c1_frame_valid_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:L0_LP_DATA_I" "PF_IOD_GENERIC_RX_C0_0:L0_LP_DATA" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:L0_LP_DATA_N_I" "PF_IOD_GENERIC_RX_C0_0:L0_LP_DATA_N" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:L1_LP_DATA_I" "PF_IOD_GENERIC_RX_C0_0:L1_LP_DATA" }
@@ -103,18 +108,16 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:L2_LP_DATA_I" 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:L2_LP_DATA_N_I" "PF_IOD_GENERIC_RX_C0_0:L2_LP_DATA_N" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:L3_LP_DATA_I" "PF_IOD_GENERIC_RX_C0_0:L3_LP_DATA" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:L3_LP_DATA_N_I" "PF_IOD_GENERIC_RX_C0_0:L3_LP_DATA_N" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:frame_start_o" "c1_frame_start_o" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:frame_valid_o" "c1_frame_valid_o" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:line_valid_o" "c1_line_valid_o" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:LINE_VALID_O" "c1_line_valid_o" }
 
 # Add bus net connections
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAM1_RXD" "PF_IOD_GENERIC_RX_C0_0:RXD" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAM1_RXD_N" "PF_IOD_GENERIC_RX_C0_0:RXD_N" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:DATA_O[9:2]" "c1_data_out_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:L0_HS_DATA_I" "PF_IOD_GENERIC_RX_C0_0:L0_RXD_DATA" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:L1_HS_DATA_I" "PF_IOD_GENERIC_RX_C0_0:L1_RXD_DATA" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:L2_HS_DATA_I" "PF_IOD_GENERIC_RX_C0_0:L2_RXD_DATA" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:L3_HS_DATA_I" "PF_IOD_GENERIC_RX_C0_0:L3_RXD_DATA" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CSI2_RXDecoder_0:data_out_o[9:2]" "c1_data_out_o" }
 
 
 # Re-enable auto promotion of pins of type 'pad'

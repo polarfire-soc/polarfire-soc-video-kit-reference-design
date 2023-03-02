@@ -1,12 +1,12 @@
-# PolarFire&reg; SoC Sev Kit Reference Design Generation Tcl Scripts - Libero&reg; SoC v2022.2
+# PolarFire&reg; SoC Video Kit Reference Design Generation Tcl Scripts - Libero&reg; SoC v2022.3
 
 ## Description
 
-This repository can be used to generate a reference design for the PolarFire SoC Sev Kit. This reference design will have the same or extended functionality compared to the pre-programmed FPGA design on the Sev Kit.
+This repository can be used to generate a reference design for the PolarFire SoC Video Kit. This reference design will have the same or extended functionality compared to the pre-programmed FPGA design on the Video Kit.
 
 A Libero SoC Tcl script is provided to generate the reference design using Libero SoC along with device specific I/O constraints.
 
-This repository supports Libero SoC v2022.2, which is available for download [here](https://www.microsemi.com/product-directory/design-resources/1750-libero-soc#downloads).
+This repository supports Libero SoC v2022.3, which is available for download [here](https://www.microsemi.com/product-directory/design-resources/1750-libero-soc#downloads).
 
 ## Using the reference design generation Tcl script
 
@@ -15,9 +15,9 @@ This repository supports Libero SoC v2022.2, which is available for download [he
 To generate the standard reference design which is capable of running the majority of bare metal example applications and run Linux&reg; the following flow can be used:
 
 1. Clone or download the repository
-2. Open Libero v2022.2
+2. Open Libero v2022.3
 3. Open the execute script dialog (CTRL + U)
-4. Execute the "MPFS_SEV_KIT_REFERENCE_DESIGN.tcl" script
+4. Execute the "MPFS_VIDEO_KIT_REFERENCE_DESIGN.tcl" script
 5. Configure the design if required
 6. Run the Libero SoC design flow to program a device
 
@@ -27,8 +27,8 @@ Once the script has completed the design can be configured further if needed and
 
 ## Board configuration
 
-Setting up the jumpers on the SEV Kit, refer to the [SEV Kit user's guide](https://mi-v-ecosystem.github.io/redirects/boards-mpfs-sev-kit-sev-kit-user-guide).
-The latest Linux images for the SEV Kit are available from the releases section of the [Meta PolarFire SoC Yocto BSP](https://mi-v-ecosystem.github.io/redirects/releases-meta-polarfire-soc-yocto-bsp) repository.  
+Setting up the jumpers on the PolarFire SoC Video Kit, refer to the [Video Kit user's guide](https://mi-v-ecosystem.github.io/redirects/boards-mpfs-sev-kit-sev-kit-user-guide).
+The latest Linux images for the PolarFire SoC Video Kit are available from the releases section of the [Meta PolarFire SoC Yocto BSP](https://mi-v-ecosystem.github.io/redirects/releases-meta-polarfire-soc-yocto-bsp) repository.  
 
 ## MSS Configuration
 
@@ -37,7 +37,7 @@ This software tool takes user inputs and generates an MSS configuration file (.x
 The XML file is used by the PolarFire SoC Configuration Generator to generate configuration header files for bare metal applications.
 The MSS component file can be imported into a Libero SoC design and used in the FPGA design flow.
 
-A saved configuration for the PolarFire SoC MSS Configurator is available in the "script_support" folder and can be opened by the PolarFire SoC MSS Configurator. These configurations will match the MSS configuration used in the design and can be used to regenerate XML and a Libero component. For argument based designs, MSS configuration files will be generated in the script_support/MSS_SEV/[configuration name] directory when a design is generated.
+A saved configuration for the PolarFire SoC MSS Configurator is available in the "script_support" folder and can be opened by the PolarFire SoC MSS Configurator. These configurations will match the MSS configuration used in the design and can be used to regenerate XML and a Libero component. For argument based designs, MSS configuration files will be generated in the script_support/MSS_VIDEO_KIT/[configuration name] directory when a design is generated.
 
 ## XML
 

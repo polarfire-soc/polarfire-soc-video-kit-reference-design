@@ -169,7 +169,7 @@ sd_instantiate_component -sd_name ${sd_name} -component_name {video_processing} 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAM1_RX_CLK_N" "IMX334_IF_TOP_0:CAM1_RX_CLK_N" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAM1_RX_CLK_P" "IMX334_IF_TOP_0:CAM1_RX_CLK_P" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CLK_125MHz_i" "h264_top_0:fic_clk" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CLK_50MHz_i" "apb3_if_0:pclk_i" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CLK_50MHz_i" "apb3_if_0:pclk_i" "h264_top_0:pclk_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:ARST_N" "IMX334_IF_TOP_0:INIT_DONE" "INIT_DONE" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:CAMCLK_RESET_N" "RGBtoYCbCr_C0_0:RESET_N_I" "h264_top_0:resetn_i" "video_processing_0:RESETN_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:PARALLEL_CLOCK" "RGBtoYCbCr_C0_0:CLOCK_I" "h264_top_0:sys_clk_i" "video_processing_0:SYS_CLK_I" }
@@ -199,6 +199,7 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"RGBtoYCbCr_C0_0:RED_I" "video_p
 sd_connect_pins -sd_name ${sd_name} -pin_names {"RGBtoYCbCr_C0_0:Y_OUT" "h264_top_0:data_y_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:RGB_SUM_i" "video_processing_0:y_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:bconst_o" "video_processing_0:B_CONST_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:disp_digits_o" "video_processing_0:digits_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:frame_bytes_i" "h264_top_0:frame_bytes_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:frame_index_i" "h264_top_0:frame_index_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:gconst_o" "video_processing_0:G_CONST_I" }
@@ -207,6 +208,8 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:horiz_resl_o" "h264_t
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:quality_o[5:0]" "h264_top_0:qp_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:rconst_o" "video_processing_0:R_CONST_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:second_const_o" "video_processing_0:COMMON_CONST_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:text_color_o" "video_processing_0:text_color_rgb_i" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:text_coordinates_o" "video_processing_0:coordinate_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:vert_resl_o" "h264_top_0:vres_i" "video_processing_0:vres_i" }
 
 # Add bus interface net connections

@@ -45,6 +45,7 @@ module ddr_write_controller_enc #(parameter g_DDR_AXI_AWIDTH = 32) (
     input              sys_clk_i,     // System clock
     input              wrclk_reset_i, //Write clock reset
     input              wrclk_i,       //Write clock 
+    input              pclk_i, //APB clock for frame size and index
     input      [11:0]  fifo_count_i,  //Fifo count
     input              eof_i,         //End of Frame
     
@@ -61,8 +62,8 @@ module ddr_write_controller_enc #(parameter g_DDR_AXI_AWIDTH = 32) (
     output wire        frm_interrupt_o,//interrupt to MSS
     
     //to apb wrapper
-    output wire [1:0]  frame_idx_o, //frame index
-    output wire [31:0] frame_size_o, //Frame Size
+    output reg [1:0]  frame_idx_o, //frame index
+    output reg [31:0] frame_size_o, //Frame Size
     
     //to arbiter
     output wire                        write_req_o, //Write Request to DDR
@@ -95,13 +96,13 @@ module ddr_write_controller_enc #(parameter g_DDR_AXI_AWIDTH = 32) (
   reg [31:0]   s_frame_size;
   reg [31:0]   s_frame_size_out;
   reg          encoder_en_dly1;
+  reg [3:0]    s_clr_eof_cnt;
+  reg          frm_sz_vld;
 
 assign write_req_o          = s_write_req;
 assign write_start_addr_o   = s_write_start_addr;
 assign write_length_o       = s_count_max - 1'b1;
 assign read_fifo_o          = s_read_fifo;
-assign frame_size_o         = s_frame_size_out ;
-assign frame_idx_o          = s_disp_frame_index;
 assign frm_interrupt_o      = s_frm_intr;
 assign fifo_reset_o         = ~(encoder_en_i & (~ encoder_en_dly1));
 assign s_disp_frame_index   = s_frame_index - 1'b1 ;
@@ -239,5 +240,42 @@ assign s_set_eof_reg        = s_eof_sync_reg[9] & (~s_eof_sync_reg[8]) ; //neg e
 	end
 end
 
+/*------------------------------------------------------------------------
+-- Name       : s_clr_eof_cnt
+-- Description: frm sz valid
+------------------------------------------------------------------------*/
+  always @ (posedge sys_clk_i or negedge reset_i)
+  begin
+	if (!reset_i) begin
+      s_clr_eof_cnt  <= 0;
+      frm_sz_vld     <= 0;
+    end
+    else begin
+      if (s_clr_eof_reg)
+        s_clr_eof_cnt  <= 1;
+      else if (s_clr_eof_cnt != 0)
+        s_clr_eof_cnt  <= s_clr_eof_cnt + 1;
+        
+      if (s_clr_eof_cnt > 3)
+        frm_sz_vld  <= 1;
+      else
+        frm_sz_vld  <= 0;
+    end 
+  end   
+/*------------------------------------------------------------------------
+-- Name       : cdc_pclk
+-- Description: frm sz to APB
+------------------------------------------------------------------------*/
+  always @ (posedge pclk_i or negedge reset_i)
+  begin
+	if (!reset_i) begin  
+      frame_size_o  <= 0;
+      frame_idx_o   <= 0;
+    end
+    else if (frm_sz_vld) begin
+      frame_size_o  <= s_frame_size_out ;
+      frame_idx_o   <= s_disp_frame_index;
+    end  
+  end  
 endmodule
 

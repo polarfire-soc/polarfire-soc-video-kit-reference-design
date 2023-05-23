@@ -7,6 +7,7 @@ auto_promote_pad_pins -promote_all 0
 
 # Create top level Scalar Ports
 sd_create_scalar_port -sd_name ${sd_name} -port_name {DATA_VALID_I} -port_direction {IN}
+sd_create_scalar_port -sd_name ${sd_name} -port_name {OSD_EN_I} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {RESETN_I} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {SYS_CLK_I} -port_direction {IN}
 sd_create_scalar_port -sd_name ${sd_name} -port_name {encoder_en_i} -port_direction {IN}
@@ -67,12 +68,6 @@ sd_instantiate_component -sd_name ${sd_name} -component_name {Gamma_Correction_C
 
 # Add Image_Enhancement_C0_0 instance
 sd_instantiate_component -sd_name ${sd_name} -component_name {Image_Enhancement_C0} -instance_name {Image_Enhancement_C0_0}
-sd_create_pin_slices -sd_name ${sd_name} -pin_name {Image_Enhancement_C0_0:DATA_I} -pin_slices {[15:8]}
-sd_create_pin_slices -sd_name ${sd_name} -pin_name {Image_Enhancement_C0_0:DATA_I} -pin_slices {[23:16]}
-sd_create_pin_slices -sd_name ${sd_name} -pin_name {Image_Enhancement_C0_0:DATA_I} -pin_slices {[7:0]}
-sd_create_pin_slices -sd_name ${sd_name} -pin_name {Image_Enhancement_C0_0:DATA_O} -pin_slices {[15:8]}
-sd_create_pin_slices -sd_name ${sd_name} -pin_name {Image_Enhancement_C0_0:DATA_O} -pin_slices {[23:16]}
-sd_create_pin_slices -sd_name ${sd_name} -pin_name {Image_Enhancement_C0_0:DATA_O} -pin_slices {[7:0]}
 sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {Image_Enhancement_C0_0:ENABLE_I} -value {VCC}
 
 
@@ -100,6 +95,7 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:RGB_VA
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:SYS_CLK_I" "CR_OSD_0:SYS_CLK_I" "Gamma_Correction_C0_0:SYS_CLK_I" "IMAGE_SCALER_C0_0:IP_CLK_I" "IMAGE_SCALER_C0_0:SYS_CLK_I" "Image_Enhancement_C0_0:SYS_CLK_I" "SYS_CLK_I" "frame_controls_gen_0:sys_clk_i" "intensity_average_0:SYS_CLK_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:DATA_ENABLE_I" "DATA_VALID_O" "frame_controls_gen_0:data_valid_r1_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:FRAME_END_I" "eof_encoder_o" "frame_controls_gen_0:eof_encoder_o" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:OSD_EN_I" "OSD_EN_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Gamma_Correction_C0_0:DATA_VALID_O" "Image_Enhancement_C0_0:DATA_VALID_I" "intensity_average_0:data_valid_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_VALID_I" "Image_Enhancement_C0_0:DATA_VALID_O" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_VALID_O" "frame_controls_gen_0:data_valid_i" }
@@ -113,33 +109,33 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:B_O" "
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:DATA_I" "DATA_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:G_O" "Gamma_Correction_C0_0:GREEN_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:R_O" "Gamma_Correction_C0_0:RED_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"COMMON_CONST_I" "Image_Enhancement_C0_0:COMMON_CONST_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:b_i" "frame_controls_gen_0:data_b_r1_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:b_o" "DATA_B_O" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:coordinate_i" "coordinate_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:g_i" "frame_controls_gen_0:data_g_r1_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:g_o" "DATA_G_O" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:hres_i" "frame_controls_gen_0:hres_i" "hres_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:num_i" "digits_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:r_i" "frame_controls_gen_0:data_r_r1_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:r_o" "DATA_R_O" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:text_color_rgb_i" "text_color_rgb_i" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"COMMON_CONST_I" "Image_Enhancement_C0_0:COMMON_CONST_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:vres_i" "frame_controls_gen_0:vres_i" "vres_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"G_CONST_I" "Image_Enhancement_C0_0:G_CONST_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"Gamma_Correction_C0_0:BLUE_O" "Image_Enhancement_C0_0:DATA_I[7:0]" "intensity_average_0:b_i" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"Gamma_Correction_C0_0:GREEN_O" "Image_Enhancement_C0_0:DATA_I[15:8]" "intensity_average_0:g_i" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"Gamma_Correction_C0_0:RED_O" "Image_Enhancement_C0_0:DATA_I[23:16]" "intensity_average_0:r_i" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_B_I" "Image_Enhancement_C0_0:DATA_O[7:0]" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"Gamma_Correction_C0_0:BLUE_O" "Image_Enhancement_C0_0:B_I" "intensity_average_0:b_i" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"Gamma_Correction_C0_0:GREEN_O" "Image_Enhancement_C0_0:G_I" "intensity_average_0:g_i" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"Gamma_Correction_C0_0:RED_O" "Image_Enhancement_C0_0:R_I" "intensity_average_0:r_i" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_B_I" "Image_Enhancement_C0_0:B_O" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_B_O" "frame_controls_gen_0:data_b_i" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_G_I" "Image_Enhancement_C0_0:DATA_O[15:8]" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_G_I" "Image_Enhancement_C0_0:G_O" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_G_O" "frame_controls_gen_0:data_g_i" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_R_I" "Image_Enhancement_C0_0:DATA_O[23:16]" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_R_I" "Image_Enhancement_C0_0:R_O" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_R_O" "frame_controls_gen_0:data_r_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:HORZ_RES_OUT_I" "hres_i[12:0]" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:SCALE_FACTOR_HORZ_I" "frame_controls_gen_0:h_scale_factor_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:SCALE_FACTOR_VERT_I" "frame_controls_gen_0:v_scale_factor_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:VERT_RES_OUT_I" "vres_i[12:0]" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Image_Enhancement_C0_0:R_CONST_I" "R_CONST_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"frame_controls_gen_0:hres_i" "hres_i" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"frame_controls_gen_0:vres_i" "vres_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"intensity_average_0:y_o" "y_o" }
 
 

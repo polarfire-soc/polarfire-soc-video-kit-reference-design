@@ -41,57 +41,35 @@
 ////////////////////////////////////////////////////////////////////////////////
 //compression ratio on screen display
 module CR_OSD(
-    // Inputs
-    DATA_ENABLE_I,
-    FRAME_END_I,
-    RESETN_I,
-    SYS_CLK_I,
-    b_i,
-    coordinate_i,
-    g_i,
-    num_i,
-    r_i,
-    text_color_rgb_i,
-    // Outputs
-    b_o,
-    g_o,
-    r_o
+  // Input
+  input         DATA_ENABLE_I,
+  input         FRAME_END_I,
+  input         RESETN_I,
+  input         SYS_CLK_I,
+  input         OSD_EN_I,
+  input  [7:0]  r_i,
+  input  [7:0]  g_i,
+  input  [7:0]  b_i,
+  input  [15:0] hres_i,
+  input  [15:0] vres_i,
+  input  [31:0] coordinate_i,
+  input  [11:0] num_i,
+  input  [23:0] text_color_rgb_i,
+  // Output
+  output [7:0]  b_o,
+  output [7:0]  g_o,
+  output [7:0]  r_o
 );
 
-//--------------------------------------------------------------------
-// Input
-//--------------------------------------------------------------------
-input         DATA_ENABLE_I;
-input         FRAME_END_I;
-input         RESETN_I;
-input         SYS_CLK_I;
-input  [7:0]  b_i;
-input  [31:0] coordinate_i;
-input  [7:0]  g_i;
-input  [11:0] num_i;
-input  [7:0]  r_i;
-input  [23:0] text_color_rgb_i;
-//--------------------------------------------------------------------
-// Output
-//--------------------------------------------------------------------
-output [7:0]  b_o;
-output [7:0]  g_o;
-output [7:0]  r_o;
+localparam G_OSD_LEN = 15'd400;//25 chars * 16 pixels per char
+localparam G_VGAP = 15'd20;//16 pixels per char + 4
 //--------------------------------------------------------------------
 // Nets
 //--------------------------------------------------------------------
-wire   [7:0]   b_i;
-wire   [7:0]   b_o_net_0;
 wire   [19:0]  CH_ROM_0_dout;
-wire   [31:0]  coordinate_i;
-wire           DATA_ENABLE_I;
-wire           FRAME_END_I;
-wire   [7:0]   g_i;
-wire   [7:0]   g_o_net_0;
 wire   [15:0]  HV_COUNTER_0_H_COUNT_O;
 wire           HV_COUNTER_0_LINE_END_O;
 wire   [15:0]  HV_COUNTER_0_V_COUNT_O;
-wire   [11:0]  num_i;
 wire   [7:0]   NUM_ROM_0_dout;
 wire   [9:0]   obj_generator_0_mem_addr_o;
 wire           obj_generator_0_mem_rd_o;
@@ -100,26 +78,26 @@ wire   [9:0]   obj_generator_num_0_mem_addr_o;
 wire           obj_generator_num_0_mem_rd_o;
 wire           obj_generator_num_0_text_valid_o;
 wire           OR2_0_Y;
-wire   [7:0]   r_i;
-wire   [7:0]   r_o_net_0;
-wire           RESETN_I;
-wire           SYS_CLK_I;
 wire   [23:16] text_color_rgb_i_slice_0;
 wire   [15:8]  text_color_rgb_i_slice_1;
 wire   [7:0]   text_color_rgb_i_slice_2;
-wire   [7:0]   b_o_net_1;
-wire   [7:0]   r_o_net_1;
-wire   [7:0]   g_o_net_1;
-wire   [23:0]  text_color_rgb_i;
-//--------------------------------------------------------------------
-// Top level output port assignments
-//--------------------------------------------------------------------
-assign b_o_net_1 = b_o_net_0;
-assign b_o[7:0]  = b_o_net_1;
-assign r_o_net_1 = r_o_net_0;
-assign r_o[7:0]  = r_o_net_1;
-assign g_o_net_1 = g_o_net_0;
-assign g_o[7:0]  = g_o_net_1;
+
+reg    [31:0]  coordinate_r;
+always@(posedge SYS_CLK_I, negedge RESETN_I)
+  if(!RESETN_I)
+    coordinate_r  <= 32'h00040004;
+  else
+  begin
+    if ( coordinate_i[15:0] > vres_i - G_VGAP )
+      coordinate_r[15:0] <= vres_i - G_VGAP;
+    else
+      coordinate_r[15:0] <= coordinate_i[15:0];
+    if ( coordinate_i[31:16] > hres_i - G_OSD_LEN )
+      coordinate_r[31:16] <= hres_i - G_OSD_LEN;
+    else
+      coordinate_r[31:16] <= coordinate_i[31:16];
+  end
+
 //--------------------------------------------------------------------
 // Slices assignments
 //--------------------------------------------------------------------
@@ -171,7 +149,7 @@ obj_generator obj_generator_0(
         .h_counter_i  ( HV_COUNTER_0_H_COUNT_O ),
         .v_counter_i  ( HV_COUNTER_0_V_COUNT_O ),
         .ram_data_i   ( CH_ROM_0_dout ),
-        .coordinate_i ( coordinate_i ),
+        .coordinate_i ( coordinate_r ),
         // Outputs
         .mem_rd_o     ( obj_generator_0_mem_rd_o ),
         .text_valid_o ( obj_generator_0_text_valid_o ),
@@ -188,7 +166,7 @@ obj_generator_num obj_generator_num_0(
         .v_counter_i  ( HV_COUNTER_0_V_COUNT_O ),
         .num_i        ( num_i ),
         .ram_data_i   ( NUM_ROM_0_dout ),
-        .coordinate_i ( coordinate_i ),
+        .coordinate_i ( coordinate_r ),
         // Outputs
         .mem_rd_o     ( obj_generator_num_0_mem_rd_o ),
         .text_valid_o ( obj_generator_num_0_text_valid_o ),
@@ -207,7 +185,7 @@ OR2 OR2_0(
 //--------text_out
 text_out text_out_0(
         // Inputs
-        .txt_vld_i      ( OR2_0_Y ),
+        .txt_vld_i      ( OR2_0_Y & OSD_EN_I),
         .r_i            ( r_i ),
         .g_i            ( g_i ),
         .b_i            ( b_i ),
@@ -215,9 +193,9 @@ text_out text_out_0(
         .text_color_g_i ( text_color_rgb_i_slice_1 ),
         .text_color_b_i ( text_color_rgb_i_slice_2 ),
         // Outputs
-        .r_o            ( r_o_net_0 ),
-        .g_o            ( g_o_net_0 ),
-        .b_o            ( b_o_net_0 ) 
+        .r_o            ( r_o ),
+        .g_o            ( g_o ),
+        .b_o            ( b_o )
         );
 
 
@@ -679,4 +657,4 @@ assign r_o = txt_vld_i ? text_color_r_i : r_i;
 assign g_o = txt_vld_i ? text_color_g_i : g_i;
 assign b_o = txt_vld_i ? text_color_b_i : b_i;
   
-endmodule  
+endmodule

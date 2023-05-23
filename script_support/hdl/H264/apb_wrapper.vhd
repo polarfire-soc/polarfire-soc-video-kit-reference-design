@@ -100,8 +100,9 @@ entity apb3_if is
     quality_o      : out std_logic_vector(7 downto 0) ;
     frame_tcount_o : out std_logic_vector(3 downto 0) ;
     h264_en_o      : out std_logic;
-    h264_ddrlsb_addr_o : out std_logic_vector(31 downto 0);
-    h264_clr_intr_o: out std_logic;
+    h264_ddrlsb_addr_o   : out std_logic_vector(31 downto 0);
+    h264_clr_intr_o      : out std_logic;
+    osd_en_o             : out std_logic;
     text_color_o         : out std_logic_vector(23 downto 0);   
     text_coordinates_o   : out std_logic_vector(31 downto 0);   
     disp_digits_o        : out std_logic_vector(11 downto 0)
@@ -157,6 +158,7 @@ architecture apb3_if of apb3_if is
   constant C_DIGITS_ADDR       : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"108";
   constant C_HORIZ_RESL_RADDR  : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"10C";
   constant C_VERT_RESL_RADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"110";
+  constant C_OSD_EN_ADDR       : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"114";
 
   constant C_ID_ROM_3_0_ADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"500";
   constant C_ID_ROM_7_4_ADDR   : std_logic_vector(g_CONST_WIDTH-1 downto 0) := x"504";
@@ -268,6 +270,12 @@ s_frame_valid_re <= frame_valid_i AND (NOT s_frame_valid_dly1);
       when C_VERT_RESL_RADDR =>
         prdata_o(g_APB3_IF_DATA_WIDTH-1 downto 0) <= x"0000" & s_vert_resl;   
         
+--------------------
+-- C_OSD_EN_ADDR
+--------------------
+      when C_OSD_EN_ADDR =>
+        prdata_o(g_APB3_IF_DATA_WIDTH-1 downto 0) <= x"0000000" & "000" & osd_en_o;
+
 --------------------
 -- C_FRM_BYTES_ADDR
 --------------------
@@ -417,7 +425,12 @@ s_frame_valid_re <= frame_valid_i AND (NOT s_frame_valid_dly1);
 --------------------
           when C_TEXT_COORDI_ADDR =>
             text_coordinates_o  <= pwdata_i(31 downto 0);
-            
+--------------------
+-- C_OSD_EN_ADDR
+--------------------
+          when C_OSD_EN_ADDR =>
+            osd_en_o  <= pwdata_i(0);
+
 --------------------
 -- C_DIGITS_ADDR
 --------------------

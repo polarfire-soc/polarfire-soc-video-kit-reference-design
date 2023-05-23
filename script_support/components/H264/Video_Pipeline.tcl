@@ -68,16 +68,6 @@ sd_create_bus_port -sd_name ${sd_name} -port_name {wstrb} -port_direction {OUT} 
 
 
 # Create top level Bus interface Ports
-sd_create_bif_port -sd_name ${sd_name} -port_name {APBslave} -port_bif_vlnv {AMBA:AMBA2:APB:r0p0} -port_bif_role {slave} -port_bif_mapping {\
-"PADDR:paddr_i" \
-"PSELx:psel_i" \
-"PENABLE:penable_i" \
-"PWRITE:pwrite_i" \
-"PRDATA:prdata_o" \
-"PWDATA:pwdata_i" \
-"PREADY:pready_o" \
-"PSLVERR:pslverr_o" } 
-
 sd_create_bif_port -sd_name ${sd_name} -port_name {BIF_1} -port_bif_vlnv {AMBA:AMBA4:AXI4:r0p0_0} -port_bif_role {mirroredSlave} -port_bif_mapping {\
 "AWID:awid" \
 "AWADDR:awaddr" \
@@ -114,6 +104,16 @@ sd_create_bif_port -sd_name ${sd_name} -port_name {BIF_1} -port_bif_vlnv {AMBA:A
 "RLAST:rlast" \
 "RVALID:rvalid" \
 "RREADY:rready" } 
+
+sd_create_bif_port -sd_name ${sd_name} -port_name {APBslave} -port_bif_vlnv {AMBA:AMBA2:APB:r0p0} -port_bif_role {slave} -port_bif_mapping {\
+"PADDR:paddr_i" \
+"PSELx:psel_i" \
+"PENABLE:penable_i" \
+"PWRITE:pwrite_i" \
+"PRDATA:prdata_o" \
+"PWDATA:pwdata_i" \
+"PREADY:pready_o" \
+"PSLVERR:pslverr_o" }
 
 # Add apb3_if_0 instance
 sd_instantiate_hdl_core -sd_name ${sd_name} -hdl_core_name {apb3_if} -instance_name {apb3_if_0}
@@ -183,6 +183,7 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"RGBtoYCbCr_C0_0:DATA_VALID_I" "
 sd_connect_pins -sd_name ${sd_name} -pin_names {"RGBtoYCbCr_C0_0:DATA_VALID_O" "h264_top_0:data_valid_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:h264_clr_intr_o" "h264_top_0:clr_intr_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:h264_en_o" "video_processing_0:encoder_en_i" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:osd_en_o" "video_processing_0:OSD_EN_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"frm_interrupt_o" "h264_top_0:frm_interrupt_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"h264_top_0:eof_i" "video_processing_0:eof_encoder_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"h264_top_0:frame_valid_i" "video_processing_0:frame_start_encoder_o" }

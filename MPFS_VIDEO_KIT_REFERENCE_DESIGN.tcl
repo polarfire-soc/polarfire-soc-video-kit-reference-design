@@ -47,7 +47,7 @@ set mss_config_loc "$install_loc/bin64/pfsoc_mss"
 set local_dir [pwd]
 set src_path ./script_support
 set constraint_path ./script_support/constraint
-set release_tag "2022.3"
+set release_tag "2023.06"
 set project_name "VKPFSOC_H264"
 set project_dir "$local_dir/$project_name"
 
@@ -228,7 +228,8 @@ configure_tool -name {PLACEROUTE} -params {DELAY_ANALYSIS:MAX} -params {EFFORT_L
 
 if {[info exists PLACEROUTE]} {
     run_tool -name {PLACEROUTE}
-} elseif {[info exists VERIFY_TIMING]} {
+}
+if {[info exists VERIFY_TIMING]} {
     run_tool -name {VERIFYTIMING}
 }
 

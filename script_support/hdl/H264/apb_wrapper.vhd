@@ -168,7 +168,7 @@ architecture apb3_if of apb3_if is
   signal s_horiz_resl       : std_logic_vector(15 downto 0);
   signal s_vert_resl        : std_logic_vector(15 downto 0);
 
-  signal s_signature : std_logic_vector(63 downto 0) := x"48_32_36_34_00_00_00_01";--h264 0001 
+  signal s_signature : std_logic_vector(63 downto 0) := x"48_32_36_34_02_03_00_06";--h264 2306
   
 begin
 

@@ -42,7 +42,7 @@
 //compression ratio on screen display
 module CR_OSD(
   // Input
-  input         DATA_ENABLE_I,
+  input         DATA_VALID_I,
   input         FRAME_END_I,
   input         RESETN_I,
   input         SYS_CLK_I,
@@ -56,6 +56,7 @@ module CR_OSD(
   input  [11:0] num_i,
   input  [23:0] text_color_rgb_i,
   // Output
+  output reg    data_valid_o,
   output [7:0]  b_o,
   output [7:0]  g_o,
   output [7:0]  r_o
@@ -83,11 +84,17 @@ wire   [15:8]  text_color_rgb_i_slice_1;
 wire   [7:0]   text_color_rgb_i_slice_2;
 
 reg    [31:0]  coordinate_r;
+reg    [31:0]  coordinate_r2;
 always@(posedge SYS_CLK_I, negedge RESETN_I)
-  if(!RESETN_I)
+  if(!RESETN_I) begin
     coordinate_r  <= 32'h00040004;
+    coordinate_r2 <= 32'h00040004;
+    data_valid_o  <= 0;
+  end
   else
   begin
+    coordinate_r2 <= coordinate_r;
+    data_valid_o  <= DATA_VALID_I;
     if ( coordinate_i[15:0] > vres_i - G_VGAP )
       coordinate_r[15:0] <= vres_i - G_VGAP;
     else
@@ -149,7 +156,7 @@ obj_generator obj_generator_0(
         .h_counter_i  ( HV_COUNTER_0_H_COUNT_O ),
         .v_counter_i  ( HV_COUNTER_0_V_COUNT_O ),
         .ram_data_i   ( CH_ROM_0_dout ),
-        .coordinate_i ( coordinate_r ),
+        .coordinate_i ( coordinate_r2 ),
         // Outputs
         .mem_rd_o     ( obj_generator_0_mem_rd_o ),
         .text_valid_o ( obj_generator_0_text_valid_o ),
@@ -166,7 +173,7 @@ obj_generator_num obj_generator_num_0(
         .v_counter_i  ( HV_COUNTER_0_V_COUNT_O ),
         .num_i        ( num_i ),
         .ram_data_i   ( NUM_ROM_0_dout ),
-        .coordinate_i ( coordinate_r ),
+        .coordinate_i ( coordinate_r2 ),
         // Outputs
         .mem_rd_o     ( obj_generator_num_0_mem_rd_o ),
         .text_valid_o ( obj_generator_num_0_text_valid_o ),
@@ -185,6 +192,8 @@ OR2 OR2_0(
 //--------text_out
 text_out text_out_0(
         // Inputs
+        .resetn_i       ( RESETN_I ),
+        .sys_clk_i      ( SYS_CLK_I ),
         .txt_vld_i      ( OR2_0_Y & OSD_EN_I),
         .r_i            ( r_i ),
         .g_i            ( g_i ),
@@ -263,8 +272,8 @@ module obj_generator#(
   parameter g_NUM_OF_CHAR = 25,
   parameter g_ADDR_WIDTH  = 10)
 (
-  input                       resetn_i     ,
-  input                       sys_clk_i    ,  
+  input                       resetn_i,
+  input                       sys_clk_i,
   input                       line_end_i,
   input  [15:0]               h_counter_i, 
   input  [15:0]               v_counter_i,
@@ -279,7 +288,7 @@ module obj_generator#(
     Register/Wire Declarations
 *************************************************************************/
   reg  [g_ADDR_WIDTH-1 : 0] s_addr_offset;
-  reg  [g_ADDR_WIDTH-1 : 0] s_addr_counter           ;
+  reg  [g_ADDR_WIDTH-1 : 0] s_addr_counter;
   reg  [4:0]                s_data_bus_width_counter ;
   wire        s_obj1_valid;
   reg         s_data_bit;
@@ -641,20 +650,34 @@ endmodule
 
 // text_out.v
 module text_out (
-  input txt_vld_i,
-  input  [7:0] r_i,
-  input  [7:0] g_i,
-  input  [7:0] b_i,
-  input  [7:0] text_color_r_i,
-  input  [7:0] text_color_g_i,
-  input  [7:0] text_color_b_i,
-  output [7:0] r_o,
-  output [7:0] g_o,
-  output [7:0] b_o
+  input            resetn_i,
+  input            sys_clk_i,
+  input            txt_vld_i,
+  input      [7:0] r_i,
+  input      [7:0] g_i,
+  input      [7:0] b_i,
+  input      [7:0] text_color_r_i,
+  input      [7:0] text_color_g_i,
+  input      [7:0] text_color_b_i,
+  output reg [7:0] r_o,
+  output reg [7:0] g_o,
+  output reg [7:0] b_o
   );
-
-assign r_o = txt_vld_i ? text_color_r_i : r_i;
-assign g_o = txt_vld_i ? text_color_g_i : g_i;
-assign b_o = txt_vld_i ? text_color_b_i : b_i;
   
+/************************************************************************
+    data output
+*************************************************************************/
+always@(posedge sys_clk_i, negedge resetn_i)
+  if (!resetn_i)
+  begin
+    r_o <= 0;
+    g_o <= 0;
+    b_o <= 0;
+  end
+  else
+  begin
+    r_o <= txt_vld_i ? text_color_r_i : r_i;
+    g_o <= txt_vld_i ? text_color_g_i : g_i;
+    b_o <= txt_vld_i ? text_color_b_i : b_i;
+  end
 endmodule

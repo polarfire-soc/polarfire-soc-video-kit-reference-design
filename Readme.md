@@ -1,8 +1,8 @@
-# PolarFire&reg; SoC Video Kit Reference Design Generation Tcl Scripts - Libero&reg; SoC v2022.3+
+# PolarFire&reg; SoC Video Kit Reference Design Generation Tcl Scripts - Libero&reg; SoC v2023.1+
 
 ## Table of Contents
 
-- [PolarFire&reg; SoC Video Kit Reference Design Generation Tcl Scripts - Libero&reg; SoC v2022.3+](#polarfire-soc-video-kit-reference-design-generation-tcl-scripts---libero-soc-v20222)
+- [PolarFire&reg; SoC Video Kit Reference Design Generation Tcl Scripts - Libero&reg; SoC v2023.1+](#polarfire-soc-video-kit-reference-design-generation-tcl-scripts---libero-soc-v20231)
   - [Table of Contents](#table-of-contents)
   - [Description](#description)
   - [Using the reference design generation Tcl script](#using-the-reference-design-generation-tcl-script)
@@ -42,7 +42,7 @@ The Video Kit Reference Design can be generated using any of the free or paid Li
 To generate the standard reference design which is capable of running the majority of bare metal example applications and run Linux&reg; the following flow can be used:
 
 1. Clone or download the repository
-2. Open Libero v2022.3
+2. Open Libero v2023.1
 3. Open the execute script dialog (CTRL + U)
 4. Execute the "MPFS_VIDEO_KIT_REFERENCE_DESIGN.tcl" script
 5. Configure the design if required

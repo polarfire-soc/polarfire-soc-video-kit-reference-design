@@ -1,10 +1,10 @@
   <mss xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="mpfs_hw_description.xsd">
     <design_information>
-      <libero_version>2022.3</libero_version>
+      <libero_version>2023.1</libero_version>
       <design_name>MSS_VIDEO_KIT</design_name>
       <mpfs_part_no>MPFS250TS</mpfs_part_no>
       <mpfs_package>FCG1152</mpfs_package>
-      <creation_date_time>03-16-2023_15:59:20</creation_date_time>
+      <creation_date_time>05-23-2023_11:22:48</creation_date_time>
       <xml_format_version>0.6.5</xml_format_version>
     </design_information>
     <mss_memory_map>

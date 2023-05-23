@@ -93,9 +93,10 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:EOF_I"
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:EOF_O" "intensity_average_0:frame_end_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:RGB_VALID_O" "Gamma_Correction_C0_0:DATA_VALID_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:SYS_CLK_I" "CR_OSD_0:SYS_CLK_I" "Gamma_Correction_C0_0:SYS_CLK_I" "IMAGE_SCALER_C0_0:IP_CLK_I" "IMAGE_SCALER_C0_0:SYS_CLK_I" "Image_Enhancement_C0_0:SYS_CLK_I" "SYS_CLK_I" "frame_controls_gen_0:sys_clk_i" "intensity_average_0:SYS_CLK_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:DATA_ENABLE_I" "DATA_VALID_O" "frame_controls_gen_0:data_valid_r1_o" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:DATA_VALID_I" "frame_controls_gen_0:data_valid_r1_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:FRAME_END_I" "eof_encoder_o" "frame_controls_gen_0:eof_encoder_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:OSD_EN_I" "OSD_EN_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CR_OSD_0:data_valid_o" "DATA_VALID_O" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Gamma_Correction_C0_0:DATA_VALID_O" "Image_Enhancement_C0_0:DATA_VALID_I" "intensity_average_0:data_valid_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_VALID_I" "Image_Enhancement_C0_0:DATA_VALID_O" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMAGE_SCALER_C0_0:DATA_VALID_O" "frame_controls_gen_0:data_valid_i" }

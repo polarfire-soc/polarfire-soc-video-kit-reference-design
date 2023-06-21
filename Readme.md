@@ -55,16 +55,16 @@ To generate the standard reference design which is capable of running the majori
 
 Below arguments are supported to modify or configure aspects of the design flow that will be run. Supported arguments are:
 
-| Argument                  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| :------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| HSS_UPDATE                | Downloads the HSS release hex file associated with this release of the reference design. <br>The hex file is added as an eNVM client in Libero. <br>This argument requires wget to be installed. <br>This is installed by default on most Linux systems, on Windows® wget (version 1.14 or above) should be installed and added to the system path, steps are shown in the following [guide](https://www.addictivetips.com/windows-tips/install-and-use-wget-in-windows-10/)                                                                                                                                 |
-| SYNTHESIZE                | Runs the synthesis step after design generation has completed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| PLACEROUTE                | Runs the synthesis and place and route steps after design generation has completed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| VERIFY_TIMING             | Runs the synthesis, place and route and timing verification steps after design generation has completed                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| GENERATE_PROGRAMMING_DATA | Generates the files required to generate a bitstream for programming a device                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| PROGRAM                   | Runs the full design flow after generating a design and programs a connected device. <br>Note: the device must be connected when the "Run PROGRAM Action" stage of the design flow is reached and only one device should be connected                                                                                                                                                                                                                                                                                                                                                |
-| EXPORT_FPE                | Runs the full design flow after generating a design and exports a FlashPro Express file to the local directory                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| EXPORT_FPE:PATH           | Runs the full design flow after generating a design and exports a FlashPro Express file to a specified path e.g EXPORT_FPE:/home/user/jobs/                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Argument                  | Description                                                                                                                                |
+| :------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------|
+| HSS_UPDATE                | Downloads the HSS release hex file associated with this release of the reference design. <br>The hex file is added as an eNVM client in Libero. <br>This argument requires wget to be installed. <br>This is installed by default on most Linux systems, on Windows® wget (version 1.14 or above) <br>should be installed and added to the system path, steps are shown in the following [guide](https://www.addictivetips.com/windows-tips/install-and-use-wget-in-windows-10/) |
+| SYNTHESIZE                | Runs the synthesis step after design generation has completed                                                         |
+| PLACEROUTE                | Runs the synthesis and place and route steps after design generation has completed                                    |
+| VERIFY_TIMING             | Runs the synthesis, place and route and timing verification steps after design generation has completed               |
+| GENERATE_PROGRAMMING_DATA | Generates the files required to generate a bitstream for programming a device                                         |
+| PROGRAM                   | Runs the full design flow after generating a design and programs a connected device. <br>Note: the device must be connected when the "Run PROGRAM Action" stage of the design flow is reached and only one device should be connected |
+| EXPORT_FPE                | Runs the full design flow after generating a design and exports a FlashPro Express file to the local directory                              |
+| EXPORT_FPE:PATH           | Runs the full design flow after generating a design and exports a FlashPro Express file to a specified path e.g EXPORT_FPE:/home/user/jobs/ |
 
 <a name="programming-the-fpga"></a>
 ## Programming the FPGA
@@ -101,6 +101,7 @@ XML generated for all available configurations is provided in the "XML" folder.
 ### Boot mode 0
 
 Boot mode 0 will put all of the MSS cores into WFI (Wait For Interrupt) mode on power on, the cores will not boot until debugged. SoftConsole v6.5 or later can be used to set the PolarFire SoC boot mode to 0:
+
 1. Connect the board to the PC using the embedded FlashPro6 or an external FlashPro and power on the board
 2. In SoftConsole select the "External Tool" drop down menu
 3. Select the "PolarFire SoC idle boot mode 0" configuration and run
@@ -116,6 +117,7 @@ Build the bare metal application using the reference XML provided to configure t
 #### Boot mode 1: SoftConsole
 
 To set the PolarFire SoC boot mode to 1 and program an eNVM client in SoftConsole:
+
 1. Select the project folder of the application to be used as an eNVM client in the project explorer
 2. Connect the board to the PC using the embedded FlashPro6 or an external FlashPro and power on the board
 3. In SoftConsole select the "External Tool" drop down menu
@@ -125,6 +127,7 @@ To set the PolarFire SoC boot mode to 1 and program an eNVM client in SoftConsol
 #### Boot mode 1: Libero SoC
 
 To set the PolarFire SoC boot mode to 1 and program and eNVM client in Libero:
+
 1. Run the Libero SoC design flow so that "Generate FPGA Array Data" has completed and open the "Configure Design Initialization Data and Memories" tool
 2. Select the "eNVM" tab
 3. Select the "Add ..." option and select "Add Boot Mode 1" client

@@ -129,7 +129,7 @@ HV_COUNTER HV_COUNTER_0(
         // Inputs
         .resetn_i      ( RESETN_I ),
         .sys_clk_i     ( SYS_CLK_I ),
-        .DATA_ENABLE_I ( DATA_ENABLE_I ),
+        .DATA_ENABLE_I ( DATA_VALID_I ),
         .FRAME_END_I   ( FRAME_END_I ),
         // Outputs
         .LINE_END_O    ( HV_COUNTER_0_LINE_END_O ),

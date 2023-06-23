@@ -348,7 +348,8 @@ s_frame_valid_re <= frame_valid_i AND (NOT s_frame_valid_dly1);
       text_coordinates_o <= x"00100010";
       disp_digits_o      <= x"000";
       h264_ddrlsb_addr_o <= x"AE000000";
-      h264_en_o      <= '0';
+      osd_en_o           <= '1';
+      h264_en_o          <= '0';
     elsif (pclk_i'event and pclk_i = '1') then
       if ((psel_i = '1') and (pwrite_i = '1') and (penable_i = '1')) then
         case paddr_i(11 downto 0) is

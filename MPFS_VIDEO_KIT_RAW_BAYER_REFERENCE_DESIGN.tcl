@@ -55,7 +55,7 @@ set install_loc [defvar_get -name ACTEL_SW_DIR]
 set mss_config_loc "$install_loc/bin64/pfsoc_mss"
 set src_path ./script_support
 set constraint_path ./script_support/constraints/RAW_BAYER
-set project_name "VKPFSOC_RAW_BAYER"
+set project_name "VKPFSoC_RAW_BAYER"
 set project_dir "./$project_name"
 
 file delete -force $project_dir

@@ -124,7 +124,7 @@ sd_instantiate_component -sd_name ${sd_name} -component_name {FIC_CONVERTER} -in
 
 
 # Add MSS instance
-sd_instantiate_component -sd_name ${sd_name} -component_name {MSS_VIDEO_KIT} -instance_name {MSS}
+sd_instantiate_component -sd_name ${sd_name} -component_name {MSS_VIDEO_KIT_H264} -instance_name {MSS}
 sd_create_pin_slices -sd_name ${sd_name} -pin_name {MSS:MSS_INT_F2M} -pin_slices {[0:0]}
 sd_create_pin_slices -sd_name ${sd_name} -pin_name {MSS:MSS_INT_F2M} -pin_slices {[63:1]}
 sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {MSS:MSS_INT_F2M[63:1]} -value {GND}

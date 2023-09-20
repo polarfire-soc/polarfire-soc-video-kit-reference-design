@@ -1,0 +1,28 @@
+# Microsemi Physical design constraints file
+
+# Version: 2022.1 2022.1.0.10
+
+# Design Name: OpenVX 
+
+# Input Netlist Format: EDIF 
+
+# Family: PolarFireSoC , Die: MPFS250T_ES , Package: FCG1152 , Speed grade: -1 
+
+# Date generated: Mon Jul  4 11:10:43 2022 
+
+
+#
+# Local clock constraints
+#
+
+
+#
+# Region constraints
+#
+
+
+#
+# Core cell constraints
+#
+
+#set_location -inst_name CLOCKS_AND_RESETS_inst_0/PF_XCVR_REF_CLK_C0_0/PF_XCVR_REF_CLK_C01_0/I_IO -fixed true -x 2467 -y 371

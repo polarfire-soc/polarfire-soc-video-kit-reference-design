@@ -313,7 +313,7 @@ if {[info exists PROGRAM]} {
     run_tool -name {PROGRAMDEVICE}
 }
 
-if {[info exists EXPORT]} {
+if {[info exists EXPORT_FPE]} {
     run_tool -name {GENERATEPROGRAMMINGDATA}     
     run_tool -name {CONSTRAINT_MANAGEMENT}     
     configure_envm -cfg_file "${src_path}/MSS_VIDEO_KIT/RAW_BAYER/ENVM.cfg"

@@ -65,6 +65,7 @@ Below arguments are supported to modify or configure aspects of the design flow 
 | PROGRAM                   | Runs the full design flow after generating a design and programs a connected device. <br>Note: the device must be connected when the "Run PROGRAM Action" stage of the design flow is reached and only one device should be connected |
 | EXPORT_FPE                | Runs the full design flow after generating a design and exports a FlashPro Express file to the local directory                              |
 | EXPORT_FPE:PATH           | Runs the full design flow after generating a design and exports a FlashPro Express file to a specified path e.g EXPORT_FPE:/home/user/jobs/ |
+| RAW_BAYER                 | This argument can be used to generates new bayer pipeline <br> Imx334 camera (SRGGB10 format /dev/v4l-subdev0) --> MIPI CSI2 IP (serial data to parallel data /dev/v4l-subdev1) --> Video DMA IP (/dev/video0)|
 
 <a name="programming-the-fpga"></a>
 ## Programming the FPGA

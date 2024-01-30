@@ -30,9 +30,12 @@ if { $::argc > 0 } {
 # ###################################################################################
 
 if {[info exists RAW_BAYER]} {
-    puts "RAW_BAYER design has been selected"
-    source ./MPFS_VIDEO_KIT_RAW_BAYER_REFERENCE_DESIGN.tcl
-} else {
-    puts "H264 design has been selected"
+    puts "Raw Bayer has been selected"
+    source ./MPFS_VIDEO_KIT_RAW_BAYER_REFERENCE_DESIGN.tcl    
+} elseif {[info exists H264_MM]} {
+    puts "H264 modular design is selected"
+    source ./MPFS_VIDEO_KIT_H264_MM_REFERENCE_DESIGN.tcl
+} else  {
+    puts "H264 legacy design is selected"
     source ./MPFS_VIDEO_KIT_H264_REFERENCE_DESIGN.tcl
-} 
+}

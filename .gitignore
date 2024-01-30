@@ -1,4 +1,3 @@
 *.job
 *.digest
 *.patch
-script_support/MSS_VIDEO_KIT/*

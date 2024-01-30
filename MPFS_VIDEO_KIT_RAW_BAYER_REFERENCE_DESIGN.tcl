@@ -12,7 +12,7 @@
 ##################################################################################
 ##################################################################################
 
-if {[string compare [string range [get_libero_version] 0 end-4] "2023.2"]==0} {
+if {[string compare [string range [get_libero_version] 0 5] "2023.2"]==0} {
 	puts "Libero v2023.2 detected."
 } else {
 	error "Incorrect Libero version. Please use Libero v2023.2  to run these scripts."
@@ -53,13 +53,15 @@ if { $::argc > 0 } {
 
 set install_loc [defvar_get -name ACTEL_SW_DIR]
 set mss_config_loc "$install_loc/bin64/pfsoc_mss"
-set src_path ./script_support
+set local_dir [pwd]
+set src_path ./script_support/
 set constraint_path ./script_support/constraints/RAW_BAYER
 set project_name "VKPFSOC_RAW_BAYER"
 set project_dir "./$project_name"
 
-file delete -force $project_dir
 source ./script_support/additional_configurations/functions_RAW_BAYER.tcl
+source ./cpz/cpz.tcl
+
 ###################################################################################
 # // Create Libero project
 ###################################################################################
@@ -96,35 +98,29 @@ new_project \
 
 
 # #
-# # // Copy the MSS files inside the Libero design folder 
+# #// Download required cores
 # #
 
-# if { [lindex $tcl_platform(os) 0]  == "Windows" } {
-#      file copy -force "$src_path\MSS_VIDEO_KIT" "$project_dir"
-# } else {
-#     exec cp -rf "$src_path/MSS_VIDEO_KIT" "$project_dir"
-# }
-
-
-#
-#// Download required cores
-#
-download_core -vlnv {Microchip:SolutionCore:mipicsi2rxdecoderPF:4.8.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:DirectCore:COREAXI4INTERCONNECT:2.8.103} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:DirectCore:CORERESET_PF:2.3.100} -location {www.microchip-ip.com/repositories/DirectCore}
-download_core -vlnv {Microchip:SolutionCore:DDR_AXI4_ARBITER_PF:2.2.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microsemi:SgCore:PFSOC_INIT_MONITOR:1.0.307} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_CCC:2.2.220} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_CLK_DIV:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SystemBuilder:PF_IOD_GENERIC_RX:2.1.110} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_OSC:1.0.102} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_XCVR_REF_CLK:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
+# download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
+# download_core -vlnv {Microchip:SolutionCore:mipicsi2rxdecoderPF:4.8.0} -location {www.microchip-ip.com/repositories/DirectCore}
+
+# Copy source files
+file mkdir $project_dir/MSS_VIDEO_KIT/
+file copy $src_path/MSS_VIDEO_KIT/RAW_BAYER $project_dir/MSS_VIDEO_KIT/
 
 #
 # // Generate base design
 #
-exec $mss_config_loc -GENERATE -CONFIGURATION_FILE:$src_path/MSS_VIDEO_KIT/RAW_BAYER/MSS_VIDEO_KIT_RAW_BAYER.cfg -OUTPUT_DIR:${src_path}/MSS_VIDEO_KIT/RAW_BAYER/
-import_mss_component -file "$src_path/MSS_VIDEO_KIT/RAW_BAYER/MSS_VIDEO_KIT_RAW_BAYER.cxz"
+exec $mss_config_loc -GENERATE -CONFIGURATION_FILE:$project_dir/MSS_VIDEO_KIT/RAW_BAYER/MSS_VIDEO_KIT_RAW_BAYER.cfg -OUTPUT_DIR:${project_dir}/MSS_VIDEO_KIT/RAW_BAYER/
+import_mss_component -file "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/MSS_VIDEO_KIT_RAW_BAYER.cxz"
 
 #This Tcl file sources other Tcl files to build the design(on which recursive export is run) in a bottom-up fashion
 
@@ -132,44 +128,28 @@ import_mss_component -file "$src_path/MSS_VIDEO_KIT/RAW_BAYER/MSS_VIDEO_KIT_RAW_
 source ${src_path}/hdl_source_RAW_BAYER.tcl
 build_design_hierarchy
 
-#Sourcing the Tcl files in which HDL+ core definitions are created for HDL modules
-source ${src_path}/components/RAW_BAYER/axi4lite_adapter_mipi.tcl 
-source ${src_path}/components/RAW_BAYER/axi4lite_adapter_dma.tcl 
-build_design_hierarchy
-
-#Sourcing the Tcl files for creating individual ${src_path}/components under the top level
-source ${src_path}/components/RAW_BAYER/CORERESET_PF_C0.tcl 
-source ${src_path}/components/RAW_BAYER/CORERESET_PF_C3.tcl 
-source ${src_path}/components/RAW_BAYER/CORERESET_PF_C6.tcl 
-source ${src_path}/components/RAW_BAYER/INIT_MONITOR.tcl 
-source ${src_path}/components/RAW_BAYER/PF_CCC_C0.tcl 
-source ${src_path}/components/RAW_BAYER/PF_CCC_C1.tcl 
-source ${src_path}/components/RAW_BAYER/PF_CLK_DIV_C0.tcl 
-source ${src_path}/components/RAW_BAYER/PF_OSC_C0.tcl 
-source ${src_path}/components/RAW_BAYER/PF_XCVR_REF_CLK_C0.tcl 
-source ${src_path}/components/RAW_BAYER/CLOCKS_AND_RESETS.tcl 
-source ${src_path}/components/RAW_BAYER/COREAXI4INTERCONNECT_C0.tcl 
-source ${src_path}/components/RAW_BAYER/COREAXI4INTERCONNECT_C1.tcl 
-source ${src_path}/components/RAW_BAYER/FIC_CONVERTER.tcl 
-source ${src_path}/components/RAW_BAYER/DDR_AXI4_ARBITER_PF_C0.tcl 
-source ${src_path}/components/RAW_BAYER/CORERESET_PF_C1.tcl 
-source ${src_path}/components/RAW_BAYER/PF_IOD_GENERIC_RX_C0.tcl 
-source ${src_path}/components/RAW_BAYER/CAM_IOD_TIP_TOP.tcl 
-source ${src_path}/components/RAW_BAYER/CORERESET_PF_C2.tcl 
-source ${src_path}/components/RAW_BAYER/PF_CCC_C2.tcl 
-source ${src_path}/components/RAW_BAYER/axi4lite_regmap_mipi.tcl 
-source ${src_path}/components/RAW_BAYER/interrupt_mipi.tcl 
+#Sourcing the Tclfiles for creating individual ${src_path}/components under the top level
+source ${src_path}/components/RAW_BAYER/CORERESET_PF_C0.tcl
+source ${src_path}/components/RAW_BAYER/INIT_MONITOR.tcl
+source ${src_path}/components/RAW_BAYER/PF_CCC_C0.tcl
+source ${src_path}/components/RAW_BAYER/PF_CLK_DIV_C0.tcl
+source ${src_path}/components/RAW_BAYER/PF_OSC_C0.tcl
+source ${src_path}/components/RAW_BAYER/PF_XCVR_REF_CLK_C0.tcl
+source ${src_path}/components/RAW_BAYER/CLOCKS_AND_RESETS.tcl
+source ${src_path}/components/RAW_BAYER/COREAXI4INTERCONNECT_C0.tcl
+source ${src_path}/components/RAW_BAYER/FIC_CONVERTER.tcl
+source ${src_path}/components/RAW_BAYER/CORERESET_PF_C1.tcl
+source ${src_path}/components/RAW_BAYER/CORERXIODBITALIGN_C1.tcl
+source ${src_path}/components/RAW_BAYER/PF_IOD_GENERIC_RX_C0.tcl
+source ${src_path}/components/RAW_BAYER/CAM_IOD_TIP_TOP.tcl
+source ${src_path}/components/RAW_BAYER/CORERESET_PF_C2.tcl
+source ${src_path}/components/RAW_BAYER/CORERESET_PF_C4.tcl
+source ${src_path}/components/RAW_BAYER/PF_CCC_C2.tcl
 source ${src_path}/components/RAW_BAYER/mipicsi2rxdecoderPF_C0.tcl
-source ${src_path}/components/RAW_BAYER/MIPI.tcl 
-source ${src_path}/components/RAW_BAYER/IMX334_IF_TOP.tcl 
-source ${src_path}/components/RAW_BAYER/axi4lite_regmap_dma.tcl 
-source ${src_path}/components/RAW_BAYER/debug_logic_dma.tcl 
-source ${src_path}/components/RAW_BAYER/dma_with_addr_fifo.tcl 
-source ${src_path}/components/RAW_BAYER/interrupt_dma.tcl 
-source ${src_path}/components/RAW_BAYER/ip_reset_circuit_dma.tcl 
-source ${src_path}/components/RAW_BAYER/DMA.tcl 
-source ${src_path}/components/RAW_BAYER/Video_Pipeline.tcl 
-source ${src_path}/components/RAW_BAYER/RAW_BAYER.tcl 
+source ${src_path}/components/RAW_BAYER/IMX334_IF_TOP.tcl
+source ${src_path}/components/RAW_BAYER/VDMA_C0.tcl
+source ${src_path}/components/RAW_BAYER/Video_Pipeline.tcl
+source ${src_path}/components/RAW_BAYER/VKPFSOC_RAW_BAYER.tcl
 build_design_hierarchy
 set_root -module ${project_name}::work
 
@@ -177,7 +157,6 @@ set_root -module ${project_name}::work
 #
 # // Import I/O constraints
 #
-
 import_files \
 	-convert_EDN_to_HDL 0 \
 	-io_pdc "${constraint_path}/io/user.pdc" \
@@ -187,47 +166,9 @@ set_as_target -type {io_pdc} -file "${constraint_path}/io/user.pdc"
 #
 # // Import floor planning constraints
 #
-
-import_files -convert_EDN_to_HDL 0 -fp_pdc "${constraint_path}/fp/user.pdc"
-
-configure_tool -name {PLACEROUTE} \
--params {DELAY_ANALYSIS:MAX} \
--params {EFFORT_LEVEL:false} \
--params {GB_DEMOTION:true} \
--params {INCRPLACEANDROUTE:false} \
--params {IOREG_COMBINING:false} \
--params {MULTI_PASS_CRITERIA:VIOLATIONS} \
--params {MULTI_PASS_LAYOUT:false} \
--params {NUM_MULTI_PASSES:5} \
--params {PDPR:false} \
--params {RANDOM_SEED:0} \
--params {REPAIR_MIN_DELAY:false} \
--params {REPLICATION:true} \
--params {SLACK_CRITERIA:WORST_SLACK} \
--params {SPECIFIC_CLOCK:} \
--params {START_SEED_INDEX:1} \
--params {STOP_ON_FIRST_PASS:false} \
--params {TDPR:true}
-
-set_as_target -type {io_pdc} -file "${project_dir}/constraint/io/user.pdc"
-
-#
-# // Associate imported constraints with the design flow
-#
-
-organize_tool_files -tool {PLACEROUTE} \
-    -file "${project_dir}/constraint/io/user.pdc" \
-    -file "${project_dir}/constraint/fp/user.pdc" \
-    -module ${project_name}::work \
-    -input_type {constraint}
-
-set_as_target -type {io_pdc} -file "${project_dir}/constraint/io/user.pdc"
-
-#
-# // Derive timing constraints
-#
-
-derive_constraints_sdc 
+import_files \
+    -convert_EDN_to_HDL 0 \
+    -fp_pdc "${constraint_path}/fp/user.pdc"
 
 #
 # // Import timing constraint
@@ -236,8 +177,33 @@ derive_constraints_sdc
 import_files \
 	-convert_EDN_to_HDL 0 \
 	-sdc "${constraint_path}/user.sdc"
-
 set_as_target -type {sdc} -file "${constraint_path}/user.sdc"
+
+#
+# // Derive timing constraints
+#
+derive_constraints_sdc 
+
+
+# #
+# # // Associate imported constraints with the design flow
+# #
+organize_tool_files -tool {SYNTHESIZE} \
+    -file "${project_dir}/constraint/${project_name}_derived_constraints.sdc"\
+    -module ${project_name}::work \
+    -input_type {constraint}
+
+organize_tool_files -tool {PLACEROUTE} \
+    -file "${project_dir}/constraint/io/user.pdc" \
+    -file "${project_dir}/constraint/${project_name}_derived_constraints.sdc"\
+    -file "${project_dir}/constraint/user.sdc" \
+    -file "${project_dir}/constraint/fp/user.pdc" \
+    -module ${project_name}::work \
+    -input_type {constraint}
+
+
+set_as_target -type {io_pdc} -file "${project_dir}/constraint/io/user.pdc"
+save_project
 
 organize_tool_files -tool {VERIFYTIMING} \
     -file "${project_dir}/constraint/user.sdc" \
@@ -246,78 +212,105 @@ organize_tool_files -tool {VERIFYTIMING} \
     -input_type {constraint}
 
 
-configure_tool -name {VERIFYTIMING} \
--params {CONSTRAINTS_COVERAGE:1} \
--params {FORMAT:XML} \
--params {MAX_EXPANDED_PATHS_TIMING:1} \
--params {MAX_EXPANDED_PATHS_VIOLATION:0} \
--params {MAX_PARALLEL_PATHS_TIMING:1} \
--params {MAX_PARALLEL_PATHS_VIOLATION:1} \
--params {MAX_PATHS_INTERACTIVE_REPORT:1000} \
--params {MAX_PATHS_TIMING:5} \
--params {MAX_PATHS_VIOLATION:20} \
--params {MAX_TIMING_FAST_HV_LT:1} \
--params {MAX_TIMING_MULTI_CORNER:1} \
--params {MAX_TIMING_SLOW_LV_HT:1} \
--params {MAX_TIMING_SLOW_LV_LT:1} \
--params {MAX_TIMING_VIOLATIONS_FAST_HV_LT:1} \
--params {MAX_TIMING_VIOLATIONS_MULTI_CORNER:1} \
--params {MAX_TIMING_VIOLATIONS_SLOW_LV_HT:1} \
--params {MAX_TIMING_VIOLATIONS_SLOW_LV_LT:1} \
--params {MIN_TIMING_FAST_HV_LT:1} \
--params {MIN_TIMING_MULTI_CORNER:1} \
--params {MIN_TIMING_SLOW_LV_HT:1} \
--params {MIN_TIMING_SLOW_LV_LT:1} \
--params {MIN_TIMING_VIOLATIONS_FAST_HV_LT:1} \
--params {MIN_TIMING_VIOLATIONS_MULTI_CORNER:1} \
--params {MIN_TIMING_VIOLATIONS_SLOW_LV_HT:1} \
--params {MIN_TIMING_VIOLATIONS_SLOW_LV_LT:1} \
--params {SLACK_THRESHOLD_VIOLATION:0.0} \
--params {SMART_INTERACTIVE:1}
+#
+# //Configure the tools
+#
+configure_tool \
+    -name {PLACEROUTE} \
+    -params {DELAY_ANALYSIS:MAX} \
+    -params {EFFORT_LEVEL:false} \
+    -params {GB_DEMOTION:true} \
+    -params {INCRPLACEANDROUTE:false} \
+    -params {IOREG_COMBINING:false} \
+    -params {MULTI_PASS_CRITERIA:VIOLATIONS} \
+    -params {MULTI_PASS_LAYOUT:false} \
+    -params {NUM_MULTI_PASSES:5} \
+    -params {PDPR:false} \
+    -params {RANDOM_SEED:0} \
+    -params {REPAIR_MIN_DELAY:false} \
+    -params {REPLICATION:true} \
+    -params {SLACK_CRITERIA:WORST_SLACK} \
+    -params {SPECIFIC_CLOCK:} \
+    -params {START_SEED_INDEX:1} \
+    -params {STOP_ON_FIRST_PASS:false} \
+    -params {TDPR:true}
+
+
+configure_tool \
+    -name {VERIFYTIMING} \
+    -params {CONSTRAINTS_COVERAGE:1} \
+    -params {FORMAT:XML} \
+    -params {MAX_EXPANDED_PATHS_TIMING:1} \
+    -params {MAX_EXPANDED_PATHS_VIOLATION:0} \
+    -params {MAX_PARALLEL_PATHS_TIMING:1} \
+    -params {MAX_PARALLEL_PATHS_VIOLATION:1} \
+    -params {MAX_PATHS_INTERACTIVE_REPORT:1000} \
+    -params {MAX_PATHS_TIMING:5} \
+    -params {MAX_PATHS_VIOLATION:20} \
+    -params {MAX_TIMING_FAST_HV_LT:1} \
+    -params {MAX_TIMING_MULTI_CORNER:1} \
+    -params {MAX_TIMING_SLOW_LV_HT:1} \
+    -params {MAX_TIMING_SLOW_LV_LT:1} \
+    -params {MAX_TIMING_VIOLATIONS_FAST_HV_LT:1} \
+    -params {MAX_TIMING_VIOLATIONS_MULTI_CORNER:1} \
+    -params {MAX_TIMING_VIOLATIONS_SLOW_LV_HT:1} \
+    -params {MAX_TIMING_VIOLATIONS_SLOW_LV_LT:1} \
+    -params {MIN_TIMING_FAST_HV_LT:1} \
+    -params {MIN_TIMING_MULTI_CORNER:1} \
+    -params {MIN_TIMING_SLOW_LV_HT:1} \
+    -params {MIN_TIMING_SLOW_LV_LT:1} \
+    -params {MIN_TIMING_VIOLATIONS_FAST_HV_LT:1} \
+    -params {MIN_TIMING_VIOLATIONS_MULTI_CORNER:1} \
+    -params {MIN_TIMING_VIOLATIONS_SLOW_LV_HT:1} \
+    -params {MIN_TIMING_VIOLATIONS_SLOW_LV_LT:1} \
+    -params {SLACK_THRESHOLD_VIOLATION:0.0} \
+    -params {SMART_INTERACTIVE:1}
 
 
 #
-# // Associate imported constraints with the design flow
+# // Run the design flow and add eNVM clients
 #
-
-organize_tool_files -tool {PLACEROUTE}\
-    -file "${project_dir}/constraint/io/user.pdc"\
-    -file "${project_dir}/constraint/fp/user.pdc"\
-    -file "${project_dir}/constraint/user.sdc"\
-    -file "${project_dir}/constraint/${project_name}_derived_constraints.sdc"\
-    -module ${project_name}::work\
-    -input_type {constraint}
-
-set_as_target -type {sdc} -file "${project_dir}/constraint/user.sdc"
-
-#
-# // Run the design flow and add eNVM clients 
-#
-create_eNVM_config "${src_path}/MSS_VIDEO_KIT/RAW_BAYER/ENVM.cfg" "../${src_path}/MSS_VIDEO_KIT/RAW_BAYER/hss-envm-wrapper-bm1-p0.hex"
-
 
 if {[info exists SYNTHESIZE]} {
     run_tool -name {SYNTHESIZE}
-} elseif {[info exists PLACEROUTE]} {
+}
+if {[info exists PLACEROUTE]} {
     run_tool -name {PLACEROUTE}
-} elseif {[info exists VERIFY_TIMING]} {
+}
+if {[info exists VERIFY_TIMING]} {
     run_tool -name {VERIFYTIMING}
-} elseif {[info exists GENERATE_BITSTREAM]} {
-    run_tool -name {GENERATEPROGRAMMINGDATA} 
+}
+if {[info exists HSS_UPDATE]} {
+    if !{[file exists "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/hss-envm-wrapper-bm1-p0.hex"]} {
+	if {[catch    {exec wget https://github.com/polarfire-soc/hart-software-services/releases/latest/download/hss-envm-wrapper-bm1-p0.hex -P $project_dir/MSS_VIDEO_KIT/RAW_BAYER} issue]} {
+	}
+    }
+    create_eNVM_config "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/ENVM.cfg" "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/hss-envm-wrapper-bm1-p0.hex"
+    run_tool -name {GENERATEPROGRAMMINGDATA}
+    configure_envm -cfg_file "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/ENVM.cfg"
 }
 
-if {[info exists PROGRAM]} {
-    run_tool -name {GENERATEPROGRAMMINGDATA}     
-    run_tool -name {CONSTRAINT_MANAGEMENT} 
-    configure_envm -cfg_file "${src_path}/MSS_VIDEO_KIT/RAW_BAYER/ENVM.cfg"
+if {[info exists GENERATE_PROGRAMMING_DATA]} {
+    run_tool -name {GENERATEPROGRAMMINGDATA}
+}  elseif {[info exists PROGRAM]} {
+    if !{[info exists HSS_UPDATE]} {
+	run_tool -name {GENERATEPROGRAMMINGDATA}
+    }
     run_tool -name {PROGRAMDEVICE}
-}
-
-if {[info exists EXPORT_FPE]} {
-    run_tool -name {GENERATEPROGRAMMINGDATA}     
-    run_tool -name {CONSTRAINT_MANAGEMENT}     
-    configure_envm -cfg_file "${src_path}/MSS_VIDEO_KIT/RAW_BAYER/ENVM.cfg"
-    export_fpe_job $project_name $project_dir
+} elseif {[info exists EXPORT_FPE]} {
+    if {[info exists HSS_UPDATE]} {
+        if {$EXPORT_FPE == 1} {
+            export_fpe_job $project_name $local_dir "ENVM FABRIC_SNVM"
+        } else {
+            export_fpe_job $project_name $EXPORT_FPE "ENVM FABRIC_SNVM"
+        }
+    } else {
+        if {$EXPORT_FPE == 1} {
+            export_fpe_job $project_name $local_dir "FABRIC_SNVM"
+        } else {
+            export_fpe_job $project_name $EXPORT_FPE "FABRIC_SNVM"
+        }
+    }
 }
 
 save_project 

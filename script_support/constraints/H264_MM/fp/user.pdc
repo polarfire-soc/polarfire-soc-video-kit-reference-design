@@ -1,0 +1,22 @@
+# Microsemi Physical design constraints file
+
+# Design Name: VKPFSOC_H264 
+
+# Family: PolarFireSoC , Die: MPFS250TS , Package: FCG1152 , Speed grade: -1 
+
+
+#
+# Local clock constraints
+#
+
+
+#
+# Region constraints
+#
+
+
+#
+# Core cell constraints
+#
+
+set_location -inst_name CLOCKS_AND_RESETS_inst_0/PF_XCVR_REF_CLK_C0_0/PF_XCVR_REF_CLK_C0_0/I_IO -fixed true -x 2467 -y 371

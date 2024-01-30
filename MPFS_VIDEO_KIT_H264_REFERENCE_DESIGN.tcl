@@ -1,9 +1,9 @@
 #
 # // PFSoC VIDEO Kit H264 I frame Encoder demo Libero design
 #
-# // Check Libero version and path lenth to verify project can be created
+# // Check Libero version and path length to verify project can be created
 #
-if {[string compare [string range [get_libero_version] 0 end-4] "2023.2"]==0} {
+if {[string compare [string range [get_libero_version] 0 5] "2023.2"]==0} {
 	puts "Libero v2023.2 detected."
 } else {
 	error "Incorrect Libero version. Please use Libero v2023.2 to run these scripts."

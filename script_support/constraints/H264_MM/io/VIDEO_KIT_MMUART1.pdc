@@ -1,0 +1,58 @@
+# Microsemi I/O Physical Design Constraints file
+
+# User I/O Constraints file 
+
+# Family: PolarFireSoC , Die: MPFS250TS , Package: FCG1152
+# 
+# User Locked I/O Bank Settings
+# 
+
+
+# 
+# Unlocked I/O Bank Settings
+# The I/O Bank Settings can be locked by directly editing this file
+# or by making changes in the I/O Attribute Editor
+# 
+
+set_iobank -bank_name Bank1  \
+    -vcci 3.30               \
+    -fixed false             \
+    -update_iostd true
+
+
+# 
+# User Locked I/O settings
+# 
+
+set_io -port_name MMUART_1_RXD_F2M  \
+    -pin_name D4                    \
+    -fixed true                     \
+    -io_std LVCMOS33                \
+    -DIRECTION INPUT
+
+
+set_io -port_name MMUART_1_TXD_M2F  \
+    -pin_name C4                    \
+    -fixed true                     \
+    -io_std LVCMOS33                \
+    -DIRECTION OUTPUT
+
+
+
+# 
+# Dedicated Peripheral I/O Settings
+# 
+
+
+# 
+# Unlocked I/O settings
+# The I/Os in this section are unplaced or placed but are not locked
+# the other listed attributes have been applied
+# 
+
+
+#
+#Ports using Dedicated Pins
+
+#
+

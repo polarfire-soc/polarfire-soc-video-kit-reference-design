@@ -103,18 +103,18 @@ download_core -vlnv {Actel:DirectCore:COREAXI4INTERCONNECT:2.8.103} -location {w
 download_core -vlnv {Actel:DirectCore:CORERESET_PF:2.3.100} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:DirectCore:CORERXIODBITALIGN:2.2.100} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microsemi:SolutionCore:Gamma_Correction:4.3.0} -location {www.microchip-ip.com/repositories/DirectCore}
-# download_core -vlnv {Microsemi:SolutionCore:Image_Enhancement:4.4.0} -location {www.microchip-ip.com/repositories/DirectCore}
-# download_core -vlnv {Microsemi:SolutionCore:IMAGE_SCALER:4.1.0} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Microchip:SolutionCore:Image_Enhancement:4.5.0} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Microchip:SolutionCore:IMAGE_SCALER:4.2.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microsemi:SgCore:PFSOC_INIT_MONITOR:1.0.307} -location {www.microchip-ip.com/repositories/SgCore}
-# download_core -vlnv {Microchip:SolutionCore:mipicsi2rxdecoderPF:4.7.0} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Microchip:SolutionCore:mipicsi2rxdecoderPF:5.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:SgCore:PF_CCC:2.2.220} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_CLK_DIV:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SystemBuilder:PF_IOD_GENERIC_RX:2.1.110} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_OSC:1.0.102} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Microsemi:SolutionCore:RGBtoYCbCr:4.4.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:SgCore:PF_XCVR_REF_CLK:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
-# download_core -vlnv {Microchip:SolutionCore:H264_Iframe_Encoder:1.4.0} -location {www.microchip-ip.com/repositories/DirectCore}
-# download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Microchip:SolutionCore:H264_Iframe_Encoder:1.5.0} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
 
 
 # Copy source files

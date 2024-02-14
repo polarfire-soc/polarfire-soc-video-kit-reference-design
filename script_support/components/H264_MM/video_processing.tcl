@@ -196,7 +196,7 @@ sd_mark_pins_unused -sd_name ${sd_name} -pin_names {H264_Iframe_Encoder_C0_0:FRA
 
 # Add Image_Enhancement_C0_0 instance
 sd_instantiate_component -sd_name ${sd_name} -component_name {Image_Enhancement_C0} -instance_name {Image_Enhancement_C0_0}
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {Image_Enhancement_C0_0:RGB_AVG_O}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {Image_Enhancement_C0_0:Y_AVG_O}
 
 
 

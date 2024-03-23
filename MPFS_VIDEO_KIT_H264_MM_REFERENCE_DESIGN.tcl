@@ -59,7 +59,6 @@ set src_path ./script_support
 set constraint_path ./script_support/constraints/H264_MM
 set project_name "VKPFSOC_H264_MM"
 set project_dir "${project_name}"
-
 source ./script_support/additional_configurations/functions_H264_MM.tcl
 
 ###################################################################################
@@ -114,7 +113,7 @@ download_core -vlnv {Actel:SgCore:PF_OSC:1.0.102} -location {www.microchip-ip.co
 download_core -vlnv {Microsemi:SolutionCore:RGBtoYCbCr:4.4.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:SgCore:PF_XCVR_REF_CLK:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Microchip:SolutionCore:H264_Iframe_Encoder:1.5.0} -location {www.microchip-ip.com/repositories/DirectCore}
-download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
+#download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
 
 
 # Copy source files
@@ -135,40 +134,40 @@ source ${src_path}/hdl_source_H264_MM.tcl
 build_design_hierarchy
 
 #Sourcing the Tcl files in which HDL+ core definitions are created for HDL modules
-source ${src_path}/components/H264_MM/axi4lite_adapter_osd.tcl
+source ${src_path}/components/H264_MM/CR_OSD.tcl
 build_design_hierarchy
 
 #Sourcing the Tclfiles for creating individual ${src_path}/components/H264_MM under the top level
-source ${src_path}/components/H264_MM/CORERESET.tcl
-source ${src_path}/components/H264_MM/INIT_MONITOR.tcl
-source ${src_path}/components/H264_MM/PF_CCC_C0.tcl
-source ${src_path}/components/H264_MM/PF_CLK_DIV_C0.tcl
-source ${src_path}/components/H264_MM/PF_OSC_C0.tcl
-source ${src_path}/components/H264_MM/PF_XCVR_REF_CLK_C0.tcl
-source ${src_path}/components/H264_MM/CLOCKS_AND_RESETS.tcl
-source ${src_path}/components/H264_MM/COREAXI4INTERCONNECT_C0.tcl
-source ${src_path}/components/H264_MM/FIC_CONVERTER.tcl
-source ${src_path}/components/H264_MM/CORERESET_PF_C1.tcl
-source ${src_path}/components/H264_MM/CORERXIODBITALIGN_C1.tcl
-source ${src_path}/components/H264_MM/PF_IOD_GENERIC_RX_C0.tcl
-source ${src_path}/components/H264_MM/CAM_IOD_TIP_TOP.tcl
-source ${src_path}/components/H264_MM/CORERESET_PF_C2.tcl
-source ${src_path}/components/H264_MM/CORERESET_PF_C5.tcl
-source ${src_path}/components/H264_MM/PF_CCC_C2.tcl
-source ${src_path}/components/H264_MM/mipicsi2rxdecoderPF_C0.tcl
-source ${src_path}/components/H264_MM/IMX334_IF_TOP.tcl
-source ${src_path}/components/H264_MM/VDMA_C1.tcl
-source ${src_path}/components/H264_MM/Bayer_Interpolation_C0.tcl
-source ${src_path}/components/H264_MM/Gamma_Correction_C0.tcl
-source ${src_path}/components/H264_MM/H264_Iframe_Encoder_C0.tcl
-source ${src_path}/components/H264_MM/IMAGE_SCALER_C0.tcl
-source ${src_path}/components/H264_MM/Image_Enhancement_C0.tcl
+
+
+source ${src_path}/components/H264_MM/CORERESET.tcl 
+source ${src_path}/components/H264_MM/INIT_MONITOR.tcl 
+source ${src_path}/components/H264_MM/PF_CCC_C0.tcl 
+source ${src_path}/components/H264_MM/PF_CLK_DIV_C0.tcl 
+source ${src_path}/components/H264_MM/PF_OSC_C0.tcl 
+source ${src_path}/components/H264_MM/PF_XCVR_REF_CLK_C0.tcl 
+source ${src_path}/components/H264_MM/CLOCKS_AND_RESETS.tcl 
+source ${src_path}/components/H264_MM/COREAXI4INTERCONNECT_C0.tcl 
+source ${src_path}/components/H264_MM/FIC_CONVERTER.tcl 
+source ${src_path}/components/H264_MM/CORERESET_PF_C1.tcl 
+source ${src_path}/components/H264_MM/CORERXIODBITALIGN_C1.tcl 
+source ${src_path}/components/H264_MM/PF_IOD_GENERIC_RX_C0.tcl 
+source ${src_path}/components/H264_MM/CAM_IOD_TIP_TOP.tcl 
+source ${src_path}/components/H264_MM/CORERESET_PF_C2.tcl 
+source ${src_path}/components/H264_MM/CORERESET_PF_C5.tcl 
+source ${src_path}/components/H264_MM/PF_CCC_C2.tcl 
+source ${src_path}/components/H264_MM/mipicsi2rxdecoderPF_C0.tcl 
+source ${src_path}/components/H264_MM/IMX334_IF_TOP.tcl 
+source ${src_path}/components/H264_MM/Bayer_Interpolation_C0.tcl 
+source ${src_path}/components/H264_MM/Gamma_Correction_C0.tcl 
+source ${src_path}/components/H264_MM/H264_Iframe_Encoder_C0.tcl 
+source ${src_path}/components/H264_MM/IMAGE_SCALER_C0.tcl 
+source ${src_path}/components/H264_MM/Image_Enhancement_C0.tcl 
 source ${src_path}/components/H264_MM/RGBtoYCbCr_C0.tcl
-source ${src_path}/components/H264_MM/axi4lite_regmap_osd.tcl
-source ${src_path}/components/H264_MM/osd_top.tcl
-source ${src_path}/components/H264_MM/video_processing.tcl
-source ${src_path}/components/H264_MM/Video_Pipeline.tcl
-source ${src_path}/components/H264_MM/VKPFSOC_H264_MM.tcl
+source ${src_path}/components/H264_MM/VDMA_C0.tcl
+source ${src_path}/components/H264_MM/video_processing.tcl 
+source ${src_path}/components/H264_MM/Video_Pipeline.tcl 
+source ${src_path}/components/H264_MM/VKPFSOC_H264_MM.tcl 
 build_design_hierarchy
 set_root -module ${project_name}::work
 
@@ -236,12 +235,12 @@ organize_tool_files -tool {VERIFYTIMING} \
 configure_tool \
     -name {PLACEROUTE} \
     -params {DELAY_ANALYSIS:MAX} \
-    -params {EFFORT_LEVEL:false} \
-    -params {GB_DEMOTION:true} \
+    -params {EFFORT_LEVEL:true} \
+    -params {GB_DEMOTION:false} \
     -params {INCRPLACEANDROUTE:false} \
-    -params {IOREG_COMBINING:false} \
+    -params {IOREG_COMBINING:true} \
     -params {MULTI_PASS_CRITERIA:VIOLATIONS} \
-    -params {MULTI_PASS_LAYOUT:false} \
+    -params {MULTI_PASS_LAYOUT:true} \
     -params {NUM_MULTI_PASSES:5} \
     -params {PDPR:false} \
     -params {RANDOM_SEED:0} \
@@ -250,7 +249,7 @@ configure_tool \
     -params {SLACK_CRITERIA:WORST_SLACK} \
     -params {SPECIFIC_CLOCK:} \
     -params {START_SEED_INDEX:1} \
-    -params {STOP_ON_FIRST_PASS:false} \
+    -params {STOP_ON_FIRST_PASS:true} \
     -params {TDPR:true}
 
 
@@ -296,6 +295,7 @@ if {[info exists PLACEROUTE]} {
 if {[info exists VERIFY_TIMING]} {
     run_tool -name {VERIFYTIMING}
 }
+
 if {[info exists HSS_UPDATE]} {
     if !{[file exists "$project_dir/MSS_VIDEO_KIT/H264_MM/hss-envm-wrapper-bm1-p0.hex"]} {
 	if {[catch    {exec wget https://github.com/polarfire-soc/hart-software-services/releases/latest/download/hss-envm-wrapper-bm1-p0.hex -P $project_dir/MSS_VIDEO_KIT/H264_MM} issue]} {
@@ -305,6 +305,7 @@ if {[info exists HSS_UPDATE]} {
     run_tool -name {GENERATEPROGRAMMINGDATA}
     configure_envm -cfg_file "$project_dir/MSS_VIDEO_KIT/H264_MM/ENVM.cfg"
 }
+
 if {[info exists GENERATE_PROGRAMMING_DATA]} {
     run_tool -name {GENERATEPROGRAMMINGDATA}
 }  elseif {[info exists PROGRAM]} {
@@ -315,15 +316,15 @@ if {[info exists GENERATE_PROGRAMMING_DATA]} {
 } elseif {[info exists EXPORT_FPE]} {
     if {[info exists HSS_UPDATE]} {
         if {$EXPORT_FPE == 1} {
-            export_fpe_job $project_name $local_dir "ENVM FABRIC_SNVM"
+            export_fpe_job $project_name $local_dir "ENVM FABRIC SNVM"
         } else {
-            export_fpe_job $project_name $EXPORT_FPE "ENVM FABRIC_SNVM"
+            export_fpe_job $project_name $EXPORT_FPE "ENVM FABRIC SNVM"
         }
     } else {
         if {$EXPORT_FPE == 1} {
-            export_fpe_job $project_name $local_dir "FABRIC_SNVM"
+            export_fpe_job $project_name $local_dir "FABRIC SNVM"
         } else {
-            export_fpe_job $project_name $EXPORT_FPE "FABRIC_SNVM"
+            export_fpe_job $project_name $EXPORT_FPE "FABRIC SNVM"
         }
     }
 }

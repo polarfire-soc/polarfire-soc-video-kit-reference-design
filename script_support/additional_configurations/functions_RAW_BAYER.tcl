@@ -34,7 +34,7 @@ proc create_eNVM_config {config client} {
     
     puts $envm_config "set_plain_text_client \\"
     puts $envm_config "-client_name {BOOT_MODE_1_ENVM_CLIENT} \\"
-    puts $envm_config "-number_of_bytes 98576 \\"
+    puts $envm_config "-number_of_bytes 100944 \\"
     puts $envm_config "-content_type {MEMORY_FILE} \\"
     puts $envm_config "-content_file_format {Intel-Hex} \\"
     puts $envm_config "-content_file {$client} \\"
@@ -54,7 +54,7 @@ proc create_eNVM_config {config client} {
 proc export_fpe_job {name directory components} {
     export_prog_job \
         -job_file_name $name \
-        -export_dir $directory/designer/$name/export \
+        -export_dir $directory \
         -bitstream_file_type {TRUSTED_FACILITY} \
         -bitstream_file_components $components \
         -zeroization_likenew_action 0 \

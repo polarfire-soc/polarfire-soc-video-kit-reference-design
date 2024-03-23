@@ -1,4 +1,4 @@
-# Creating SmartDesign "VKPFSOC_TOP"
+# Creating SmartDesign "VKPFSOC_H264_MM"
 set sd_name {VKPFSOC_H264_MM}
 create_smartdesign -sd_name ${sd_name}
 
@@ -251,5 +251,5 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"MSS:FIC_1_AXI4_TARGET" "Video_P
 auto_promote_pad_pins -promote_all 1
 # Save the SmartDesign 
 save_smartdesign -sd_name ${sd_name}
-# Generate SmartDesign "VKPFSOC_TOP"
+# Generate SmartDesign "VKPFSOC_H264_MM"
 generate_component -component_name ${sd_name}

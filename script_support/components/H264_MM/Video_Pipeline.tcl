@@ -157,6 +157,24 @@ sd_create_bus_port -sd_name ${sd_name} -port_name {mAXI4_SLAVE_wstrb} -port_dire
 
 
 # Create top level Bus interface Ports
+sd_create_bif_port -sd_name ${sd_name} -port_name {AXI4L_MIPI} -port_bif_vlnv {AMBA:AMBA4:AXI4:r0p0_0} -port_bif_role {slave} -port_bif_mapping {\
+"AWADDR:AXI4L_MIPI_awaddr" \
+"AWVALID:AXI4L_MIPI_awvalid" \
+"AWREADY:AXI4L_MIPI_awready" \
+"WDATA:AXI4L_MIPI_wdata" \
+"WVALID:AXI4L_MIPI_wvalid" \
+"WREADY:AXI4L_MIPI_wready" \
+"BRESP:AXI4L_MIPI_bresp" \
+"BVALID:AXI4L_MIPI_bvalid" \
+"BREADY:AXI4L_MIPI_bready" \
+"ARADDR:AXI4L_MIPI_araddr" \
+"ARVALID:AXI4L_MIPI_arvalid" \
+"ARREADY:AXI4L_MIPI_arready" \
+"RDATA:AXI4L_MIPI_rdata" \
+"RRESP:AXI4L_MIPI_rresp" \
+"RVALID:AXI4L_MIPI_rvalid" \
+"RREADY:AXI4L_MIPI_rready" } 
+
 sd_create_bif_port -sd_name ${sd_name} -port_name {AXI4L_H264} -port_bif_vlnv {AMBA:AMBA4:AXI4:r0p0_0} -port_bif_role {slave} -port_bif_mapping {\
 "AWADDR:AXI4L_H264_awaddr" \
 "AWVALID:AXI4L_H264_awvalid" \
@@ -193,24 +211,6 @@ sd_create_bif_port -sd_name ${sd_name} -port_name {AXI4L_OSD} -port_bif_vlnv {AM
 "RVALID:AXI4L_OSD_rvalid" \
 "RREADY:AXI4L_OSD_rready" } 
 
-sd_create_bif_port -sd_name ${sd_name} -port_name {AXI4L_SCALER} -port_bif_vlnv {AMBA:AMBA4:AXI4:r0p0_0} -port_bif_role {slave} -port_bif_mapping {\
-"AWADDR:AXI4L_SCALER_awaddr" \
-"AWVALID:AXI4L_SCALER_awvalid" \
-"AWREADY:AXI4L_SCALER_awready" \
-"WDATA:AXI4L_SCALER_wdata" \
-"WVALID:AXI4L_SCALER_wvalid" \
-"WREADY:AXI4L_SCALER_wready" \
-"BRESP:AXI4L_SCALER_bresp" \
-"BVALID:AXI4L_SCALER_bvalid" \
-"BREADY:AXI4L_SCALER_bready" \
-"ARADDR:AXI4L_SCALER_araddr" \
-"ARVALID:AXI4L_SCALER_arvalid" \
-"ARREADY:AXI4L_SCALER_arready" \
-"RDATA:AXI4L_SCALER_rdata" \
-"RRESP:AXI4L_SCALER_rresp" \
-"RVALID:AXI4L_SCALER_rvalid" \
-"RREADY:AXI4L_SCALER_rready" } 
-
 sd_create_bif_port -sd_name ${sd_name} -port_name {AXI4L_IE} -port_bif_vlnv {AMBA:AMBA4:AXI4:r0p0_0} -port_bif_role {slave} -port_bif_mapping {\
 "AWADDR:AXI4L_IE_awaddr" \
 "AWVALID:AXI4L_IE_awvalid" \
@@ -229,23 +229,23 @@ sd_create_bif_port -sd_name ${sd_name} -port_name {AXI4L_IE} -port_bif_vlnv {AMB
 "RVALID:AXI4L_IE_rvalid" \
 "RREADY:AXI4L_IE_rready" } 
 
-sd_create_bif_port -sd_name ${sd_name} -port_name {AXI4L_MIPI} -port_bif_vlnv {AMBA:AMBA4:AXI4:r0p0_0} -port_bif_role {slave} -port_bif_mapping {\
-"AWADDR:AXI4L_MIPI_awaddr" \
-"AWVALID:AXI4L_MIPI_awvalid" \
-"AWREADY:AXI4L_MIPI_awready" \
-"WDATA:AXI4L_MIPI_wdata" \
-"WVALID:AXI4L_MIPI_wvalid" \
-"WREADY:AXI4L_MIPI_wready" \
-"BRESP:AXI4L_MIPI_bresp" \
-"BVALID:AXI4L_MIPI_bvalid" \
-"BREADY:AXI4L_MIPI_bready" \
-"ARADDR:AXI4L_MIPI_araddr" \
-"ARVALID:AXI4L_MIPI_arvalid" \
-"ARREADY:AXI4L_MIPI_arready" \
-"RDATA:AXI4L_MIPI_rdata" \
-"RRESP:AXI4L_MIPI_rresp" \
-"RVALID:AXI4L_MIPI_rvalid" \
-"RREADY:AXI4L_MIPI_rready" } 
+sd_create_bif_port -sd_name ${sd_name} -port_name {AXI4L_SCALER} -port_bif_vlnv {AMBA:AMBA4:AXI4:r0p0_0} -port_bif_role {slave} -port_bif_mapping {\
+"AWADDR:AXI4L_SCALER_awaddr" \
+"AWVALID:AXI4L_SCALER_awvalid" \
+"AWREADY:AXI4L_SCALER_awready" \
+"WDATA:AXI4L_SCALER_wdata" \
+"WVALID:AXI4L_SCALER_wvalid" \
+"WREADY:AXI4L_SCALER_wready" \
+"BRESP:AXI4L_SCALER_bresp" \
+"BVALID:AXI4L_SCALER_bvalid" \
+"BREADY:AXI4L_SCALER_bready" \
+"ARADDR:AXI4L_SCALER_araddr" \
+"ARVALID:AXI4L_SCALER_arvalid" \
+"ARREADY:AXI4L_SCALER_arready" \
+"RDATA:AXI4L_SCALER_rdata" \
+"RRESP:AXI4L_SCALER_rresp" \
+"RVALID:AXI4L_SCALER_rvalid" \
+"RREADY:AXI4L_SCALER_rready" } 
 
 sd_create_bif_port -sd_name ${sd_name} -port_name {AXI4L_VDMA} -port_bif_vlnv {AMBA:AMBA4:AXI4:r0p0_0} -port_bif_role {slave} -port_bif_mapping {\
 "AWADDR:AXI4L_VDMA_awaddr" \
@@ -308,8 +308,7 @@ sd_instantiate_component -sd_name ${sd_name} -component_name {IMX334_IF_TOP} -in
 
 
 # Add VDMA_0 instance
-sd_instantiate_component -sd_name ${sd_name} -component_name {VDMA_C1} -instance_name {VDMA_0}
-
+sd_instantiate_component -sd_name ${sd_name} -component_name {VDMA_C0} -instance_name {VDMA_C0_0}
 
 
 # Add video_processing_0 instance
@@ -318,27 +317,28 @@ sd_instantiate_component -sd_name ${sd_name} -component_name {video_processing} 
 
 
 # Add scalar net connections
-sd_connect_pins -sd_name ${sd_name} -pin_names {"ACLK_I" "IMX334_IF_TOP_0:ACLK_I" "VDMA_0:ACLK_I" "video_processing_0:ACLK_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"ARESETN_I" "IMX334_IF_TOP_0:ARESETN_I" "VDMA_0:ARESETN_I" "video_processing_0:ARESETN_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"ACLK_I" "IMX334_IF_TOP_0:ACLK_I" "VDMA_C0_0:ACLK_I" "video_processing_0:ACLK_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"ARESETN_I" "IMX334_IF_TOP_0:ARESETN_I" "VDMA_C0_0:ARESETN_I" "video_processing_0:ARESETN_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAM1_RX_CLK_N" "IMX334_IF_TOP_0:CAM1_RX_CLK_N" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAM1_RX_CLK_P" "IMX334_IF_TOP_0:CAM1_RX_CLK_P" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CLK_125MHz_i" "VDMA_0:DDR_CLK_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CLK_125MHz_i" "VDMA_C0_0:DDR_CLK_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:ARST_N" "IMX334_IF_TOP_0:INIT_DONE" "INIT_DONE" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:MIPI_INTERRUPT_O" "MIPI_INTERRUPT_O" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:PARALLEL_CLK" "VDMA_0:VIDEO_CLK_I" "video_processing_0:SYS_CLK_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:PARALLEL_CLK_RESET_N" "VDMA_0:VIDEO_CLK_RSTN_I" "video_processing_0:RESETN_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:TRNG_RST_N" "LPDDR4_RDY_i" "VDMA_0:DDR_CTRL_READY_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:c1_frame_start_o" "VDMA_0:FRAME_START_I" "video_processing_0:FRAME_START_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:PARALLEL_CLK" "VDMA_C0_0:VIDEO_CLK_I" "video_processing_0:SYS_CLK_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:PARALLEL_CLK_RESET_N" "VDMA_C0_0:VIDEO_CLK_RSTN_I" "video_processing_0:RESETN_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:TRNG_RST_N" "LPDDR4_RDY_i" "VDMA_C0_0:DDR_CTRL_READY_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:c1_frame_start_o" "video_processing_0:FRAME_START_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:c1_line_valid_o" "video_processing_0:DATA_VALID_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"INT_DMA_O" "VDMA_0:INT_DMA_O" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"RESETN_125MHz_i" "VDMA_0:DDR_CLK_RSTN_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"VDMA_0:DATA_VALID_I" "video_processing_0:DATA_VALID_O" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"INT_DMA_O" "VDMA_C0_0:INT_DMA_O" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"RESETN_125MHz_i" "VDMA_C0_0:DDR_CLK_RSTN_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"VDMA_C0_0:DATA_VALID_I" "video_processing_0:DATA_VALID_O" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"VDMA_C0_0:FRAME_START_I" "video_processing_0:FRAME_START_O" }
 
 # Add bus net connections
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAM1_RXD" "IMX334_IF_TOP_0:CAM1_RXD" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAM1_RXD_N" "IMX334_IF_TOP_0:CAM1_RXD_N" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"IMX334_IF_TOP_0:c1_data_out_o" "video_processing_0:DATA_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"VDMA_0:DATA_I" "video_processing_0:DATA_O" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"VDMA_C0_0:DATA_I" "video_processing_0:DATA_O" }
 
 # Add bus interface net connections
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4L_H264" "video_processing_0:AXI4L_H264" }
@@ -346,8 +346,8 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4L_IE" "video_processing_0:A
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4L_MIPI" "IMX334_IF_TOP_0:AXI4L_MIPI" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4L_OSD" "video_processing_0:AXI4L_OSD" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4L_SCALER" "video_processing_0:AXI4L_SCALER" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4L_VDMA" "VDMA_0:AXI4L_VDMA" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"VDMA_0:mAXI4_SLAVE" "mAXI4_SLAVE" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4L_VDMA" "VDMA_C0_0:AXI4L_VDMA" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"VDMA_C0_0:mAXI4_SLAVE" "mAXI4_SLAVE" }
 
 # Re-enable auto promotion of pins of type 'pad'
 auto_promote_pad_pins -promote_all 1

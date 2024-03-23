@@ -5,5 +5,8 @@
 create_and_configure_core -core_vlnv {Microchip:SolutionCore:H264_Iframe_Encoder:1.5.0} -component_name {H264_Iframe_Encoder_C0} -params {\
 "G_16x16_INTRA_PRED:1"  \
 "G_C_TYPE:1"  \
-"G_DW:8"   }
+"G_DW:8"  \
+"G_HRES:1920"  \
+"G_QFACTOR:30"  \
+"G_VRES:1072"   }
 # Exporting Component Description of H264_Iframe_Encoder_C0 to TCL done

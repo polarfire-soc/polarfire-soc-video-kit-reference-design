@@ -57,15 +57,12 @@ set local_dir [pwd]
 set src_path ./script_support/
 set constraint_path ./script_support/constraints/RAW_BAYER
 set project_name "VKPFSOC_RAW_BAYER"
-set project_dir "./$project_name"
-
+set project_dir "${project_name}"
 source ./script_support/additional_configurations/functions_RAW_BAYER.tcl
-source ./cpz/cpz.tcl
 
 ###################################################################################
 # // Create Libero project
 ###################################################################################
-
 new_project \
 	-location $project_dir \
 	-name $project_name \
@@ -109,12 +106,12 @@ download_core -vlnv {Actel:SgCore:PF_CLK_DIV:1.0.103} -location {www.microchip-i
 download_core -vlnv {Actel:SystemBuilder:PF_IOD_GENERIC_RX:2.1.110} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_OSC:1.0.102} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_XCVR_REF_CLK:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
+download_core -vlnv {Microchip:SolutionCore:mipicsi2rxdecoderPF:5.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
 # download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
-# download_core -vlnv {Microchip:SolutionCore:mipicsi2rxdecoderPF:4.8.0} -location {www.microchip-ip.com/repositories/DirectCore}
 
 # Copy source files
 file mkdir $project_dir/MSS_VIDEO_KIT/
-file copy $src_path/MSS_VIDEO_KIT/RAW_BAYER $project_dir/MSS_VIDEO_KIT/
+file copy $src_path/MSS_VIDEO_KIT/RAW_BAYER/ $project_dir/MSS_VIDEO_KIT/
 
 #
 # // Generate base design
@@ -280,12 +277,13 @@ if {[info exists PLACEROUTE]} {
 if {[info exists VERIFY_TIMING]} {
     run_tool -name {VERIFYTIMING}
 }
+
 if {[info exists HSS_UPDATE]} {
     if !{[file exists "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/hss-envm-wrapper-bm1-p0.hex"]} {
 	if {[catch    {exec wget https://github.com/polarfire-soc/hart-software-services/releases/latest/download/hss-envm-wrapper-bm1-p0.hex -P $project_dir/MSS_VIDEO_KIT/RAW_BAYER} issue]} {
 	}
     }
-    create_eNVM_config "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/ENVM.cfg" "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/hss-envm-wrapper-bm1-p0.hex"
+    create_eNVM_config "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/ENVM.cfg" MSS_VIDEO_KIT/RAW_BAYER/hss-envm-wrapper-bm1-p0.hex
     run_tool -name {GENERATEPROGRAMMINGDATA}
     configure_envm -cfg_file "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/ENVM.cfg"
 }
@@ -300,15 +298,15 @@ if {[info exists GENERATE_PROGRAMMING_DATA]} {
 } elseif {[info exists EXPORT_FPE]} {
     if {[info exists HSS_UPDATE]} {
         if {$EXPORT_FPE == 1} {
-            export_fpe_job $project_name $local_dir "ENVM FABRIC_SNVM"
+            export_fpe_job $project_name $local_dir "ENVM FABRIC SNVM"
         } else {
-            export_fpe_job $project_name $EXPORT_FPE "ENVM FABRIC_SNVM"
+            export_fpe_job $project_name $EXPORT_FPE "ENVM FABRIC SNVM"
         }
     } else {
         if {$EXPORT_FPE == 1} {
-            export_fpe_job $project_name $local_dir "FABRIC_SNVM"
+            export_fpe_job $project_name $local_dir "FABRIC SNVM"
         } else {
-            export_fpe_job $project_name $EXPORT_FPE "FABRIC_SNVM"
+            export_fpe_job $project_name $EXPORT_FPE "FABRIC SNVM"
         }
     }
 }

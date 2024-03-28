@@ -191,6 +191,7 @@ import_files -fp_pdc "${constraint_path}/fp/user.pdc"
 # // Import timing constraint
 #
 import_files -sdc "${constraint_path}/user.sdc"
+import_files -sdc "${constraint_path}/scaler_constraint.sdc"
 set_as_target -type {sdc} -file "${constraint_path}/user.sdc"
 
 
@@ -214,6 +215,7 @@ organize_tool_files -tool {PLACEROUTE} \
     -file "${project_dir}/constraint/io/user.pdc" \
     -file "${project_dir}/constraint/${project_name}_derived_constraints.sdc" \
     -file "${project_dir}/constraint/user.sdc" \
+    -file "${project_dir}/constraint/scaler_constraint.sdc" \
     -file "${project_dir}/constraint/fp/user.pdc" \
     -module ${project_name}::work\
     -input_type {constraint}
@@ -235,12 +237,12 @@ organize_tool_files -tool {VERIFYTIMING} \
 configure_tool \
     -name {PLACEROUTE} \
     -params {DELAY_ANALYSIS:MAX} \
-    -params {EFFORT_LEVEL:true} \
+    -params {EFFORT_LEVEL:false} \
     -params {GB_DEMOTION:false} \
     -params {INCRPLACEANDROUTE:false} \
     -params {IOREG_COMBINING:true} \
     -params {MULTI_PASS_CRITERIA:VIOLATIONS} \
-    -params {MULTI_PASS_LAYOUT:true} \
+    -params {MULTI_PASS_LAYOUT:false} \
     -params {NUM_MULTI_PASSES:5} \
     -params {PDPR:false} \
     -params {RANDOM_SEED:0} \

@@ -107,7 +107,7 @@ download_core -vlnv {Actel:SystemBuilder:PF_IOD_GENERIC_RX:2.1.110} -location {w
 download_core -vlnv {Actel:SgCore:PF_OSC:1.0.102} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_XCVR_REF_CLK:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Microchip:SolutionCore:mipicsi2rxdecoderPF:5.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
-# download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
+ download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
 
 # Copy source files
 file mkdir $project_dir/MSS_VIDEO_KIT/

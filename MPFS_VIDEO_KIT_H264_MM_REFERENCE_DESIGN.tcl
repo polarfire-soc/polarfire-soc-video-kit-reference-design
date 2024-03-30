@@ -113,7 +113,7 @@ download_core -vlnv {Actel:SgCore:PF_OSC:1.0.102} -location {www.microchip-ip.co
 download_core -vlnv {Microsemi:SolutionCore:RGBtoYCbCr:4.4.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:SgCore:PF_XCVR_REF_CLK:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Microchip:SolutionCore:H264_Iframe_Encoder:1.5.0} -location {www.microchip-ip.com/repositories/DirectCore}
-#download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
 
 
 # Copy source files

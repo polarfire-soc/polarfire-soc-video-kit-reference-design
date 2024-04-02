@@ -1,71 +1,68 @@
+// --*************************************************************************************************
+// -- File Name                           : axi4lite_if_osd.v
+// -- Targeted device                     : Microsemi-SoC
+// -- Author                              : India Solutions Team
+// --
+// -- COPYRIGHT 2021 BY MICROSEMI
+// -- THE INFORMATION CONTAINED IN THIS DOCUMENT IS SUBJECT TO LICENSING RESTRICTIONS FROM MICROSEMI
+// -- CORP. IF YOU ARE NOT IN POSSESSION OF WRITTEN AUTHORIZATION FROM MICROSEMI FOR USE OF THIS
+// -- FILE, THEN THE FILE SHOULD BE IMMEDIATELY DESTROYED AND NO BACK-UP OF THE FILE SHOULD BE MADE.
+// --
+// --*************************************************************************************************
 
-localparam ADDR_DECODER_WIDTH = 8; //Address values of the registers
-localparam IP_VER = 32'h0; //Read Only
-localparam CTRL_REG = 32'h4; //Read Write
-localparam COORDINATE = 32'h8; //Read Only
-localparam RGB_COLOR = 32'hC; //Write Only
-localparam OSD_NUM = 32'h10; //Read Only
-localparam H_RES = 32'h14; //Write Only
-localparam V_RES = 32'h18; //Write Only
+module CR_OSD (
+	       // Clock and Reset interface----------------------------------------------------
+	       input		 aclk, // clock
+	       input		 aresetn, // This active-low reset
+	       //write address channel
+	       input wire	 awvalid, // AXI4-Lite write address valid. This signal indicates that valid write address and control information are available.
+	       output reg	 awready, // AXI4-Lite write address ready. This signal indicates that the target is ready to accept an address and associated control signals.
+	       input wire [31:0] awaddr, // AXI4-Lite write address.
+	       //write data channel
+	       input wire [31:0] wdata, // AXI4-Lite write data.
+	       input wire	 wvalid, // AXI4-Lite write valid.
+	       output reg	 wready, // AXI4-Lite Write ready.
+	       //write response channel
+	       output [1:0]	 bresp, // AXI4-Lite write response.
+	       output reg	 bvalid, // AXI4-Lite write response valid.
+	       input wire	 bready, // AXI4-Lite response ready.
+	       //read address channel
+	       input wire [31:0] araddr, // AXI4-Lite read address. The read address gives the address of the first transfer in a read burst transaction.  
+	       input wire	 arvalid, // AXI4-Lite read address valid. This signal indicates that the channel is signaling valid read address and control information. 
+	       output reg	 arready, // AXI4-Lite response ready. This signal indicates that the slave is ready to accept an address and associated control signals.
+	       //read data and response channel
+	       input wire	 rready, 
+	       output [31:0]	 rdata, // AXI4-Lite read data.
+	       output [1:0]	 rresp, // AXI4-Lite read response.
+	       output reg	 rvalid, // AXI4-Lite read valid. This signal indicates that the channel is signaling the required read data.
 
+	       input DATA_VALID_I,
+	       input FRAME_END_I,
+	       input RESETN_I,
+	       input SYS_CLK_I,
+	       input [7:0] r_i,
+	       input [7:0] g_i,
+	       input [7:0] b_i,
 
-module CR_OSD
-(
-   // Clock and Reset interface----------------------------------------------------
-   input wire 	     aclk, // clock
-   input wire 	     aresetn, // This active-low reset
-   //write address channel
-   input wire 	     awvalid, // AXI4-Lite write address valid. This signal indicates that valid write address and control information are available.
-   output reg 	     awready, // AXI4-Lite write address ready. This signal indicates that the target is ready to accept an address and associated control signals.
-   input wire [31:0] awaddr, // AXI4-Lite write address.
-   //write data channel
-   input wire [31:0] wdata, // AXI4-Lite write data.
-   input wire 	     wvalid, // AXI4-Lite write valid.
-   output reg 	     wready, // AXI4-Lite Write ready.
-  //write response channel
-   output reg [1:0]  bresp, // AXI4-Lite write response.
-   output reg 	     bvalid, // AXI4-Lite write response valid.
-   input wire 	     bready, // AXI4-Lite response ready.
-  //read address channel
-   input wire [31:0] araddr, // AXI4-Lite read address. The read address gives the address of the first transfer in a read burst transaction.  
-   input wire 	     arvalid, // AXI4-Lite read address valid. This signal indicates that the channel is signaling valid read address and control information. 
-   output reg 	     arready, // AXI4-Lite response ready. This signal indicates that the slave is ready to accept an address and associated control signals.
-  //read data and response channel
-   input wire 	     rready, 
-   output reg [31:0] rdata, // AXI4-Lite read data.
-   output wire [1:0] rresp, // AXI4-Lite read response.
-   output reg 	     rvalid, // AXI4-Lite read valid. This signal indicates that the channel is signaling the required read data.
- 
-  // Input
-  input	       DATA_VALID_I,
-  input	       FRAME_END_I,
-  input	       RESETN_I,
-  input	       SYS_CLK_I,
-  input [7:0]  r_i,
-  input [7:0]  g_i,
-  input [7:0]  b_i,
-  // Output
-  output reg   data_valid_o,
-  output [7:0] b_o,
-  output [7:0] g_o,
-  output [7:0] r_o
-);
+	       output reg data_valid_o,
+	       output [7:0] r_o,
+	       output [7:0] g_o,
+	       output [7:0] b_o	       
+	       );
 
-   wire	       w_aresetn;
-   wire	       w_osd_en;
-   wire	       w_osd_ip_rstn;
-   wire [31:0] w_coordinate;
-   wire [23:0] w_rgb_color;
-   wire [11:0] w_osd_num;
-   wire [15:0] w_h_res;
-   wire [15:0] w_v_res;
+   wire			    w_aresetn;   
+   wire			    w_osd_ip_en;
+   wire			    w_osd_ip_rstn;
+   wire [31:0]		    w_coordinate;
+   wire [23:0]		    w_rgb_color;
+   wire [11:0]		    w_osd_num;
+   wire [15:0]		    w_hres;
+   wire [15:0]		    w_vres;   
 
-
-   assign w_aresetn = ~w_osd_ip_rstn & RESETN_I;
+   assign w_aresetn = RESETN_I && (~w_osd_ip_rstn);
    
-
    axi4lite_if_osd axi4lite_if_osd (.*,
-				    .osd_ip_en(w_osd_en),
+				    .osd_ip_en(w_osd_ip_en),
 				    .osd_ip_rstn(w_osd_ip_rstn),
 				    .coordinate(w_coordinate),
 				    .rgb_color(w_rgb_color),
@@ -73,19 +70,30 @@ module CR_OSD
 				    .h_res(w_hres),
 				    .v_res(w_vres)
 				    );
-   CR_OSD_top CR_OSD_top (.*,
-		  .OSD_EN_I(w_osd_en),
-		  .hres_i(w_hres),
-		  .vres_i(w_vres),
-		  .coordinate_i(w_coordinate),
-		  .num_i(w_osd_num),
-		  .text_color_rgb_i(w_rgb_color)
-		  );
+   
+   CR_OSD_top CR_OSD_top (
+			  .DATA_VALID_I(DATA_VALID_I),
+			  .FRAME_END_I(FRAME_END_I),
+			  .RESETN_I(w_aresetn),
+			  .SYS_CLK_I(SYS_CLK_I),
+			  .OSD_EN_I(w_osd_ip_en),
+			  .r_i(r_i),
+			  .g_i(g_i),
+			  .b_i(b_i),
+			  .hres_i(w_hres),
+			  .vres_i(w_vres),
+			  .coordinate_i(w_coordinate),
+			  .num_i(w_osd_num),
+			  .text_color_rgb_i(w_rgb_color),
+			  .data_valid_o(data_valid_o),
+			  .r_o(r_o),
+			  .g_o(g_o),
+			  .b_o(b_o)
+			  );
    
 
 endmodule // CR_OSD
 
-	      
 
 
 // --*************************************************************************************************
@@ -100,73 +108,62 @@ endmodule // CR_OSD
 // --
 // --*************************************************************************************************
 
-module axi4lite_if_osd  
+module axi4lite_if_osd
   (
    // Clock and Reset interface----------------------------------------------------
-   input wire 	     aclk, // clock
-   input wire 	     aresetn, // This active-low reset
+   input	     aclk, // clock
+   input	     aresetn, // This active-low reset
    //write address channel
-   input wire 	     awvalid, // AXI4-Lite write address valid. This signal indicates that valid write address and control information are available.
-   output reg 	     awready, // AXI4-Lite write address ready. This signal indicates that the target is ready to accept an address and associated control signals.
+   input wire	     awvalid, // AXI4-Lite write address valid. This signal indicates that valid write address and control information are available.
+   output reg	     awready, // AXI4-Lite write address ready. This signal indicates that the target is ready to accept an address and associated control signals.
    input wire [31:0] awaddr, // AXI4-Lite write address.
    //write data channel
    input wire [31:0] wdata, // AXI4-Lite write data.
-   input wire 	     wvalid, // AXI4-Lite write valid.
-   output reg 	     wready, // AXI4-Lite Write ready.
-  //write response channel
-   output reg [1:0]  bresp, // AXI4-Lite write response.
-   output reg 	     bvalid, // AXI4-Lite write response valid.
-   input wire 	     bready, // AXI4-Lite response ready.
-  //read address channel
+   input wire	     wvalid, // AXI4-Lite write valid.
+   output reg	     wready, // AXI4-Lite Write ready.
+   //write response channel
+   output [1:0]	     bresp, // AXI4-Lite write response.
+   output reg	     bvalid, // AXI4-Lite write response valid.
+   input wire	     bready, // AXI4-Lite response ready.
+   //read address channel
    input wire [31:0] araddr, // AXI4-Lite read address. The read address gives the address of the first transfer in a read burst transaction.  
-   input wire 	     arvalid, // AXI4-Lite read address valid. This signal indicates that the channel is signaling valid read address and control information. 
-   output reg 	     arready, // AXI4-Lite response ready. This signal indicates that the slave is ready to accept an address and associated control signals.
-  //read data and response channel
-   input wire 	     rready, 
-   output reg [31:0] rdata, // AXI4-Lite read data.
-   output wire [1:0] rresp, // AXI4-Lite read response.
-   output reg 	     rvalid, // AXI4-Lite read valid. This signal indicates that the channel is signaling the required read data.
-   
-   //IP interface
-   output reg 	     osd_ip_en,
-   output 	     osd_ip_rstn,
+   input wire	     arvalid, // AXI4-Lite read address valid. This signal indicates that the channel is signaling valid read address and control information. 
+   output reg	     arready, // AXI4-Lite response ready. This signal indicates that the slave is ready to accept an address and associated control signals.
+   //read data and response channel
+   input wire	     rready, 
+   output [31:0]     rdata, // AXI4-Lite read data.
+   output [1:0]	     rresp, // AXI4-Lite read response.
+   output reg	     rvalid, // AXI4-Lite read valid. This signal indicates that the channel is signaling the required read data.
+
+   output reg	     osd_ip_en,
+   output	     osd_ip_rstn,
    output reg [31:0] coordinate,
    output reg [23:0] rgb_color,
    output reg [11:0] osd_num,
    output reg [15:0] h_res,
    output reg [15:0] v_res
-   );      
-
-   wire              mem_wr_valid;
-   wire [31:0]       mem_wr_addr;
-   wire [31:0]       mem_wr_data;
-   wire [31:0]       mem_rd_data;
-   wire [31:0]       mem_rd_addr;
-   wire 	     w_aresetn;
-   wire [1:0] 	     w_ctrl_reg;
+   );
    
-
-   assign w_aresetn = aresetn & (~osd_ip_rstn);
-   assign w_ctrl_reg = {osd_ip_rstn, osd_ip_en};
+   wire		     mem_wr_valid;
+   wire [31:0]	     mem_wr_addr;
+   wire [31:0]	     mem_wr_data;
+   wire		     mem_rd_req;   
+   wire [31:0]	     mem_rd_data;
+   wire		     mem_rd_data_valid;
+   wire [31:0] 	     mem_rd_addr;
+   wire		     w_aresetn;
+   wire [1:0]	     w_ctrl_reg;   
    
+   assign w_aresetn = aresetn && (~osd_ip_rstn);   
+   assign w_ctrl_reg[0] = osd_ip_en;
+   assign w_ctrl_reg[1] = osd_ip_rstn;
    
-   axi4lite_adapter_osd axi4lite_adapter_osd_inst (.*);
-   read_reg_osd read_reg_osd_inst (.*, .ctrl_reg(w_ctrl_reg));
-   write_reg_osd write_reg_osd_inst (.*, .aresetn(w_aresetn));
+   axi4lite_adapter_osd axi4lite_adapter_osd (.*);
+   write_reg_osd write_reg_osd (.*, .aresetn(w_aresetn));
+   read_reg_osd read_reg_osd (.*, .ctrl_reg(w_ctrl_reg)); 
    
-
 endmodule // axi4lite_if_osd
 
-// -- File Name                           : axi4lite_adapter_osd.v
-// -- Targeted device                     : Microsemi-SoC
-// -- Author                              : India Solutions Team
-// --
-// -- COPYRIGHT 2021 BY MICROSEMI
-// -- THE INFORMATION CONTAINED IN THIS DOCUMENT IS SUBJECT TO LICENSING RESTRICTIONS FROM MICROSEMI
-// -- CORP. IF YOU ARE NOT IN POSSESSION OF WRITTEN AUTHORIZATION FROM MICROSEMI FOR USE OF THIS
-// -- FILE, THEN THE FILE SHOULD BE IMMEDIATELY DESTROYED AND NO BACK-UP OF THE FILE SHOULD BE MADE.
-// --
-// --*************************************************************************************************
 
 module axi4lite_adapter_osd  
   (
@@ -194,17 +191,20 @@ module axi4lite_adapter_osd
    output reg [31:0] rdata, // AXI4-Lite read data.
    output wire [1:0] rresp, // AXI4-Lite read response.
    output reg 	     rvalid, // AXI4-Lite read valid. This signal indicates that the channel is signaling the required read data.
+
    //Memory interface
-   output reg 	     mem_wr_valid,
+   output reg	     mem_wr_valid,
    output reg [31:0] mem_wr_addr,
    output reg [31:0] mem_wr_data,
+   output reg	     mem_rd_req,
    output [31:0]     mem_rd_addr,
+   input	     mem_rd_data_valid,
    input [31:0]	     mem_rd_data
    );      
 
-   reg [31:0] 	     awaddr_reg;
-   reg [31:0] 	     araddr_reg;            
-   wire 	     raddr_phs_cmp;   
+   reg [31:0]	     awaddr_reg;
+   reg [31:0]	     araddr_reg;            
+   wire		     raddr_phs_cmp;   
 
    //------------------------------------------------------------------------------------
    // AXI4 Lite Write Address channel
@@ -298,8 +298,19 @@ module axi4lite_adapter_osd
           arready  <= 1'b0;
      end
 
-   assign raddr_phs_cmp = (arvalid && arready); 
+   assign raddr_phs_cmp = (arvalid && arready);
 
+   ////////////////////////////////////////////////
+   // Generating memory read request
+   ////////////////////////////////////////////////         
+   always@(posedge aclk or negedge aresetn)
+     if(!aresetn)
+       mem_rd_req <= 'h0;   
+     else
+       mem_rd_req <= arvalid && arready;
+   
+
+   
    ////////////////////////////////////////////////
    // Registering valid read address
    ////////////////////////////////////////////////         
@@ -321,17 +332,33 @@ module axi4lite_adapter_osd
    always@(posedge aclk or negedge aresetn)
      if(!aresetn)
        rvalid <= 'b0;   
-     else if(arvalid && arready) 
-       rvalid <= 'b1;
      else if(rvalid && rready) //hold rvalid high till rready is asserted
-       rvalid <= 'b0;   
-
+       rvalid <= 'b0;
+     else if (mem_rd_data_valid)
+       rvalid <= 1'b1;
+   
    assign rdata = mem_rd_data; //connect the the mem data directly to axi4 lite bus
    assign rresp = 2'h0; //return read OK response
       
 endmodule
 
 
+//Address values of the registers
+localparam ADDR_DECODER_WIDTH = 8;
+//Read Only
+localparam IP_VER = 32'h0;
+//Read Write
+localparam CTRL_REG = 32'h4;
+//Read Only
+localparam COORDINATE = 32'h8;
+//Write Only
+localparam RGB_COLOR = 32'hC;
+//Read Only
+localparam OSD_NUM = 32'h10;
+//Write Only
+localparam H_RES = 32'h14;
+//Write Only
+localparam V_RES = 32'h18;
 
 
 // --*************************************************************************************************
@@ -348,39 +375,25 @@ endmodule
 
 
 module write_reg_osd (
-		       aclk,
-		       aresetn,
+		      
+		      // Clock and Reset interface----------------------------------------------------
+		      input		aclk, // clock
+		      input		aresetn, // This active-low reset
 
-		       mem_wr_valid,
-		       mem_wr_addr,
-		       mem_wr_data,
+		      //Memory interface
+		      input		mem_wr_valid,
+		      input [31:0]	mem_wr_addr,
+		      input [31:0]	mem_wr_data,
 
-		       osd_ip_en,
-		       osd_ip_rstn,
-		       coordinate,
-		       rgb_color,
-		       osd_num,
-		       h_res,
-		       v_res
-		       );
+		      output reg	osd_ip_en,
+		      output		osd_ip_rstn,
+		      output reg [31:0]	coordinate,
+		      output reg [23:0]	rgb_color,
+		      output reg [11:0]	osd_num,
+		      output reg [15:0]	h_res,
+		      output reg [15:0]	v_res
+		      )/* synthesis syn_preserve = 1 */; 
    
-
-   // Clock and Reset interface----------------------------------------------------
-   input 	     aclk; // clock
-   input 	     aresetn; // This active-low reset
-
-   //Memory interface
-   input 	     mem_wr_valid;
-   input [31:0]      mem_wr_addr;
-   input [31:0]      mem_wr_data;
-
-   output reg 	     osd_ip_en;
-   output 	     osd_ip_rstn;
-   output reg [31:0] coordinate;
-   output reg [23:0]  rgb_color;
-   output reg [11:0]    osd_num;
-   output reg [15:0]      h_res;
-   output reg [15:0]      v_res;
 
    reg [1:0] 	       ctrl_reg;
    assign osd_ip_en = ctrl_reg[0];
@@ -429,7 +442,6 @@ module write_reg_osd (
 endmodule
 
 
-
 // --*************************************************************************************************
 // -- File Name                           : read_reg_osd.v
 // -- Targeted device                     : Microsemi-SoC
@@ -443,30 +455,46 @@ endmodule
 // --*************************************************************************************************
 
 module read_reg_osd (
-		      mem_rd_addr,
-		      mem_rd_data,
+		     // Clock and Reset interface----------------------------------------------------
+		     input	       aclk, // clock
+		     input	       aresetn, //Reset initiated by processor
+		     //Memory interface
+		     input	       mem_rd_req,
+		     input [31:0]      mem_rd_addr,
+		     output reg [31:0] mem_rd_data,
+		     output reg	       mem_rd_data_valid,		     
+		     input [1:0]       ctrl_reg
+	       )/* synthesis syn_noprune = 1 */;
 
-		      ctrl_reg
-		      );
+      reg [1:0]		  r_mem_rd_req_dly;
+
+   ////////////////////////////////////////////////
+   // Delaying the mem read request and generating data valid
+   ////////////////////////////////////////////////
+   always@ (posedge aclk , negedge aresetn) 
+     if (!aresetn) begin
+	r_mem_rd_req_dly <= 'h0;
+	mem_rd_data_valid <= 'h0;
+     end
+     else begin
+	r_mem_rd_req_dly <= {r_mem_rd_req_dly[0], mem_rd_req};
+	mem_rd_data_valid <= r_mem_rd_req_dly[1];
+     end   
    
-   //Memory interface
-   input [31:0] 	  mem_rd_addr;
-   output reg [31:0] 	  mem_rd_data;
-
-   input [1:0] ctrl_reg;   
-
-
    ////////////////////////////////////////////////
    // Read registers based on input address
    ////////////////////////////////////////////////
-   always@(mem_rd_addr[ADDR_DECODER_WIDTH-1:0])
+   always@(posedge aclk, negedge aresetn)
+     if (!aresetn)
+       mem_rd_data <= 'h0;
+     else if (r_mem_rd_req_dly[1])
        case (mem_rd_addr[ADDR_DECODER_WIDTH-1:0])
 	 
 	 IP_VER:
 	   mem_rd_data <= 32'h01;
 
 	 CTRL_REG:
-	   mem_rd_data <= ctrl_reg;
+	   mem_rd_data <= {30'h0, ctrl_reg};
 
 	 default:
 	   mem_rd_data <= 32'h0;
@@ -474,7 +502,6 @@ module read_reg_osd (
        endcase // case (mem_rd_addr)
       
 endmodule
-
 
 
 
@@ -687,9 +714,7 @@ text_out text_out_0(
         .b_o            ( b_o )
         );
 
-
 endmodule // CR_OSD_top
-
 
 //pixel,line counter
 module HV_COUNTER (

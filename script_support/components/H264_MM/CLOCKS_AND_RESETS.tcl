@@ -25,7 +25,7 @@ sd_instantiate_macro -sd_name ${sd_name} -macro_name {AND2} -instance_name {AND2
 
 
 # Add CORERESET_CLK_125MHz instance
-sd_instantiate_component -sd_name ${sd_name} -component_name {CORERESET} -instance_name {CORERESET_CLK_125MHz}
+sd_instantiate_component -sd_name ${sd_name} -component_name {CORERESET_PF_C0} -instance_name {CORERESET_CLK_125MHz}
 sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_CLK_125MHz:BANK_x_VDDI_STATUS} -value {VCC}
 sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_CLK_125MHz:BANK_y_VDDI_STATUS} -value {VCC}
 sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_CLK_125MHz:SS_BUSY} -value {GND}

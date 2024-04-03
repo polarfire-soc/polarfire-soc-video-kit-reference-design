@@ -102,7 +102,7 @@ new_project \
 download_core -vlnv {Microsemi:SolutionCore:Bayer_Interpolation:4.7.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:DirectCore:COREAXI4INTERCONNECT:2.8.103} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:DirectCore:CORERESET_PF:2.3.100} -location {www.microchip-ip.com/repositories/DirectCore}
-download_core -vlnv {Actel:DirectCore:CORERXIODBITALIGN:2.3.103} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Microchip:SolutionCore:MIPI_TRAINING_LITE:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microsemi:SolutionCore:Gamma_Correction:4.3.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microchip:SolutionCore:Image_Enhancement:4.5.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microchip:SolutionCore:IMAGE_SCALER:4.2.0} -location {www.microchip-ip.com/repositories/DirectCore}
@@ -141,8 +141,7 @@ build_design_hierarchy
 
 #Sourcing the Tclfiles for creating individual ${src_path}/components/H264_MM under the top level
 
-
-source ${src_path}/components/H264_MM/CORERESET.tcl 
+source ${src_path}/components/H264_MM/CORERESET_PF_C0.tcl 
 source ${src_path}/components/H264_MM/INIT_MONITOR.tcl 
 source ${src_path}/components/H264_MM/PF_CCC_C0.tcl 
 source ${src_path}/components/H264_MM/PF_CLK_DIV_C0.tcl 
@@ -151,13 +150,13 @@ source ${src_path}/components/H264_MM/PF_XCVR_REF_CLK_C0.tcl
 source ${src_path}/components/H264_MM/CLOCKS_AND_RESETS.tcl 
 source ${src_path}/components/H264_MM/COREAXI4INTERCONNECT_C0.tcl 
 source ${src_path}/components/H264_MM/FIC_CONVERTER.tcl 
-source ${src_path}/components/H264_MM/CORERESET_PF_C1.tcl 
-source ${src_path}/components/H264_MM/CORERXIODBITALIGN_C1.tcl 
+source ${src_path}/components/H264_MM/CORERESET_PF_C1.tcl
+source ${src_path}/components/H264_MM/MIPI_TRAINING_LITE_C0.tcl
 source ${src_path}/components/H264_MM/PF_IOD_GENERIC_RX_C0.tcl 
 source ${src_path}/components/H264_MM/CAM_IOD_TIP_TOP.tcl 
 source ${src_path}/components/H264_MM/CORERESET_PF_C2.tcl 
-source ${src_path}/components/H264_MM/CORERESET_PF_C5.tcl 
-source ${src_path}/components/H264_MM/PF_CCC_C2.tcl 
+source ${src_path}/components/H264_MM/CORERESET_PF_C3.tcl 
+source ${src_path}/components/H264_MM/PF_CCC_C1.tcl 
 source ${src_path}/components/H264_MM/mipicsi2rxdecoderPF_C0.tcl 
 source ${src_path}/components/H264_MM/IMX334_IF_TOP.tcl 
 source ${src_path}/components/H264_MM/Bayer_Interpolation_C0.tcl 

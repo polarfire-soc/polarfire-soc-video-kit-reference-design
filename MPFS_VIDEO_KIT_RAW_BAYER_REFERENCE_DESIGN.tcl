@@ -111,7 +111,9 @@ download_core -vlnv {Actel:SystemBuilder:PF_IOD_GENERIC_RX:2.1.110} -location {w
 download_core -vlnv {Actel:SgCore:PF_OSC:1.0.102} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_XCVR_REF_CLK:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Microchip:SolutionCore:mipicsi2rxdecoderPF:5.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Microchip:SolutionCore:MIPI_TRAINING_LITE:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
+
 
 # Copy source files
 file mkdir $project_dir/MSS_VIDEO_KIT/
@@ -140,12 +142,12 @@ source ${src_path}/components/RAW_BAYER/CLOCKS_AND_RESETS.tcl
 source ${src_path}/components/RAW_BAYER/COREAXI4INTERCONNECT_C0.tcl
 source ${src_path}/components/RAW_BAYER/FIC_CONVERTER.tcl
 source ${src_path}/components/RAW_BAYER/CORERESET_PF_C1.tcl
-source ${src_path}/components/RAW_BAYER/CORERXIODBITALIGN_C1.tcl
+source ${src_path}/components/RAW_BAYER/MIPI_TRAINING_LITE_C0.tcl
 source ${src_path}/components/RAW_BAYER/PF_IOD_GENERIC_RX_C0.tcl
 source ${src_path}/components/RAW_BAYER/CAM_IOD_TIP_TOP.tcl
 source ${src_path}/components/RAW_BAYER/CORERESET_PF_C2.tcl
-source ${src_path}/components/RAW_BAYER/CORERESET_PF_C4.tcl
-source ${src_path}/components/RAW_BAYER/PF_CCC_C2.tcl
+source ${src_path}/components/RAW_BAYER/CORERESET_PF_C3.tcl
+source ${src_path}/components/RAW_BAYER/PF_CCC_C1.tcl
 source ${src_path}/components/RAW_BAYER/mipicsi2rxdecoderPF_C0.tcl
 source ${src_path}/components/RAW_BAYER/IMX334_IF_TOP.tcl
 source ${src_path}/components/RAW_BAYER/VDMA_C0.tcl

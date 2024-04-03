@@ -79,14 +79,14 @@ sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CORERESET_PF_C2_0:PLL_POWERD
 
 
 
-# Add CORERESET_PF_C5_0 instance
-sd_instantiate_component -sd_name ${sd_name} -component_name {CORERESET_PF_C5} -instance_name {CORERESET_PF_C5_0}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_PF_C5_0:BANK_x_VDDI_STATUS} -value {VCC}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_PF_C5_0:BANK_y_VDDI_STATUS} -value {VCC}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_PF_C5_0:SS_BUSY} -value {GND}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_PF_C5_0:FF_US_RESTORE} -value {GND}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_PF_C5_0:FPGA_POR_N} -value {VCC}
-sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CORERESET_PF_C5_0:PLL_POWERDOWN_B}
+# Add CORERESET_PF_C3_0 instance
+sd_instantiate_component -sd_name ${sd_name} -component_name {CORERESET_PF_C3} -instance_name {CORERESET_PF_C3_0}
+sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_PF_C3_0:BANK_x_VDDI_STATUS} -value {VCC}
+sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_PF_C3_0:BANK_y_VDDI_STATUS} -value {VCC}
+sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_PF_C3_0:SS_BUSY} -value {GND}
+sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_PF_C3_0:FF_US_RESTORE} -value {GND}
+sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {CORERESET_PF_C3_0:FPGA_POR_N} -value {VCC}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {CORERESET_PF_C3_0:PLL_POWERDOWN_B}
 
 
 
@@ -124,8 +124,8 @@ sd_mark_pins_unused -sd_name ${sd_name} -pin_names {mipi_ip_0:WORD_COUNT_O}
 
 
 
-# Add PF_CCC_C2_0 instance
-sd_instantiate_component -sd_name ${sd_name} -component_name {PF_CCC_C2} -instance_name {PF_CCC_C2_0}
+# Add PF_CCC_C1_0 instance
+sd_instantiate_component -sd_name ${sd_name} -component_name {PF_CCC_C1} -instance_name {PF_CCC_C1_0}
 
 
 
@@ -133,8 +133,6 @@ sd_instantiate_component -sd_name ${sd_name} -component_name {PF_CCC_C2} -instan
 sd_instantiate_component -sd_name ${sd_name} -component_name {CAM_IOD_TIP_TOP} -instance_name {PF_IOD_GENERIC_RX_C0_0}
 sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:HS_IO_CLK_PAUSE} -value {GND}
 sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:HS_SEL} -value {VCC}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:RESTART_TRNG} -value {GND}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:SKIP_TRNG} -value {GND}
 sd_mark_pins_unused -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:CLK_TRAIN_DONE}
 sd_mark_pins_unused -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:CLK_TRAIN_ERROR}
 
@@ -142,23 +140,23 @@ sd_mark_pins_unused -sd_name ${sd_name} -pin_names {PF_IOD_GENERIC_RX_C0_0:CLK_T
 
 # Add scalar net connections
 sd_create_scalar_net -sd_name ${sd_name} -net_name {DFN1_2_Q}
-sd_connect_net_to_pins -sd_name ${sd_name} -net_name {DFN1_2_Q} -pin_names {"CORERESET_PF_C2_0:EXT_RST_N" "CORERESET_PF_C5_0:EXT_RST_N" "DFN1_2:Q" "mipi_ip_0:TRAINING_DONE_I" }
+sd_connect_net_to_pins -sd_name ${sd_name} -net_name {DFN1_2_Q} -pin_names {"CORERESET_PF_C2_0:EXT_RST_N" "CORERESET_PF_C3_0:EXT_RST_N" "DFN1_2:Q" "mipi_ip_0:TRAINING_DONE_I" }
 
 sd_connect_pins -sd_name ${sd_name} -pin_names {"ACLK_I" "mipi_ip_0:ACLK_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AND2_0:A" "DFN1_0:Q" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"AND2_0:B" "CORERESET_PF_C2_0:PLL_LOCK" "CORERESET_PF_C5_0:PLL_LOCK" "DFN1_1:Q" "PF_IOD_GENERIC_RX_C0_0:PLL_LOCK" "mipi_ip_0:CAM_PLL_LOCK_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"AND2_0:B" "CORERESET_PF_C2_0:PLL_LOCK" "CORERESET_PF_C3_0:PLL_LOCK" "DFN1_1:Q" "mipi_ip_0:CAM_PLL_LOCK_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AND2_0:Y" "PF_IOD_GENERIC_RX_C0_0:TRAINING_RESETN" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"ARESETN_I" "mipi_ip_0:ARESETN_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"ARST_N" "PF_IOD_GENERIC_RX_C0_0:ARST_N" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAM1_RX_CLK_N" "PF_IOD_GENERIC_RX_C0_0:RX_CLK_N" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CAM1_RX_CLK_P" "PF_IOD_GENERIC_RX_C0_0:RX_CLK_P" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C2_0:CLK" "DFN1_2:CLK" "PF_CCC_C2_0:REF_CLK_0" "PF_IOD_GENERIC_RX_C0_0:RX_CLK_G" "mipi_ip_0:CAM_CLOCK_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C2_0:CLK" "DFN1_2:CLK" "PF_CCC_C1_0:REF_CLK_0" "PF_IOD_GENERIC_RX_C0_0:RX_CLK_G" "mipi_ip_0:CAM_CLOCK_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C2_0:FABRIC_RESET_N" "mipi_ip_0:RESET_N_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C2_0:INIT_DONE" "CORERESET_PF_C5_0:INIT_DONE" "INIT_DONE" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C5_0:CLK" "DFN1_0:CLK" "DFN1_1:CLK" "PARALLEL_CLK" "PF_CCC_C2_0:OUT0_FABCLK_0" "mipi_ip_0:PARALLEL_CLOCK_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C5_0:FABRIC_RESET_N" "PARALLEL_CLK_RESET_N" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C2_0:INIT_DONE" "CORERESET_PF_C3_0:INIT_DONE" "INIT_DONE" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C3_0:CLK" "DFN1_0:CLK" "DFN1_1:CLK" "PARALLEL_CLK" "PF_CCC_C1_0:OUT0_FABCLK_0" "mipi_ip_0:PARALLEL_CLOCK_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"CORERESET_PF_C3_0:FABRIC_RESET_N" "PARALLEL_CLK_RESET_N" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"DFN1_0:D" "TRNG_RST_N" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"DFN1_1:D" "PF_CCC_C2_0:PLL_LOCK_0" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"DFN1_1:D" "PF_CCC_C1_0:PLL_LOCK_0" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"DFN1_2:D" "PF_IOD_GENERIC_RX_C0_0:training_done_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"MIPI_INTERRUPT_O" "mipi_ip_0:MIPI_INTERRUPT_O" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_IOD_GENERIC_RX_C0_0:L0_LP_DATA" "mipi_ip_0:L0_LP_DATA_I" }

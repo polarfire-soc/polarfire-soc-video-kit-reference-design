@@ -39,7 +39,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "GL0_0_BYPASS:0"  \
 "GL0_0_BYPASS_EN:false"  \
 "GL0_0_DEDICATED_USED:false"  \
-"GL0_0_DIV:7"  \
+"GL0_0_DIV:6"  \
 "GL0_0_DIVSTART:0"  \
 "GL0_0_DYNAMIC_PH:false"  \
 "GL0_0_EXPOSE_EN:false"  \
@@ -47,7 +47,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "GL0_0_FABCLK_USED:true"  \
 "GL0_0_FREQ_SEL:false"  \
 "GL0_0_IS_USED:true"  \
-"GL0_0_OUT_FREQ:200"  \
+"GL0_0_OUT_FREQ:170"  \
 "GL0_0_PHASE_INDEX:0"  \
 "GL0_0_PHASE_SEL:false"  \
 "GL0_0_PLL_PHASE:0"  \
@@ -214,7 +214,7 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "PLL_FB_CLK_1:GL0_1"  \
 "PLL_FEEDBACK_MODE_0:Post-VCO"  \
 "PLL_FEEDBACK_MODE_1:Post-VCO"  \
-"PLL_IN_FREQ_0:50"  \
+"PLL_IN_FREQ_0:62.5"  \
 "PLL_IN_FREQ_1:100"  \
 "PLL_INT_MODE_EN_0:false"  \
 "PLL_INT_MODE_EN_1:false"  \

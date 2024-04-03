@@ -2,7 +2,7 @@
 # Family: PolarFireSoC
 # Part Number: MPFS250TS-1FCG1152I
 # Create and Configure the core component PF_CCC_C2
-create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_name {PF_CCC_C2} -params {\
+create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_name {PF_CCC_C1} -params {\
 "DLL_CLK_0_BANKCLK_EN:false"  \
 "DLL_CLK_0_DEDICATED_EN:false"  \
 "DLL_CLK_0_FABCLK_EN:false"  \
@@ -246,4 +246,4 @@ create_and_configure_core -core_vlnv {Actel:SgCore:PF_CCC:2.2.220} -component_na
 "PLL_SYNC_EN:false"  \
 "PLL_VCO_MODE_0:MIN_JITTER"  \
 "PLL_VCO_MODE_1:MIN_JITTER"   }
-# Exporting Component Description of PF_CCC_C2 to TCL done
+# Exporting Component Description of PF_CCC_C1 to TCL done

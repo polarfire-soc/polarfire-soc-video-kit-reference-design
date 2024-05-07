@@ -96,6 +96,27 @@ The Microcontroller Subsystem (MSS) configuration is captured in an XML file tha
 
 XML generated for all available configurations is provided in the "XML" folder.
 
+<a name="setting-the-spi-data-client-for-dt-overlay"></a>
+## Setting the spi data client for dt overlay
+
+Run the below command to generate spi data client for dt overlay
+In the command posible args H264, RAW_BAYER and H264_MM.
+
+```
+python generate_overlays_spiclient_data.py <build arg>
+```
+
+Ex: if you wanted to build spi client data for the H264 the run the below command
+this command will generate mpfs_dtbo.spi file to used as spi data client
+
+```
+python generate_overlays_spiclient_data.py H264
+```
+
+If you wated to run this in windows we need run in the WSL environment and all required pakages should be installed in the WSL (dtc, wget, gcc and python).
+
+WSL instalation instruction [here](https://learn.microsoft.com/en-us/windows/wsl/install)
+
 <a name="setting-the-boot-mode-and-programming-the-envm"></a>
 ## Setting the boot mode and programming the eNVM
 

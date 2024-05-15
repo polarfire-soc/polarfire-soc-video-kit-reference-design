@@ -11,19 +11,23 @@
 # // Check Libero version and path length to verify project can be created
 ##################################################################################
 ##################################################################################
+set libero_version 2023.2
+set my_platform "Linux"
 
-if {[string compare [string range [get_libero_version] 0 5] "2023.2"]==0} {
-	puts "Libero v2023.2 detected."
+if {[string compare [string range [get_libero_version] 0 5] "$libero_version"]==0} {
+    puts "Libero $libero_version detected."
 } else {
-	error "Incorrect Libero version. Please use Libero v2023.2  to run these scripts."
+    error "Incorrect Libero version. Please use Libero $libero_version to run these scripts."
 }
 
-if { [lindex $tcl_platform(os) 0]  == "Windows" } {
+
+if { [lindex $tcl_platform(os) 0]  == "Windows" } {    
 	if {[string length [pwd]] < 90} {
 		puts "Project path length ok."
 	} else {
 		error "Path to project is too long, please reduce the path and try again."
 	}
+set my_platform "Windows"
 }
 
 ###################################################################################
@@ -107,7 +111,7 @@ download_core -vlnv {Actel:SystemBuilder:PF_IOD_GENERIC_RX:2.1.110} -location {w
 download_core -vlnv {Actel:SgCore:PF_OSC:1.0.102} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_XCVR_REF_CLK:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Microchip:SolutionCore:mipicsi2rxdecoderPF:5.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
- download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
 
 # Copy source files
 file mkdir $project_dir/MSS_VIDEO_KIT/
@@ -271,44 +275,49 @@ configure_tool \
 if {[info exists SYNTHESIZE]} {
     run_tool -name {SYNTHESIZE}
 }
+
 if {[info exists PLACEROUTE]} {
     run_tool -name {PLACEROUTE}
 }
+
 if {[info exists VERIFY_TIMING]} {
     run_tool -name {VERIFYTIMING}
 }
 
 if {[info exists HSS_UPDATE]} {
-    if !{[file exists "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/hss-envm-wrapper-bm1-p0.hex"]} {
-	if {[catch    {exec wget https://github.com/polarfire-soc/hart-software-services/releases/latest/download/hss-envm-wrapper-bm1-p0.hex -P $project_dir/MSS_VIDEO_KIT/RAW_BAYER} issue]} {
-	}
-    }
     create_eNVM_config "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/ENVM.cfg" MSS_VIDEO_KIT/RAW_BAYER/hss-envm-wrapper-bm1-p0.hex
     run_tool -name {GENERATEPROGRAMMINGDATA}
     configure_envm -cfg_file "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/ENVM.cfg"
 }
 
+if {[info exists SPIFLASH_DATA]} {
+    if {$my_platform == "Linux"} {
+	if {[catch {exec python generate_overlays_spiclient_data.py RAW_BAYER} issue]} {}
+    } else {
+	if {[catch {exec wsl.exe -e python generate_overlays_spiclient_data.py RAW_BAYER} issue]} {}
+    }
+    create_spiflash "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/spiflash.cfg" $local_dir
+    run_tool -name {GENERATEPROGRAMMINGDATA}
+    configure_spiflash -cfg_file "$project_dir/designer/$project_name/spiflash.cfg"
+}
+
 if {[info exists GENERATE_PROGRAMMING_DATA]} {
     run_tool -name {GENERATEPROGRAMMINGDATA}
-}  elseif {[info exists PROGRAM]} {
+}
+
+if {[info exists PROGRAM]} {
     if !{[info exists HSS_UPDATE]} {
 	run_tool -name {GENERATEPROGRAMMINGDATA}
-    }
+    }    
     run_tool -name {PROGRAMDEVICE}
-} elseif {[info exists EXPORT_FPE]} {
+}
+
+if {[info exists EXPORT_FPE]} {
     if {[info exists HSS_UPDATE]} {
-        if {$EXPORT_FPE == 1} {
             export_fpe_job $project_name $local_dir "ENVM FABRIC SNVM"
-        } else {
-            export_fpe_job $project_name $EXPORT_FPE "ENVM FABRIC SNVM"
-        }
     } else {
-        if {$EXPORT_FPE == 1} {
             export_fpe_job $project_name $local_dir "FABRIC SNVM"
-        } else {
-            export_fpe_job $project_name $EXPORT_FPE "FABRIC SNVM"
-        }
     }
 }
 
-save_project 
+save_project

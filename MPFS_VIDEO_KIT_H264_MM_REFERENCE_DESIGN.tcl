@@ -11,11 +11,13 @@
 # // Check Libero version and path length to verify project can be created
 ##################################################################################
 ##################################################################################
+set libero_version 2023.2
+set my_platform "Linux"
 
-if {[string compare [string range [get_libero_version] 0 5] "2023.2"]==0} {
-    puts "Libero v2023.2 detected."
+if {[string compare [string range [get_libero_version] 0 5] "$libero_version"]==0} {
+    puts "Libero $libero_version detected."
 } else {
-    error "Incorrect Libero version. Please use Libero v2023.2 to run these scripts."
+    error "Incorrect Libero version. Please use Libero $libero_version to run these scripts."
 }
 
 
@@ -25,6 +27,7 @@ if { [lindex $tcl_platform(os) 0]  == "Windows" } {
 	} else {
 		error "Path to project is too long, please reduce the path and try again."
 	}
+   set my_platform "Windows" 
 }
 
 #
@@ -100,12 +103,12 @@ new_project \
 download_core -vlnv {Microsemi:SolutionCore:Bayer_Interpolation:4.7.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:DirectCore:COREAXI4INTERCONNECT:2.8.103} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:DirectCore:CORERESET_PF:2.3.100} -location {www.microchip-ip.com/repositories/DirectCore}
-download_core -vlnv {Actel:DirectCore:CORERXIODBITALIGN:2.2.100} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Actel:DirectCore:CORERXIODBITALIGN:2.3.103} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microsemi:SolutionCore:Gamma_Correction:4.3.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microchip:SolutionCore:Image_Enhancement:4.5.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microchip:SolutionCore:IMAGE_SCALER:4.2.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microsemi:SgCore:PFSOC_INIT_MONITOR:1.0.307} -location {www.microchip-ip.com/repositories/SgCore}
-download_core -vlnv {Microchip:SolutionCore:mipicsi2rxdecoderPF:5.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Microchip:SolutionCore:mipicsi2rxdecoderPF:5.1.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:SgCore:PF_CCC:2.2.220} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SgCore:PF_CLK_DIV:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Actel:SystemBuilder:PF_IOD_GENERIC_RX:2.1.110} -location {www.microchip-ip.com/repositories/SgCore}
@@ -299,35 +302,42 @@ if {[info exists VERIFY_TIMING]} {
 }
 
 if {[info exists HSS_UPDATE]} {
-    if !{[file exists "$project_dir/MSS_VIDEO_KIT/H264_MM/hss-envm-wrapper-bm1-p0.hex"]} {
-	if {[catch    {exec wget https://github.com/polarfire-soc/hart-software-services/releases/latest/download/hss-envm-wrapper-bm1-p0.hex -P $project_dir/MSS_VIDEO_KIT/H264_MM} issue]} {
-	}
-    }
     create_eNVM_config "$project_dir/MSS_VIDEO_KIT/H264_MM/ENVM.cfg" MSS_VIDEO_KIT/H264_MM/hss-envm-wrapper-bm1-p0.hex
     run_tool -name {GENERATEPROGRAMMINGDATA}
     configure_envm -cfg_file "$project_dir/MSS_VIDEO_KIT/H264_MM/ENVM.cfg"
 }
 
+
+if {[info exists SPIFLASH_DATA]} {
+    if {$my_platform == "Linux"} {
+	if {[catch {exec python generate_overlays_spiclient_data.py H264_MM} issue]} {}
+    } else {
+	if {[catch {exec wsl.exe -e python generate_overlays_spiclient_data.py H264_MM} issue]} {}
+    }
+    create_spiflash "$project_dir/MSS_VIDEO_KIT/H264_MM/spiflash.cfg" $local_dir
+    run_tool -name {GENERATEPROGRAMMINGDATA}
+    configure_spiflash -cfg_file "$project_dir/designer/$project_name/spiflash.cfg"
+}
+
+
 if {[info exists GENERATE_PROGRAMMING_DATA]} {
     run_tool -name {GENERATEPROGRAMMINGDATA}
-}  elseif {[info exists PROGRAM]} {
+}
+
+
+if {[info exists PROGRAM]} {
     if !{[info exists HSS_UPDATE]} {
 	run_tool -name {GENERATEPROGRAMMINGDATA}
     }    
     run_tool -name {PROGRAMDEVICE}
-} elseif {[info exists EXPORT_FPE]} {
+}
+
+
+if {[info exists EXPORT_FPE]} {
     if {[info exists HSS_UPDATE]} {
-        if {$EXPORT_FPE == 1} {
             export_fpe_job $project_name $local_dir "ENVM FABRIC SNVM"
-        } else {
-            export_fpe_job $project_name $EXPORT_FPE "ENVM FABRIC SNVM"
-        }
     } else {
-        if {$EXPORT_FPE == 1} {
             export_fpe_job $project_name $local_dir "FABRIC SNVM"
-        } else {
-            export_fpe_job $project_name $EXPORT_FPE "FABRIC SNVM"
-        }
     }
 }
 

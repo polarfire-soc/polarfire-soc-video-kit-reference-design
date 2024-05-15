@@ -1,13 +1,25 @@
+##################################################################################
+##################################################################################
 #
-# // PFSoC VIDEO Kit H264 I frame Encoder demo Libero design
+# // PFSoC Video Kit Libero design
 #
+##################################################################################
+##################################################################################
+
+##################################################################################
+##################################################################################
 # // Check Libero version and path length to verify project can be created
-#
-if {[string compare [string range [get_libero_version] 0 5] "2023.2"]==0} {
-	puts "Libero v2023.2 detected."
+##################################################################################
+##################################################################################
+set libero_version 2023.2
+set my_platform "Linux"
+
+if {[string compare [string range [get_libero_version] 0 5] "$libero_version"]==0} {
+    puts "Libero $libero_version detected."
 } else {
-	error "Incorrect Libero version. Please use Libero v2023.2 to run these scripts."
+    error "Incorrect Libero version. Please use Libero $libero_version to run these scripts."
 }
+
 
 if { [lindex $tcl_platform(os) 0]  == "Windows" } {
 	if {[string length [pwd]] < 90} {
@@ -15,7 +27,9 @@ if { [lindex $tcl_platform(os) 0]  == "Windows" } {
 	} else {
 		error "Path to project is too long, please reduce the path and try again."
 	}
+   set my_platform "Windows"     
 }
+
 
 #
 # // Process arguments
@@ -49,8 +63,6 @@ set src_path ./script_support/
 set constraint_path ./script_support/constraints/H264
 set project_name "VKPFSOC_H264"
 set project_dir "./$project_name"
-
-file delete -force $project_dir
 source ./script_support/additional_configurations/functions_H264.tcl
 
 #
@@ -219,17 +231,70 @@ organize_tool_files -tool {VERIFYTIMING} \
     -input_type {constraint}
 
 #
+# //Configure the tools
+#
+configure_tool \
+    -name {PLACEROUTE} \
+    -params {DELAY_ANALYSIS:MAX} \
+    -params {EFFORT_LEVEL:false} \
+    -params {GB_DEMOTION:true} \
+    -params {INCRPLACEANDROUTE:false} \
+    -params {IOREG_COMBINING:false} \
+    -params {MULTI_PASS_CRITERIA:VIOLATIONS} \
+    -params {MULTI_PASS_LAYOUT:false} \
+    -params {NUM_MULTI_PASSES:5} \
+    -params {PDPR:false} \
+    -params {RANDOM_SEED:0} \
+    -params {REPAIR_MIN_DELAY:false} \
+    -params {REPLICATION:true} \
+    -params {SLACK_CRITERIA:WORST_SLACK} \
+    -params {SPECIFIC_CLOCK:} \
+    -params {START_SEED_INDEX:1} \
+    -params {STOP_ON_FIRST_PASS:true} \
+    -params {TDPR:true}
+
+
+configure_tool \
+    -name {VERIFYTIMING} \
+    -params {CONSTRAINTS_COVERAGE:1} \
+    -params {FORMAT:XML} \
+    -params {MAX_EXPANDED_PATHS_TIMING:1} \
+    -params {MAX_EXPANDED_PATHS_VIOLATION:0} \
+    -params {MAX_PARALLEL_PATHS_TIMING:1} \
+    -params {MAX_PARALLEL_PATHS_VIOLATION:1} \
+    -params {MAX_PATHS_INTERACTIVE_REPORT:1000} \
+    -params {MAX_PATHS_TIMING:5} \
+    -params {MAX_PATHS_VIOLATION:20} \
+    -params {MAX_TIMING_FAST_HV_LT:1} \
+    -params {MAX_TIMING_MULTI_CORNER:1} \
+    -params {MAX_TIMING_SLOW_LV_HT:1} \
+    -params {MAX_TIMING_SLOW_LV_LT:1} \
+    -params {MAX_TIMING_VIOLATIONS_FAST_HV_LT:1} \
+    -params {MAX_TIMING_VIOLATIONS_MULTI_CORNER:1} \
+    -params {MAX_TIMING_VIOLATIONS_SLOW_LV_HT:1} \
+    -params {MAX_TIMING_VIOLATIONS_SLOW_LV_LT:1} \
+    -params {MIN_TIMING_FAST_HV_LT:1} \
+    -params {MIN_TIMING_MULTI_CORNER:1} \
+    -params {MIN_TIMING_SLOW_LV_HT:1} \
+    -params {MIN_TIMING_SLOW_LV_LT:1} \
+    -params {MIN_TIMING_VIOLATIONS_FAST_HV_LT:1} \
+    -params {MIN_TIMING_VIOLATIONS_MULTI_CORNER:1} \
+    -params {MIN_TIMING_VIOLATIONS_SLOW_LV_HT:1} \
+    -params {MIN_TIMING_VIOLATIONS_SLOW_LV_LT:1} \
+    -params {SLACK_THRESHOLD_VIOLATION:0.0} \
+    -params {SMART_INTERACTIVE:1}
+
+#
 # // Run the design flow and add eNVM clients
 #
 if {[info exists SYNTHESIZE]} {
     run_tool -name {SYNTHESIZE}
 }
-configure_tool -name {VERIFYTIMING} -params {CONSTRAINTS_COVERAGE:1} -params {FORMAT:XML} -params {MAX_EXPANDED_PATHS_TIMING:1} -params {MAX_EXPANDED_PATHS_VIOLATION:0} -params {MAX_PARALLEL_PATHS_TIMING:1} -params {MAX_PARALLEL_PATHS_VIOLATION:1} -params {MAX_PATHS_INTERACTIVE_REPORT:1000} -params {MAX_PATHS_TIMING:5} -params {MAX_PATHS_VIOLATION:20} -params {MAX_TIMING_FAST_HV_LT:1} -params {MAX_TIMING_MULTI_CORNER:1} -params {MAX_TIMING_SLOW_LV_HT:1} -params {MAX_TIMING_SLOW_LV_LT:1} -params {MAX_TIMING_VIOLATIONS_FAST_HV_LT:1} -params {MAX_TIMING_VIOLATIONS_MULTI_CORNER:1} -params {MAX_TIMING_VIOLATIONS_SLOW_LV_HT:1} -params {MAX_TIMING_VIOLATIONS_SLOW_LV_LT:1} -params {MIN_TIMING_FAST_HV_LT:1} -params {MIN_TIMING_MULTI_CORNER:1} -params {MIN_TIMING_SLOW_LV_HT:1} -params {MIN_TIMING_SLOW_LV_LT:1} -params {MIN_TIMING_VIOLATIONS_FAST_HV_LT:1} -params {MIN_TIMING_VIOLATIONS_MULTI_CORNER:1} -params {MIN_TIMING_VIOLATIONS_SLOW_LV_HT:1} -params {MIN_TIMING_VIOLATIONS_SLOW_LV_LT:1} -params {SLACK_THRESHOLD_VIOLATION:0.0} -params {SMART_INTERACTIVE:1}
-configure_tool -name {PLACEROUTE} -params {DELAY_ANALYSIS:MAX} -params {EFFORT_LEVEL:false} -params {GB_DEMOTION:true} -params {INCRPLACEANDROUTE:false} -params {IOREG_COMBINING:false} -params {MULTI_PASS_CRITERIA:VIOLATIONS} -params {MULTI_PASS_LAYOUT:false} -params {NUM_MULTI_PASSES:5} -params {PDPR:false} -params {RANDOM_SEED:0} -params {REPAIR_MIN_DELAY:false} -params {REPLICATION:true} -params {SLACK_CRITERIA:WORST_SLACK} -params {SPECIFIC_CLOCK:} -params {START_SEED_INDEX:1} -params {STOP_ON_FIRST_PASS:false} -params {TDPR:true}
 
 if {[info exists PLACEROUTE]} {
     run_tool -name {PLACEROUTE}
 }
+
 if {[info exists VERIFY_TIMING]} {
     run_tool -name {VERIFYTIMING}
 }
@@ -239,30 +304,38 @@ if {[info exists HSS_UPDATE]} {
       if {[catch    {exec wget https://github.com/polarfire-soc/hart-software-services/releases/latest/download/hss-envm-wrapper.mpfs-video-kit.hex -P ./script_support/MSS_VIDEO_KIT/H264} issue]} {
       }
      }
-
   create_eNVM_config "$local_dir/script_support/MSS_VIDEO_KIT/H264/ENVM.cfg" "$local_dir/script_support/MSS_VIDEO_KIT/H264/hss-envm-wrapper.mpfs-video-kit.hex"
   run_tool -name {GENERATEPROGRAMMINGDATA}
   configure_envm -cfg_file {script_support/MSS_VIDEO_KIT/H264/ENVM.cfg}
 }
 
+if {[info exists SPIFLASH_DATA]} {
+    if {$my_platform == "Linux"} {
+	if {[catch {exec python generate_overlays_spiclient_data.py H264} issue]} {}
+    } else {
+	if {[catch {exec wsl.exe -e python generate_overlays_spiclient_data.py H264} issue]} {}
+    }
+    create_spiflash "$project_dir/MSS_VIDEO_KIT/H264/spiflash.cfg" $local_dir    
+    run_tool -name {GENERATEPROGRAMMINGDATA}
+    configure_spiflash -cfg_file "$project_dir/designer/$project_name/spiflash.cfg"
+}
+
 if {[info exists GENERATE_PROGRAMMING_DATA]} {
     run_tool -name {GENERATEPROGRAMMINGDATA}
-}  elseif {[info exists PROGRAM]} {
-    run_tool -name {GENERATEPROGRAMMINGDATA}
+}
+
+if {[info exists PROGRAM]} {
+    if !{[info exists HSS_UPDATE]} {
+	run_tool -name {GENERATEPROGRAMMINGDATA}
+    }    
     run_tool -name {PROGRAMDEVICE}
-} elseif {[info exists EXPORT_FPE]} {
+}
+
+if {[info exists EXPORT_FPE]} {
     if {[info exists HSS_UPDATE]} {
-        if {$EXPORT_FPE == 1} {
-            export_fpe_job $project_name $local_dir "ENVM FABRIC_SNVM"
-        } else {
-            export_fpe_job $project_name $EXPORT_FPE "ENVM FABRIC_SNVM"
-        }
+            export_fpe_job $project_name $local_dir "ENVM FABRIC SNVM"
     } else {
-        if {$EXPORT_FPE == 1} {
-            export_fpe_job $project_name $local_dir "FABRIC_SNVM"
-        } else {
-            export_fpe_job $project_name $EXPORT_FPE "FABRIC_SNVM"
-        }
+            export_fpe_job $project_name $local_dir "FABRIC SNVM"
     }
 }
 

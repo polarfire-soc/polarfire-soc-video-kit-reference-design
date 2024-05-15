@@ -61,10 +61,10 @@ Below arguments are supported to modify or configure aspects of the design flow 
 | SYNTHESIZE                | Runs the synthesis step after design generation has completed                                                         |
 | PLACEROUTE                | Runs the synthesis and place and route steps after design generation has completed                                    |
 | VERIFY_TIMING             | Runs the synthesis, place and route and timing verification steps after design generation has completed               |
+| SPIFLASH_DATA             | Adds the data client to the SPI Flash to pick the dtbo file based on the design selection               |
 | GENERATE_PROGRAMMING_DATA | Generates the files required to generate a bitstream for programming a device                                         |
 | PROGRAM                   | Runs the full design flow after generating a design and programs a connected device. <br>Note: the device must be connected when the "Run PROGRAM Action" stage of the design flow is reached and only one device should be connected |
 | EXPORT_FPE                | Runs the full design flow after generating a design and exports a FlashPro Express file to the local directory                              |
-| EXPORT_FPE:PATH           | Runs the full design flow after generating a design and exports a FlashPro Express file to a specified path e.g EXPORT_FPE:/home/user/jobs/ |
 | RAW_BAYER                 | This argument can be used to generates new bayer pipeline <br> Imx334 camera (SRGGB10 format /dev/v4l-subdev0) --> MIPI CSI2 IP (serial data to parallel data /dev/v4l-subdev1) --> Video DMA IP (/dev/video0)|
 | H264_MM                   | This argument can be used to generates modular H264 pipeline <br> Camera → MIPI  → GVPC (Mono2RGB) → Image-Enhancement → Scaler → OSD → GVPC (RGB2YUV420) → H.264 → Video-Capture (/dev/video0)|
 

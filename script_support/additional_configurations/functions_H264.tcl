@@ -1,34 +1,3 @@
-proc create_config {current_config updated_config} {
-    set def_config [open $current_config]
-    set def_config_data [read $def_config]
-    set data [split $def_config_data "\n"]
-    close $def_config
-    
-    set new_config [open $updated_config w]
-    foreach line $data {
-        puts $new_config "$line"
-    }
-    puts $new_config ""
-    close $new_config
-}
-
-proc update_param {config param_to_update value_to_set} {
-    set config_file [open $config]
-    set config_file_data [read $config_file]
-    set config_file_lines [split $config_file_data "\n"]
-    close $config_file
-    set config_file [open $config w]
-    foreach line $config_file_lines {
-        if { [regexp $param_to_update $line] } {
-            puts $config_file "$param_to_update$value_to_set"
-            puts $line
-        } else {
-            puts $config_file "$line"
-        }
-    }
-    close $config_file
-}
-
 proc create_eNVM_config {config client} {
     set envm_config [open $config w]
     
@@ -67,4 +36,20 @@ proc export_fpe_job {name directory components} {
         -skip_recommended_procedures {} \
         -sanitize_snvm 0 \
         -sanitize_envm 0
+}
+
+proc create_spiflash {spiflash src_path} {
+    set spiflash [open $spiflash w]
+
+    puts $spiflash "set_auto_update_mode {1} \\"
+    puts $spiflash "set_spi_flash_memory_size {134217728} \\"
+    puts $spiflash "set_client \ \\"
+    puts $spiflash "-client_name    {DT_Overlay} \ \\"
+    puts $spiflash "-client_type    {FILE_DATA_STORAGE_PLAIN_BIN} \ \\"
+    puts $spiflash "-content_type   {MEMORY_FILE} \ \\"
+    puts $spiflash "-content_file   {$src_path/mpfs_dtbo.bin} \ \\"
+    puts $spiflash "-start_address  {1024} \ \\"
+    puts $spiflash "-program        {1} "
+
+    close $spiflash
 }

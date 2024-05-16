@@ -54,7 +54,6 @@ if { $::argc > 0 } {
 ###################################################################################
 # // Set required variables and add functions
 ###################################################################################
-
 set install_loc [defvar_get -name ACTEL_SW_DIR]
 set mss_config_loc "$install_loc/bin64/pfsoc_mss"
 set local_dir [pwd]
@@ -314,9 +313,10 @@ if {[info exists SPIFLASH_DATA]} {
     } else {
 	if {[catch {exec wsl.exe -e python generate_overlays_spiclient_data.py H264_MM} issue]} {}
     }
-    create_spiflash "$project_dir/MSS_VIDEO_KIT/H264_MM/spiflash.cfg" $local_dir
     run_tool -name {GENERATEPROGRAMMINGDATA}
-    configure_spiflash -cfg_file "$project_dir/designer/$project_name/spiflash.cfg"
+    create_spiflash "$project_dir/MSS_VIDEO_KIT/H264_MM/spiflash.cfg" $local_dir
+    configure_spiflash -cfg_file "$project_dir/MSS_VIDEO_KIT/H264_MM/spiflash.cfg"
+    generate_design_initialization_data
 }
 
 

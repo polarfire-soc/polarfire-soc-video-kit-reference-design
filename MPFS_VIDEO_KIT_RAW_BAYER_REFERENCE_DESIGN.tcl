@@ -298,7 +298,7 @@ if {[info exists SPIFLASH_DATA]} {
     }
     create_spiflash "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/spiflash.cfg" $local_dir
     run_tool -name {GENERATEPROGRAMMINGDATA}
-    configure_spiflash -cfg_file "$project_dir/designer/$project_name/spiflash.cfg"
+    configure_spiflash -cfg_file "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/spiflash.cfg"
 }
 
 if {[info exists GENERATE_PROGRAMMING_DATA]} {

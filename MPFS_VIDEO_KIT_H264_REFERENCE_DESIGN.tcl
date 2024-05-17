@@ -120,6 +120,11 @@ download_core -vlnv {Microsemi:SolutionCore:DDR_AXI4_ARBITER_PF:2.1.0} -location
 download_core -vlnv {Microchip:SolutionCore:H264_Iframe_Encoder:1.4.0} -location {www.microchip-ip.com/repositories/DirectCore}
 
 
+# Copy source files
+file mkdir $project_dir/MSS_VIDEO_KIT/
+file copy $src_path/MSS_VIDEO_KIT/H264/ $project_dir/MSS_VIDEO_KIT/
+
+
 #
 # // Generate base design
 #

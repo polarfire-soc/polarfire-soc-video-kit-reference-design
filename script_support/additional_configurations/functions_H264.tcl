@@ -29,7 +29,7 @@ proc export_fpe_job {name directory components} {
         -zeroization_likenew_action 0 \
         -zeroization_unrecoverable_action 0 \
         -program_design 1 \
-        -program_spi_flash 0 \
+        -program_spi_flash 1 \
         -include_plaintext_passkey 0 \
         -design_bitstream_format {PPD} \
         -prog_optional_procedures {} \
@@ -41,14 +41,15 @@ proc export_fpe_job {name directory components} {
 proc create_spiflash {spiflash src_path} {
     set spiflash [open $spiflash w]
 
-    puts $spiflash "set_auto_update_mode {1} \\"
-    puts $spiflash "set_spi_flash_memory_size {134217728} \\"
+    puts $spiflash "set_auto_update_mode {0} "
+    puts $spiflash "set_spi_flash_memory_size {134217728} "
     puts $spiflash "set_client \ \\"
     puts $spiflash "-client_name    {DT_Overlay} \ \\"
     puts $spiflash "-client_type    {FILE_DATA_STORAGE_PLAIN_BIN} \ \\"
     puts $spiflash "-content_type   {MEMORY_FILE} \ \\"
     puts $spiflash "-content_file   {$src_path/mpfs_dtbo.bin} \ \\"
     puts $spiflash "-start_address  {1024} \ \\"
+    puts $spiflash "-client_size    {6774} \ \\"
     puts $spiflash "-program        {1} "
 
     close $spiflash

@@ -296,7 +296,7 @@ if {[info exists SPIFLASH_DATA]} {
     if {$my_platform == "Linux"} {
 	if {[catch {exec python generate_overlays_spiclient_data.py RAW_BAYER} issue]} {}
     } else {
-	if {[catch {exec wsl.exe -e python generate_overlays_spiclient_data.py RAW_BAYER} issue]} {}
+	if {[catch {exec cmd.exe /c "wsl.exe -e python generate_overlays_spiclient_data.py RAW_BAYER"} issue]} {}
     }
     create_spiflash "$project_dir/MSS_VIDEO_KIT/RAW_BAYER/spiflash.cfg" $local_dir
     run_tool -name {GENERATEPROGRAMMINGDATA}

@@ -318,7 +318,7 @@ if {[info exists SPIFLASH_DATA]} {
     if {$my_platform == "Linux"} {
 	if {[catch {exec python generate_overlays_spiclient_data.py H264} issue]} {}
     } else {
-	if {[catch {exec wsl.exe -e python generate_overlays_spiclient_data.py H264} issue]} {}
+	if {[catch {exec cmd.exe /c "wsl.exe -e python generate_overlays_spiclient_data.py H264"} issue]} {}
     }
     create_spiflash "$project_dir/MSS_VIDEO_KIT/H264/spiflash.cfg" $local_dir    
     run_tool -name {GENERATEPROGRAMMINGDATA}

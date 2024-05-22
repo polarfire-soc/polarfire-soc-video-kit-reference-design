@@ -99,23 +99,27 @@ XML generated for all available configurations is provided in the "XML" folder.
 <a name="setting-the-spi-data-client-for-dt-overlay"></a>
 ## Setting the spi data client for dt overlay
 
-Run the below command to generate spi data client for dt overlay
-In the command posible args H264, RAW_BAYER and H264_MM.
+Run the below command to generate spi data client for dt overlay:
 
 ```
 python generate_overlays_spiclient_data.py <build arg>
 ```
+where,
+<build arg> should be one among: H264, RAW_BAYER or H264_MM.
+H264 = H.264 Compact Design
+RAW_BAYER = Raw Bayer Design
+H264_MM = New H.264 Modular Design
 
-Ex: if you wanted to build spi client data for the H264 the run the below command
-this command will generate mpfs_dtbo.spi file to used as spi data client
+Example: If H.264 Compact Design SPI Client Data is required, then run the following command:
 
 ```
 python generate_overlays_spiclient_data.py H264
 ```
+Above command will generate mpfs_dtbo.bin file to be used as SPI Data Client
 
-If you wated to run this in windows we need run in the WSL environment and all required pakages should be installed in the WSL (dtc, wget, gcc and python).
+If it is required to run this in windows we need to run in the WSL environment and all required pakages should be installed in the WSL (device-tree-compiler, wget, gcc and python).
 
-WSL instalation instruction [here](https://learn.microsoft.com/en-us/windows/wsl/install)
+WSL installation instructions [here](https://learn.microsoft.com/en-us/windows/wsl/install)
 
 <a name="setting-the-boot-mode-and-programming-the-envm"></a>
 ## Setting the boot mode and programming the eNVM

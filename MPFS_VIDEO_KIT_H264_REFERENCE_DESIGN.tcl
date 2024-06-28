@@ -318,6 +318,7 @@ if {[info exists SPIFLASH_DATA]} {
     if {$my_platform == "Linux"} {
 	if {[catch {exec python generate_overlays_spiclient_data.py H264} issue]} {}
     } else {
+	file copy $local_dir/script_support/dtso_overlay/H264/mpfs_h264.dtbo  $local_dir/mpfs_dtbo.bin
 	if {[catch {exec cmd.exe /c "wsl.exe -e python generate_overlays_spiclient_data.py H264"} issue]} {}
     }
     create_spiflash "$project_dir/MSS_VIDEO_KIT/H264/spiflash.cfg" $local_dir    

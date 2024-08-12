@@ -114,7 +114,7 @@ download_core -vlnv {Actel:SystemBuilder:PF_IOD_GENERIC_RX:2.1.110} -location {w
 download_core -vlnv {Actel:SgCore:PF_OSC:1.0.102} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Microsemi:SolutionCore:RGBtoYCbCr:4.4.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:SgCore:PF_XCVR_REF_CLK:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
-download_core -vlnv {Microchip:SolutionCore:H264_Iframe_Encoder:1.5.0} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Microchip:SolutionCore:H264_Encoder:2.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Microchip:SolutionCore:VDMA:1.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
 
 
@@ -137,6 +137,7 @@ build_design_hierarchy
 
 #Sourcing the Tcl files in which HDL+ core definitions are created for HDL modules
 source ${src_path}/components/H264_MM/CR_OSD.tcl
+source ${src_path}/components/H264_MM/delay_register.tcl
 build_design_hierarchy
 
 #Sourcing the Tclfiles for creating individual ${src_path}/components/H264_MM under the top level
@@ -161,7 +162,7 @@ source ${src_path}/components/H264_MM/mipicsi2rxdecoderPF_C0.tcl
 source ${src_path}/components/H264_MM/IMX334_IF_TOP.tcl 
 source ${src_path}/components/H264_MM/Bayer_Interpolation_C0.tcl 
 source ${src_path}/components/H264_MM/Gamma_Correction_C0.tcl 
-source ${src_path}/components/H264_MM/H264_Iframe_Encoder_C0.tcl 
+source ${src_path}/components/H264_MM/H264_Encoder_C0.tcl
 source ${src_path}/components/H264_MM/IMAGE_SCALER_C0.tcl 
 source ${src_path}/components/H264_MM/Image_Enhancement_C0.tcl 
 source ${src_path}/components/H264_MM/RGBtoYCbCr_C0.tcl
@@ -238,7 +239,7 @@ organize_tool_files -tool {VERIFYTIMING} \
 configure_tool \
     -name {PLACEROUTE} \
     -params {DELAY_ANALYSIS:MAX} \
-    -params {EFFORT_LEVEL:false} \
+    -params {EFFORT_LEVEL:true} \
     -params {GB_DEMOTION:false} \
     -params {INCRPLACEANDROUTE:false} \
     -params {IOREG_COMBINING:true} \

@@ -178,7 +178,7 @@ sd_instantiate_component -sd_name ${sd_name} -component_name {Gamma_Correction_C
 
 
 # Add H264_Iframe_Encoder_C0_0 instance
-sd_instantiate_component -sd_name ${sd_name} -component_name {H264_Encoder_C0} -instance_name {H264_Iframe_Encoder_C0_0}
+sd_instantiate_component -sd_name ${sd_name} -component_name {H264_Encoder_C0} -instance_name {H264_Encoder_C0_0}
 
 
 
@@ -204,17 +204,17 @@ sd_instantiate_component -sd_name ${sd_name} -component_name {RGBtoYCbCr_C0} -in
 
 
 # Add scalar net connections
-sd_connect_pins -sd_name ${sd_name} -pin_names {"ACLK_I" "H264_Iframe_Encoder_C0_0:ACLK_I" "Image_Enhancement_C0_0:ACLK_I" "Image_Scaler_top_0:ACLK_I" "osd_top_0:aclk" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"ARESETN_I" "H264_Iframe_Encoder_C0_0:ARESETN_I" "Image_Enhancement_C0_0:ARESETN_I" "Image_Scaler_top_0:ARESETN_I" "osd_top_0:aresetn" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"ACLK_I" "H264_Encoder_C0_0:ACLK_I" "Image_Enhancement_C0_0:ACLK_I" "Image_Scaler_top_0:ACLK_I" "osd_top_0:aclk" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"ARESETN_I" "H264_Encoder_C0_0:ARESETN_I" "Image_Enhancement_C0_0:ARESETN_I" "Image_Scaler_top_0:ARESETN_I" "osd_top_0:aresetn" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:DATA_VALID_I" "DATA_VALID_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:EOF_I" "FRAME_START_I" "H264_Iframe_Encoder_C0_0:FRAME_START_I" "Image_Enhancement_C0_0:FRAME_START_I" "Image_Scaler_top_0:FRAME_START_I" "osd_top_0:FRAME_END_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:RESETN_I" "Gamma_Correction_C0_0:RESETN_I" "H264_Iframe_Encoder_C0_0:RESET_N" "Image_Enhancement_C0_0:RESETN_I" "Image_Scaler_top_0:RESETN_I" "RESETN_I" "RGBtoYCbCr_C0_0:RESET_N_I" "delay_register_0:RESETN_I" "osd_top_0:RESETN_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:EOF_I" "FRAME_START_I" "H264_Encoder_C0_0:FRAME_START_I" "Image_Enhancement_C0_0:FRAME_START_I" "Image_Scaler_top_0:FRAME_START_I" "osd_top_0:FRAME_END_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:RESETN_I" "Gamma_Correction_C0_0:RESETN_I" "H264_Encoder_C0_0:RESET_N" "Image_Enhancement_C0_0:RESETN_I" "Image_Scaler_top_0:RESETN_I" "RESETN_I" "RGBtoYCbCr_C0_0:RESET_N_I" "delay_register_0:RESETN_I" "osd_top_0:RESETN_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:RGB_VALID_O" "Gamma_Correction_C0_0:DATA_VALID_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:SYS_CLK_I" "Gamma_Correction_C0_0:SYS_CLK_I" "H264_Iframe_Encoder_C0_0:PIX_CLK_I" "Image_Enhancement_C0_0:SYS_CLK_I" "Image_Scaler_top_0:IN_VIDEO_CLK_I" "Image_Scaler_top_0:OUT_VIDEO_CLK_I" "RGBtoYCbCr_C0_0:CLOCK_I" "SYS_CLK_I" "delay_register_0:SYS_CLK_I" "osd_top_0:SYS_CLK_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"DATA_VALID_O" "H264_Iframe_Encoder_C0_0:DATA0_VALID_O" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"FRAME_START_O" "H264_Iframe_Encoder_C0_0:FRAME_START_O" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:SYS_CLK_I" "Gamma_Correction_C0_0:SYS_CLK_I" "H264_Encoder_C0_0:PIX_CLK_I" "Image_Enhancement_C0_0:SYS_CLK_I" "Image_Scaler_top_0:IN_VIDEO_CLK_I" "Image_Scaler_top_0:OUT_VIDEO_CLK_I" "RGBtoYCbCr_C0_0:CLOCK_I" "SYS_CLK_I" "delay_register_0:SYS_CLK_I" "osd_top_0:SYS_CLK_I" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"DATA_VALID_O" "H264_Encoder_C0_0:DATA0_VALID_O" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"FRAME_START_O" "H264_Encoder_C0_0:FRAME_START_O" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Gamma_Correction_C0_0:DATA_VALID_O" "Image_Enhancement_C0_0:DATA_VALID_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_Iframe_Encoder_C0_0:DATA_VALID_I" "RGBtoYCbCr_C0_0:DATA_VALID_O" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_Encoder_C0_0:DATA_VALID_I" "RGBtoYCbCr_C0_0:DATA_VALID_O" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Image_Enhancement_C0_0:DATA_VALID_O" "Image_Scaler_top_0:DATA_VALID_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Image_Scaler_top_0:DATA_VALID_O" "delay_register_0:data_valid_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"RGBtoYCbCr_C0_0:DATA_VALID_I" "osd_top_0:data_valid_o" }
@@ -225,12 +225,12 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:B_O" "
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:DATA_I" "DATA_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:G_O" "Gamma_Correction_C0_0:GREEN_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Bayer_Interpolation_C0_0:R_O" "Gamma_Correction_C0_0:RED_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"DATA_O" "H264_Iframe_Encoder_C0_0:DATA0_O" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"DATA_O" "H264_Encoder_C0_0:DATA0_O" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Gamma_Correction_C0_0:BLUE_O" "Image_Enhancement_C0_0:B_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Gamma_Correction_C0_0:GREEN_O" "Image_Enhancement_C0_0:G_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Gamma_Correction_C0_0:RED_O" "Image_Enhancement_C0_0:R_I" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_Iframe_Encoder_C0_0:DATA_C_I" "RGBtoYCbCr_C0_0:C_OUT" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_Iframe_Encoder_C0_0:DATA_Y_I" "RGBtoYCbCr_C0_0:Y_OUT" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_Encoder_C0_0:DATA_C_I" "RGBtoYCbCr_C0_0:C_OUT" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"H264_Encoder_C0_0:DATA_Y_I" "RGBtoYCbCr_C0_0:Y_OUT" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Image_Enhancement_C0_0:B_O" "Image_Scaler_top_0:DATA_B_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Image_Enhancement_C0_0:G_O" "Image_Scaler_top_0:DATA_G_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"Image_Enhancement_C0_0:R_O" "Image_Scaler_top_0:DATA_R_I" }
@@ -245,7 +245,7 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"delay_register_0:green_o" "osd_
 sd_connect_pins -sd_name ${sd_name} -pin_names {"delay_register_0:red_o" "osd_top_0:r_i" }
 
 # Add bus interface net connections
-sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4L_H264" "H264_Iframe_Encoder_C0_0:AXI4L_H264" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4L_H264" "H264_Encoder_C0_0:AXI4L_H264" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4L_IE" "Image_Enhancement_C0_0:AXI4L_IE" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4L_OSD" "osd_top_0:AXI4L_OSD" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4L_SCALER" "Image_Scaler_top_0:AXI4L_SCALER" }

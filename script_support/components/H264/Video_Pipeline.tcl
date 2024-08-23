@@ -1,4 +1,4 @@
-# Creating SmartDesign Video_Pipeline
+# Creating SmartDesign "Video_Pipeline"
 set sd_name {Video_Pipeline}
 create_smartdesign -sd_name ${sd_name}
 
@@ -68,6 +68,16 @@ sd_create_bus_port -sd_name ${sd_name} -port_name {wstrb} -port_direction {OUT} 
 
 
 # Create top level Bus interface Ports
+sd_create_bif_port -sd_name ${sd_name} -port_name {APBslave} -port_bif_vlnv {AMBA:AMBA2:APB:r0p0} -port_bif_role {slave} -port_bif_mapping {\
+"PADDR:paddr_i" \
+"PSELx:psel_i" \
+"PENABLE:penable_i" \
+"PWRITE:pwrite_i" \
+"PRDATA:prdata_o" \
+"PWDATA:pwdata_i" \
+"PREADY:pready_o" \
+"PSLVERR:pslverr_o" } 
+
 sd_create_bif_port -sd_name ${sd_name} -port_name {BIF_1} -port_bif_vlnv {AMBA:AMBA4:AXI4:r0p0_0} -port_bif_role {mirroredSlave} -port_bif_mapping {\
 "AWID:awid" \
 "AWADDR:awaddr" \
@@ -104,16 +114,6 @@ sd_create_bif_port -sd_name ${sd_name} -port_name {BIF_1} -port_bif_vlnv {AMBA:A
 "RLAST:rlast" \
 "RVALID:rvalid" \
 "RREADY:rready" } 
-
-sd_create_bif_port -sd_name ${sd_name} -port_name {APBslave} -port_bif_vlnv {AMBA:AMBA2:APB:r0p0} -port_bif_role {slave} -port_bif_mapping {\
-"PADDR:paddr_i" \
-"PSELx:psel_i" \
-"PENABLE:penable_i" \
-"PWRITE:pwrite_i" \
-"PRDATA:prdata_o" \
-"PWDATA:pwdata_i" \
-"PREADY:pready_o" \
-"PSLVERR:pslverr_o" }
 
 # Add apb3_if_0 instance
 sd_instantiate_hdl_core -sd_name ${sd_name} -hdl_core_name {apb3_if} -instance_name {apb3_if_0}
@@ -162,6 +162,7 @@ sd_instantiate_component -sd_name ${sd_name} -component_name {RGBtoYCbCr_C0} -in
 
 # Add video_processing_0 instance
 sd_instantiate_component -sd_name ${sd_name} -component_name {video_processing} -instance_name {video_processing_0}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {video_processing_0:eof_encoder_o}
 
 
 
@@ -185,7 +186,6 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:h264_clr_intr_o" "h26
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:h264_en_o" "video_processing_0:encoder_en_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"apb3_if_0:osd_en_o" "video_processing_0:OSD_EN_I" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"frm_interrupt_o" "h264_top_0:frm_interrupt_o" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"h264_top_0:eof_i" "video_processing_0:eof_encoder_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"h264_top_0:frame_valid_i" "video_processing_0:frame_start_encoder_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"h264_top_0:h264_encoder_en" "video_processing_0:encoder_en_o" }
 
@@ -219,7 +219,7 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"BIF_1" "h264_top_0:BIF_1" }
 
 # Re-enable auto promotion of pins of type 'pad'
 auto_promote_pad_pins -promote_all 1
-# Save the smartDesign
+# Save the SmartDesign 
 save_smartdesign -sd_name ${sd_name}
-# Generate SmartDesign Video_Pipeline
+# Generate SmartDesign "Video_Pipeline"
 generate_component -component_name ${sd_name}

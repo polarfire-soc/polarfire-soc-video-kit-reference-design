@@ -65,6 +65,13 @@ set project_name "VKPFSOC_H264"
 set project_dir "./$project_name"
 source ./script_support/additional_configurations/functions_H264.tcl
 
+if {[file exist $project_dir]} {
+    file delete -force $project_dir
+} else {
+    puts "Creating the project"
+}
+
+
 #
 # // Create Libero project
 #
@@ -117,7 +124,7 @@ download_core -vlnv {Actel:SgCore:PF_OSC:1.0.102} -location {www.microchip-ip.co
 download_core -vlnv {Microsemi:SolutionCore:RGBtoYCbCr:4.4.0} -location {www.microchip-ip.com/repositories/DirectCore}
 download_core -vlnv {Actel:SgCore:PF_XCVR_REF_CLK:1.0.103} -location {www.microchip-ip.com/repositories/SgCore}
 download_core -vlnv {Microsemi:SolutionCore:DDR_AXI4_ARBITER_PF:2.1.0} -location {www.microchip-ip.com/repositories/DirectCore}
-download_core -vlnv {Microchip:SolutionCore:H264_Iframe_Encoder:1.4.0} -location {www.microchip-ip.com/repositories/DirectCore}
+download_core -vlnv {Microchip:SolutionCore:H264_Encoder:2.0.0} -location {www.microchip-ip.com/repositories/DirectCore}
 
 
 # Copy source files
@@ -169,7 +176,7 @@ source ${src_path}/components/H264/PF_IOD_GENERIC_RX_C0.tcl
 source ${src_path}/components/H264/FIC_CONVERTER.tcl
 source ${src_path}/components/H264/CAM_IOD_TIP_TOP.tcl
 source ${src_path}/components/H264/IMX334_IF_TOP.tcl
-source ${src_path}/components/H264/H264_Iframe_Encoder_C0.tcl
+source ${src_path}/components/H264/H264_Encoder_C0.tcl
 source ${src_path}/components/H264/H264_DDR_WRITE.tcl
 source ${src_path}/components/H264/h264_top.tcl
 source ${src_path}/components/H264/video_processing.tcl

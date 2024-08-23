@@ -1,4 +1,4 @@
-# Creating SmartDesign H264_DDR_WRITE
+# Creating SmartDesign "H264_DDR_WRITE"
 set sd_name {H264_DDR_WRITE}
 create_smartdesign -sd_name ${sd_name}
 
@@ -33,8 +33,6 @@ sd_create_bus_port -sd_name ${sd_name} -port_name {write_length_o} -port_directi
 sd_create_bus_port -sd_name ${sd_name} -port_name {write_start_addr_o} -port_direction {OUT} -port_range {[31:0]}
 
 
-sd_create_pin_slices -sd_name ${sd_name} -pin_name {data_i} -pin_slices {[15:8]}
-sd_create_pin_slices -sd_name ${sd_name} -pin_name {data_i} -pin_slices {[7:0]}
 # Add AND2_1 instance
 sd_instantiate_macro -sd_name ${sd_name} -macro_name {AND2} -instance_name {AND2_1}
 
@@ -49,8 +47,6 @@ sd_configure_core_instance -sd_name ${sd_name} -instance_name {data_packer_h264_
 -validate_rules 0
 sd_save_core_instance_config -sd_name ${sd_name} -instance_name {data_packer_h264_0}
 sd_update_instance -sd_name ${sd_name} -instance_name {data_packer_h264_0}
-sd_create_pin_slices -sd_name ${sd_name} -pin_name {data_packer_h264_0:data_i} -pin_slices {[15:8]}
-sd_create_pin_slices -sd_name ${sd_name} -pin_name {data_packer_h264_0:data_i} -pin_slices {[7:0]}
 
 
 
@@ -99,8 +95,7 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"ddr_write_controller_enc_0:writ
 sd_connect_pins -sd_name ${sd_name} -pin_names {"rdata_rdy_o" "video_fifo_0:rdata_rdy_o" }
 
 # Add bus net connections
-sd_connect_pins -sd_name ${sd_name} -pin_names {"data_i[15:8]" "data_packer_h264_0:data_i[7:0]" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"data_i[7:0]" "data_packer_h264_0:data_i[15:8]" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"data_i" "data_packer_h264_0:data_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"data_packer_h264_0:data_o" "video_fifo_0:wdata_i" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"ddr_write_controller_enc_0:fifo_count_i" "video_fifo_0:rdata_count_o" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"ddr_write_controller_enc_0:frame_ddr_addr_i" "frame_ddr_addr_i" }
@@ -113,7 +108,7 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"rdata_o" "video_fifo_0:rdata_o"
 
 # Re-enable auto promotion of pins of type 'pad'
 auto_promote_pad_pins -promote_all 1
-# Save the smartDesign
+# Save the SmartDesign 
 save_smartdesign -sd_name ${sd_name}
-# Generate SmartDesign H264_DDR_WRITE
+# Generate SmartDesign "H264_DDR_WRITE"
 generate_component -component_name ${sd_name}

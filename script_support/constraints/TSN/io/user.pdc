@@ -1,0 +1,331 @@
+# Microchip I/O Physical Design Constraints file
+
+# User I/O Constraints file 
+
+# Version: 2024.2 2024.2.0.13
+
+# Family: PolarFireSoC , Die: MPFS250TS , Package: FCG1152
+
+# Date generated: Thu Jan 16 16:44:52 2025 
+
+
+# 
+# User Locked I/O Bank Settings
+# 
+
+
+# 
+# Unlocked I/O Bank Settings
+# The I/O Bank Settings can be locked by directly editing this file
+# or by making changes in the I/O Attribute Editor
+# 
+
+set_iobank -bank_name Bank0   \
+    -vcci 1.20                \
+    -vref 0.60                \
+    -auto_calib true          \
+    -auto_calib_ramp_time 50  \
+    -fixed false              \
+    -update_iostd true
+
+
+# 
+# User Locked I/O settings
+# 
+
+set_io -port_name LED2  \
+    -pin_name AP28      \
+    -fixed true         \
+    -io_std LVCMOS12    \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name LED3  \
+    -pin_name AP29      \
+    -fixed true         \
+    -io_std LVCMOS12    \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name TEN  \
+    -pin_name AM5      \
+    -fixed true        \
+    -io_std HSTL12I    \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name cam1inck  \
+    -pin_name J5            \
+    -fixed true             \
+    -io_std LVCMOS25        \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name cam1xmaster  \
+    -pin_name J4               \
+    -fixed true                \
+    -io_std LVCMOS25           \
+    -DIRECTION OUTPUT
+
+
+
+# 
+# Dedicated Peripheral I/O Settings
+# 
+
+
+# 
+# Unlocked I/O settings
+# The I/Os in this section are unplaced or placed but are not locked
+# the other listed attributes have been applied
+# 
+
+
+#
+#Ports using Dedicated Pins
+
+#
+
+set_io -port_name REF_CLK_PAD_N  \
+    -pin_name L28                \
+    -DIRECTION INPUT
+
+
+set_io -port_name REF_CLK_PAD_P  \
+    -pin_name L27                \
+    -DIRECTION INPUT
+
+
+# 
+# Unlocked I/O Bank Settings
+# The I/O Bank Settings can be locked by directly editing this file
+# or by making changes in the I/O Attribute Editor
+# 
+
+set_iobank -bank_name Bank7   \
+    -auto_calib true          \
+    -auto_calib_ramp_time 50  \
+    -fixed false
+
+set_iobank -bank_name Bank8   \
+    -auto_calib true          \
+    -auto_calib_ramp_time 50  \
+    -fixed false
+
+set_iobank -bank_name Bank9   \
+    -auto_calib true          \
+    -auto_calib_ramp_time 50  \
+    -fixed false
+
+
+# 
+# User Locked I/O settings
+# 
+
+set_io -port_name PADN  \
+    -pin_name A31       \
+    -fixed true         \
+    -DIRECTION INPUT
+
+
+set_io -port_name PADP  \
+    -pin_name A30       \
+    -fixed true         \
+    -DIRECTION INPUT
+
+
+set_io -port_name PHY_MDC  \
+    -pin_name H26          \
+    -fixed true            \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name PHY_MDIO  \
+    -pin_name J26           \
+    -fixed true             \
+    -DIRECTION INOUT
+
+
+set_io -port_name RX_N  \
+    -pin_name C24       \
+    -fixed true         \
+    -DIRECTION INPUT
+
+
+set_io -port_name RX_P  \
+    -pin_name C23       \
+    -fixed true         \
+    -DIRECTION INPUT
+
+
+set_io -port_name SPI_0_CLK_M2F  \
+    -pin_name B4                 \
+    -fixed true                  \
+    -io_std LVCMOS33             \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name SPI_0_DI_F2M  \
+    -pin_name B5                \
+    -fixed true                 \
+    -io_std LVCMOS33            \
+    -DIRECTION INPUT
+
+
+set_io -port_name SPI_0_DO_M2F  \
+    -pin_name D9                \
+    -fixed true                 \
+    -io_std LVCMOS33            \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name SPI_0_SS1_M2F  \
+    -pin_name E7                 \
+    -fixed true                  \
+    -io_std LVCMOS33             \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name TX_N  \
+    -pin_name B25       \
+    -fixed true         \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name TX_P  \
+    -pin_name A25       \
+    -fixed true         \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name VSC_8552_RESETN  \
+    -pin_name B29                  \
+    -fixed true                    \
+    -DIRECTION OUTPUT
+
+
+
+# 
+# Dedicated Peripheral I/O Settings
+# 
+
+
+# 
+# Unlocked I/O settings
+# The I/Os in this section are unplaced or placed but are not locked
+# the other listed attributes have been applied
+# 
+
+
+#
+#Ports using Dedicated Pins
+
+#
+
+set_io -port_name LANE0_RXD_N  \
+    -pin_name L31              \
+    -DIRECTION INPUT
+
+
+set_io -port_name LANE0_RXD_P  \
+    -pin_name L32              \
+    -DIRECTION INPUT
+
+
+set_io -port_name LANE0_TXD_N  \
+    -pin_name M33              \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name LANE0_TXD_P  \
+    -pin_name M34              \
+    -DIRECTION OUTPUT
+	
+	
+	
+	
+	# Unlocked I/O Bank Settings
+# The I/O Bank Settings can be locked by directly editing this file
+# or by making changes in the I/O Attribute Editor
+# 
+
+set_iobank -bank_name Bank1  \
+    -vcci 3.30               \
+    -fixed false             \
+    -update_iostd true
+
+
+# 
+# User Locked I/O settings
+# 
+
+set_io -port_name VSC_8662_CMODE3  \
+    -pin_name H12                  \
+    -fixed true                    \
+    -io_std LVCMOS33               \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name VSC_8662_CMODE4  \
+    -pin_name G12                  \
+    -fixed true                    \
+    -io_std LVCMOS33               \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name VSC_8662_CMODE5  \
+    -pin_name F12                  \
+    -fixed true                    \
+    -io_std LVCMOS33               \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name VSC_8662_CMODE6  \
+    -pin_name E12                  \
+    -fixed true                    \
+    -io_std LVCMOS33               \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name VSC_8662_CMODE7  \
+    -pin_name G14                  \
+    -fixed true                    \
+    -io_std LVCMOS33               \
+    -DIRECTION OUTPUT
+
+
+
+set_io -port_name VSC_8662_SRESET  \
+    -pin_name A7                   \
+    -fixed true                    \
+    -io_std LVCMOS33               \
+    -DIRECTION OUTPUT
+	
+	
+
+set_io -port_name MMUART_0_RXD_F2M  \
+    -pin_name C7                    \
+    -fixed true                     \
+    -io_std LVCMOS33                \
+    -DIRECTION INPUT
+
+
+set_io -port_name MMUART_0_TXD_M2F  \
+    -pin_name B7                    \
+    -fixed true                     \
+    -io_std LVCMOS33                \
+    -DIRECTION OUTPUT
+
+
+set_io -port_name MMUART_1_RXD_F2M  \
+    -pin_name D4                    \
+    -fixed true                     \
+    -io_std LVCMOS33                \
+    -DIRECTION INPUT
+
+
+set_io -port_name MMUART_1_TXD_M2F  \
+    -pin_name C4                    \
+    -fixed true                     \
+    -io_std LVCMOS33                \
+    -DIRECTION OUTPUT

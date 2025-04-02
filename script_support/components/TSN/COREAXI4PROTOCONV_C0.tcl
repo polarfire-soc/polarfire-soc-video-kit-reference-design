@@ -1,0 +1,37 @@
+# Exporting Component Description of COREAXI4PROTOCONV_C0 to TCL
+# Family: PolarFireSoC
+# Part Number: MPFS250TS-1FCG1152I
+# Create and Configure the core component COREAXI4PROTOCONV_C0
+create_and_configure_core -core_vlnv {Actel:DirectCore:COREAXI4PROTOCONV:3.0.125} -component_name {COREAXI4PROTOCONV_C0} -params {\
+"MM2S_ADDR_WIDTH:32"  \
+"MM2S_CMDSTS_FIFO_DEPTH:32"  \
+"MM2S_CMDSTS_FIFO_ENABLE:true"  \
+"MM2S_CMDSTS_RAM_TYPE:3"  \
+"MM2S_DATA_FIFO_DEPTH:512"  \
+"MM2S_DATA_FIFO_ENABLE:true"  \
+"MM2S_DATA_RAM_TYPE:2"  \
+"MM2S_DATA_WIDTH:32"  \
+"MM2S_ENABLE:true"  \
+"MM2S_ENDIAN_CONV:false"  \
+"MM2S_PKT_FIFO_ENABLE:1"  \
+"MM2S_USER_ENABLE:false"  \
+"MM2S_USER_WIDTH:1"  \
+"RESET_TYPE:0"  \
+"S2MM_ADDR_WIDTH:32"  \
+"S2MM_BURST_LENGTH:32"  \
+"S2MM_CMDSTS_FIFO_DEPTH:32"  \
+"S2MM_CMDSTS_FIFO_ENABLE:true"  \
+"S2MM_CMDSTS_RAM_TYPE:3"  \
+"S2MM_DATA_FIFO_DEPTH:512"  \
+"S2MM_DATA_FIFO_ENABLE:true"  \
+"S2MM_DATA_RAM_TYPE:2"  \
+"S2MM_DATA_WIDTH:32"  \
+"S2MM_ENABLE:true"  \
+"S2MM_ENDIAN_CONV:false"  \
+"S2MM_PKT_DROP_ERR:false"  \
+"S2MM_PKT_DROP_OVF:false"  \
+"S2MM_PKT_FIFO_ENABLE:0"  \
+"S2MM_UNDEF_BSTLEN:true"  \
+"S2MM_USER_ENABLE:false"  \
+"S2MM_USER_WIDTH:1"   }
+# Exporting Component Description of COREAXI4PROTOCONV_C0 to TCL done

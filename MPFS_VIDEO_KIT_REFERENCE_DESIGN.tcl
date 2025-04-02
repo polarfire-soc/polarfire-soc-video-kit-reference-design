@@ -29,7 +29,10 @@ if { $::argc > 0 } {
 # # // Run the Libero SoC flow based on the input arguments passed by the user
 # ###################################################################################
 
-if {[info exists RAW_BAYER]} {
+if {[info exists TSN]} {
+    puts "TSN Design has been selected"
+    source ./MPFS_VIDEO_KIT_TSN_REFERENCE_DESIGN.tcl
+} elseif {[info exists RAW_BAYER]} {
     puts "Raw Bayer has been selected"
     source ./MPFS_VIDEO_KIT_RAW_BAYER_REFERENCE_DESIGN.tcl    
 } elseif {[info exists H264_MM]} {

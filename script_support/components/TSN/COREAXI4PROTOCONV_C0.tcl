@@ -26,7 +26,7 @@ create_and_configure_core -core_vlnv {Actel:DirectCore:COREAXI4PROTOCONV:3.0.125
 "S2MM_DATA_FIFO_ENABLE:true"  \
 "S2MM_DATA_RAM_TYPE:2"  \
 "S2MM_DATA_WIDTH:32"  \
-"S2MM_ENABLE:true"  \
+"S2MM_ENABLE:false"  \
 "S2MM_ENDIAN_CONV:false"  \
 "S2MM_PKT_DROP_ERR:false"  \
 "S2MM_PKT_DROP_OVF:false"  \

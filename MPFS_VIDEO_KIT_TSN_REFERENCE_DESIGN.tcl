@@ -156,6 +156,7 @@ source ${src_path}/components/TSN/CLOCKS_AND_RESETS.tcl
 source ${src_path}/components/TSN/CORE1588_C0.tcl 
 source ${src_path}/components/TSN/CoreAXI4SInterconnect_C0.tcl 
 source ${src_path}/components/TSN/COREAXI4PROTOCONV_C0.tcl 
+source ${src_path}/components/TSN/COREAXI4PROTOCONV_C1.tcl 
 source ${src_path}/components/TSN/CORESGMII_C0.tcl 
 source ${src_path}/components/TSN/DMA_INITIATOR.tcl 
 source ${src_path}/components/TSN/FIC0_INITIATOR.tcl 

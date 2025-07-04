@@ -147,52 +147,6 @@ sd_create_bus_port -sd_name ${sd_name} -port_name {TSN_APB_SLAVE_PRDATA} -port_d
 
 
 # Create top level Bus interface Ports
-sd_create_bif_port -sd_name ${sd_name} -port_name {AXI4mmaster0} -port_bif_vlnv {AMBA:AMBA4:AXI4:r0p0_0} -port_bif_role {mirroredMaster} -port_bif_mapping {\
-"AWID:AXI4mmaster0_MASTER0_AWID" \
-"AWADDR:AXI4mmaster0_MASTER0_AWADDR" \
-"AWLEN:AXI4mmaster0_MASTER0_AWLEN" \
-"AWSIZE:AXI4mmaster0_MASTER0_AWSIZE" \
-"AWBURST:AXI4mmaster0_MASTER0_AWBURST" \
-"AWLOCK:AXI4mmaster0_MASTER0_AWLOCK" \
-"AWCACHE:AXI4mmaster0_MASTER0_AWCACHE" \
-"AWPROT:AXI4mmaster0_MASTER0_AWPROT" \
-"AWQOS:AXI4mmaster0_MASTER0_AWQOS" \
-"AWREGION:AXI4mmaster0_MASTER0_AWREGION" \
-"AWVALID:AXI4mmaster0_MASTER0_AWVALID" \
-"AWREADY:AXI4mmaster0_MASTER0_AWREADY" \
-"WDATA:AXI4mmaster0_MASTER0_WDATA" \
-"WSTRB:AXI4mmaster0_MASTER0_WSTRB" \
-"WLAST:AXI4mmaster0_MASTER0_WLAST" \
-"WVALID:AXI4mmaster0_MASTER0_WVALID" \
-"WREADY:AXI4mmaster0_MASTER0_WREADY" \
-"BID:AXI4mmaster0_MASTER0_BID" \
-"BRESP:AXI4mmaster0_MASTER0_BRESP" \
-"BVALID:AXI4mmaster0_MASTER0_BVALID" \
-"BREADY:AXI4mmaster0_MASTER0_BREADY" \
-"ARID:AXI4mmaster0_MASTER0_ARID" \
-"ARADDR:AXI4mmaster0_MASTER0_ARADDR" \
-"ARLEN:AXI4mmaster0_MASTER0_ARLEN" \
-"ARSIZE:AXI4mmaster0_MASTER0_ARSIZE" \
-"ARBURST:AXI4mmaster0_MASTER0_ARBURST" \
-"ARLOCK:AXI4mmaster0_MASTER0_ARLOCK" \
-"ARCACHE:AXI4mmaster0_MASTER0_ARCACHE" \
-"ARPROT:AXI4mmaster0_MASTER0_ARPROT" \
-"ARQOS:AXI4mmaster0_MASTER0_ARQOS" \
-"ARREGION:AXI4mmaster0_MASTER0_ARREGION" \
-"ARVALID:AXI4mmaster0_MASTER0_ARVALID" \
-"ARREADY:AXI4mmaster0_MASTER0_ARREADY" \
-"RID:AXI4mmaster0_MASTER0_RID" \
-"RDATA:AXI4mmaster0_MASTER0_RDATA" \
-"RRESP:AXI4mmaster0_MASTER0_RRESP" \
-"RLAST:AXI4mmaster0_MASTER0_RLAST" \
-"RVALID:AXI4mmaster0_MASTER0_RVALID" \
-"RREADY:AXI4mmaster0_MASTER0_RREADY" \
-"AWUSER:AXI4mmaster0_MASTER0_AWUSER" \
-"WUSER:AXI4mmaster0_MASTER0_WUSER" \
-"BUSER:AXI4mmaster0_MASTER0_BUSER" \
-"ARUSER:AXI4mmaster0_MASTER0_ARUSER" \
-"RUSER:AXI4mmaster0_MASTER0_RUSER" } 
-
 sd_create_bif_port -sd_name ${sd_name} -port_name {AXI4mslave0} -port_bif_vlnv {AMBA:AMBA4:AXI4:r0p0_0} -port_bif_role {mirroredSlave} -port_bif_mapping {\
 "AWID:AXI4mslave0_SLAVE0_AWID" \
 "AWADDR:AXI4mslave0_SLAVE0_AWADDR" \
@@ -268,6 +222,52 @@ sd_create_bif_port -sd_name ${sd_name} -port_name {TSN_APB_SLAVE} -port_bif_vlnv
 "PREADY:TSN_APB_SLAVE_PREADY" \
 "PSLVERR:TSN_APB_SLAVE_PSLVERR" } 
 
+sd_create_bif_port -sd_name ${sd_name} -port_name {AXI4mmaster0} -port_bif_vlnv {AMBA:AMBA4:AXI4:r0p0_0} -port_bif_role {mirroredMaster} -port_bif_mapping {\
+"AWID:AXI4mmaster0_MASTER0_AWID" \
+"AWADDR:AXI4mmaster0_MASTER0_AWADDR" \
+"AWLEN:AXI4mmaster0_MASTER0_AWLEN" \
+"AWSIZE:AXI4mmaster0_MASTER0_AWSIZE" \
+"AWBURST:AXI4mmaster0_MASTER0_AWBURST" \
+"AWLOCK:AXI4mmaster0_MASTER0_AWLOCK" \
+"AWCACHE:AXI4mmaster0_MASTER0_AWCACHE" \
+"AWPROT:AXI4mmaster0_MASTER0_AWPROT" \
+"AWQOS:AXI4mmaster0_MASTER0_AWQOS" \
+"AWREGION:AXI4mmaster0_MASTER0_AWREGION" \
+"AWVALID:AXI4mmaster0_MASTER0_AWVALID" \
+"AWREADY:AXI4mmaster0_MASTER0_AWREADY" \
+"WDATA:AXI4mmaster0_MASTER0_WDATA" \
+"WSTRB:AXI4mmaster0_MASTER0_WSTRB" \
+"WLAST:AXI4mmaster0_MASTER0_WLAST" \
+"WVALID:AXI4mmaster0_MASTER0_WVALID" \
+"WREADY:AXI4mmaster0_MASTER0_WREADY" \
+"BID:AXI4mmaster0_MASTER0_BID" \
+"BRESP:AXI4mmaster0_MASTER0_BRESP" \
+"BVALID:AXI4mmaster0_MASTER0_BVALID" \
+"BREADY:AXI4mmaster0_MASTER0_BREADY" \
+"ARID:AXI4mmaster0_MASTER0_ARID" \
+"ARADDR:AXI4mmaster0_MASTER0_ARADDR" \
+"ARLEN:AXI4mmaster0_MASTER0_ARLEN" \
+"ARSIZE:AXI4mmaster0_MASTER0_ARSIZE" \
+"ARBURST:AXI4mmaster0_MASTER0_ARBURST" \
+"ARLOCK:AXI4mmaster0_MASTER0_ARLOCK" \
+"ARCACHE:AXI4mmaster0_MASTER0_ARCACHE" \
+"ARPROT:AXI4mmaster0_MASTER0_ARPROT" \
+"ARQOS:AXI4mmaster0_MASTER0_ARQOS" \
+"ARREGION:AXI4mmaster0_MASTER0_ARREGION" \
+"ARVALID:AXI4mmaster0_MASTER0_ARVALID" \
+"ARREADY:AXI4mmaster0_MASTER0_ARREADY" \
+"RID:AXI4mmaster0_MASTER0_RID" \
+"RDATA:AXI4mmaster0_MASTER0_RDATA" \
+"RRESP:AXI4mmaster0_MASTER0_RRESP" \
+"RLAST:AXI4mmaster0_MASTER0_RLAST" \
+"RVALID:AXI4mmaster0_MASTER0_RVALID" \
+"RREADY:AXI4mmaster0_MASTER0_RREADY" \
+"AWUSER:AXI4mmaster0_MASTER0_AWUSER" \
+"WUSER:AXI4mmaster0_MASTER0_WUSER" \
+"BUSER:AXI4mmaster0_MASTER0_BUSER" \
+"ARUSER:AXI4mmaster0_MASTER0_ARUSER" \
+"RUSER:AXI4mmaster0_MASTER0_RUSER" } 
+
 # Add BIBUF_0 instance
 sd_instantiate_macro -sd_name ${sd_name} -macro_name {BIBUF} -instance_name {BIBUF_0}
 
@@ -287,14 +287,6 @@ sd_create_pin_slices -sd_name ${sd_name} -pin_name {CORE1588_C0_0:INTERNAL_TIMER
 
 # Add COREAXI4PROTOCONV_C0_0 instance
 sd_instantiate_component -sd_name ${sd_name} -component_name {COREAXI4PROTOCONV_C0} -instance_name {COREAXI4PROTOCONV_C0_0}
-sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C0_0:T_AXI4S_TVALID}
-sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C0_0:T_AXI4S_TREADY}
-sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C0_0:T_AXI4S_TDATA}
-sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C0_0:T_AXI4S_TKEEP}
-sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C0_0:T_AXI4S_TLAST}
-sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C0_0:T_AXI4S_TID}
-sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C0_0:T_AXI4S_TDEST}
-sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C0_0:T_AXI4S_TUSER}
 sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:MM2S_AXI4S_INITR} -pin_names {COREAXI4PROTOCONV_C0_0:I_AXI4S_TVALID}
 sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:MM2S_AXI4S_INITR} -pin_names {COREAXI4PROTOCONV_C0_0:I_AXI4S_TREADY}
 sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:MM2S_AXI4S_INITR} -pin_names {COREAXI4PROTOCONV_C0_0:I_AXI4S_TDATA}
@@ -303,8 +295,22 @@ sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:MM2S_
 sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:MM2S_AXI4S_INITR} -pin_names {COREAXI4PROTOCONV_C0_0:I_AXI4S_TID}
 sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:MM2S_AXI4S_INITR} -pin_names {COREAXI4PROTOCONV_C0_0:I_AXI4S_TDEST}
 sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C0_0:MM2S_AXI4S_INITR} -pin_names {COREAXI4PROTOCONV_C0_0:I_AXI4S_TUSER}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {COREAXI4PROTOCONV_C0_0:T_AXI4S_TID} -value {GND}
-sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {COREAXI4PROTOCONV_C0_0:T_AXI4S_TDEST} -value {GND}
+
+
+
+# Add COREAXI4PROTOCONV_C1_0 instance
+sd_instantiate_component -sd_name ${sd_name} -component_name {COREAXI4PROTOCONV_C1} -instance_name {COREAXI4PROTOCONV_C1_0}
+sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C1_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C1_0:T_AXI4S_TVALID}
+sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C1_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C1_0:T_AXI4S_TREADY}
+sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C1_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C1_0:T_AXI4S_TDATA}
+sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C1_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C1_0:T_AXI4S_TKEEP}
+sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C1_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C1_0:T_AXI4S_TLAST}
+sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C1_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C1_0:T_AXI4S_TID}
+sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C1_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C1_0:T_AXI4S_TDEST}
+sd_show_bif_pins -sd_name ${sd_name} -bif_pin_name {COREAXI4PROTOCONV_C1_0:S2MM_AXI4S_TRGT} -pin_names {COREAXI4PROTOCONV_C1_0:T_AXI4S_TUSER}
+sd_mark_pins_unused -sd_name ${sd_name} -pin_names {COREAXI4PROTOCONV_C1_0:S2MM_ERR_INT}
+sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {COREAXI4PROTOCONV_C1_0:T_AXI4S_TID} -value {GND}
+sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {COREAXI4PROTOCONV_C1_0:T_AXI4S_TDEST} -value {GND}
 
 
 
@@ -515,8 +521,8 @@ sd_connect_pins_to_constant -sd_name ${sd_name} -pin_names {STR_NAT_CONV_0:Pkt_R
 
 
 # Add scalar net connections
-sd_connect_pins -sd_name ${sd_name} -pin_names {"ACLK_125MHZ" "CORE1588_C0_0:RXCLK" "CORE1588_C0_0:TXCLK" "COREAXI4PROTOCONV_C0_0:ACLK" "CORESGMII_C0_0:RXCLK" "CORESGMII_C0_0:TXCLK" "CORETSN_C0_0:AXI_S0_CLK" "CORETSN_C0_0:AXI_S1_CLK" "CORETSN_C0_0:MAC_RX_CLK" "CORETSN_C0_0:MAC_SYS_CLK" "CORETSN_C0_0:MAC_TX_CLK" "CoreAXI4SInterconnect_C0_0:ACLK" "DMA_INITIATOR_0:ACLK" "FIC0_INITIATOR_0:ACLK" "NAT_STR_CONV1_0:CLK" "PF_TX_PLL_C1_0:JA_FAB_REF_CLK" "STR_NAT_CONV_0:CLK" "pckt_generator_checker_0:SYSCLK_IN" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"ARESETN_125MHZ" "CORE1588_C0_0:PTPRSTN" "CORE1588_C0_0:RXRSTN" "CORE1588_C0_0:TXRSTN" "COREAXI4PROTOCONV_C0_0:RESETN" "CORETSN_C0_0:AXIS1_RD_RESET_FIFO_N" "CORETSN_C0_0:AXIS1_WR_RESET_FIFO_N" "CORETSN_C0_0:AXI_S0_RESETN" "CORETSN_C0_0:AXI_S1_RESETN" "CORETSN_C0_0:MAC_RST_N" "CORETSN_C0_0:MAC_SYS_CLK_RSTN" "CORETSN_C0_0:RD_RESET_FIFO_N[0:0]" "CORETSN_C0_0:RD_RESET_FIFO_N[1:1]" "CORETSN_C0_0:RD_RESET_FIFO_N[2:2]" "CORETSN_C0_0:RD_RESET_FIFO_N[3:3]" "CORETSN_C0_0:RD_RESET_FIFO_N[4:4]" "CORETSN_C0_0:RD_RESET_FIFO_N[5:5]" "CORETSN_C0_0:RD_RESET_FIFO_N[6:6]" "CORETSN_C0_0:RD_RESET_FIFO_N[7:7]" "CORETSN_C0_0:WR_RESET_FIFO_N[0:0]" "CORETSN_C0_0:WR_RESET_FIFO_N[1:1]" "CORETSN_C0_0:WR_RESET_FIFO_N[2:2]" "CORETSN_C0_0:WR_RESET_FIFO_N[3:3]" "CORETSN_C0_0:WR_RESET_FIFO_N[4:4]" "CORETSN_C0_0:WR_RESET_FIFO_N[5:5]" "CORETSN_C0_0:WR_RESET_FIFO_N[6:6]" "CORETSN_C0_0:WR_RESET_FIFO_N[7:7]" "CoreAXI4SInterconnect_C0_0:RESETN" "DMA_INITIATOR_0:ARESETN" "FIC0_INITIATOR_0:ARESETN" "INV_0:A" "NAT_STR_CONV1_0:RSTN" "PF_IOD_CDR_C0_0:RST_N" "SSDetect_0:rst_b" "STR_NAT_CONV_0:RSTN" "pckt_generator_checker_0:SYSRST_N_IN" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"ACLK_125MHZ" "CORE1588_C0_0:RXCLK" "CORE1588_C0_0:TXCLK" "COREAXI4PROTOCONV_C0_0:ACLK" "COREAXI4PROTOCONV_C1_0:ACLK" "CORESGMII_C0_0:RXCLK" "CORESGMII_C0_0:TXCLK" "CORETSN_C0_0:AXI_S0_CLK" "CORETSN_C0_0:AXI_S1_CLK" "CORETSN_C0_0:MAC_RX_CLK" "CORETSN_C0_0:MAC_SYS_CLK" "CORETSN_C0_0:MAC_TX_CLK" "CoreAXI4SInterconnect_C0_0:ACLK" "DMA_INITIATOR_0:ACLK" "FIC0_INITIATOR_0:ACLK" "NAT_STR_CONV1_0:CLK" "PF_TX_PLL_C1_0:JA_FAB_REF_CLK" "STR_NAT_CONV_0:CLK" "pckt_generator_checker_0:SYSCLK_IN" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"ARESETN_125MHZ" "CORE1588_C0_0:PTPRSTN" "CORE1588_C0_0:RXRSTN" "CORE1588_C0_0:TXRSTN" "COREAXI4PROTOCONV_C0_0:RESETN" "COREAXI4PROTOCONV_C1_0:RESETN" "CORETSN_C0_0:AXIS1_RD_RESET_FIFO_N" "CORETSN_C0_0:AXIS1_WR_RESET_FIFO_N" "CORETSN_C0_0:AXI_S0_RESETN" "CORETSN_C0_0:AXI_S1_RESETN" "CORETSN_C0_0:MAC_RST_N" "CORETSN_C0_0:MAC_SYS_CLK_RSTN" "CORETSN_C0_0:RD_RESET_FIFO_N[0:0]" "CORETSN_C0_0:RD_RESET_FIFO_N[1:1]" "CORETSN_C0_0:RD_RESET_FIFO_N[2:2]" "CORETSN_C0_0:RD_RESET_FIFO_N[3:3]" "CORETSN_C0_0:RD_RESET_FIFO_N[4:4]" "CORETSN_C0_0:RD_RESET_FIFO_N[5:5]" "CORETSN_C0_0:RD_RESET_FIFO_N[6:6]" "CORETSN_C0_0:RD_RESET_FIFO_N[7:7]" "CORETSN_C0_0:WR_RESET_FIFO_N[0:0]" "CORETSN_C0_0:WR_RESET_FIFO_N[1:1]" "CORETSN_C0_0:WR_RESET_FIFO_N[2:2]" "CORETSN_C0_0:WR_RESET_FIFO_N[3:3]" "CORETSN_C0_0:WR_RESET_FIFO_N[4:4]" "CORETSN_C0_0:WR_RESET_FIFO_N[5:5]" "CORETSN_C0_0:WR_RESET_FIFO_N[6:6]" "CORETSN_C0_0:WR_RESET_FIFO_N[7:7]" "CoreAXI4SInterconnect_C0_0:RESETN" "DMA_INITIATOR_0:ARESETN" "FIC0_INITIATOR_0:ARESETN" "INV_0:A" "NAT_STR_CONV1_0:RSTN" "PF_IOD_CDR_C0_0:RST_N" "SSDetect_0:rst_b" "STR_NAT_CONV_0:RSTN" "pckt_generator_checker_0:SYSRST_N_IN" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"BIBUF_0:D" "CORESGMII_C0_0:MDO" "CORETSN_C0_0:MDO" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"BIBUF_0:E" "CORESGMII_C0_0:MDOEN" "CORETSN_C0_0:MDOEN" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"BIBUF_0:PAD" "PHY_MDIO" }
@@ -542,11 +548,11 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:I_AXI4S_
 sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:I_AXI4S_TUSER" "CORETSN_C0_0:AXI4S0_I_AXI4S_TUSER" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:I_AXI4S_TVALID" "CoreAXI4SInterconnect_C0_0:AXI4S_T0TVALID" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:MM2S_INT" "MM2S_INT_0" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:S2MM_INT" "S2MM_INT" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:T_AXI4S_TLAST" "CORETSN_C0_0:AXI4S0_O_AXI4S_TLAST" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:T_AXI4S_TREADY" "CORETSN_C0_0:AXI4S0_I_AXI4S_TREADY" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:T_AXI4S_TUSER" "CORETSN_C0_0:AXI4S0_O_AXI4S_TUSER" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:T_AXI4S_TVALID" "CORETSN_C0_0:AXI4S0_O_AXI4S_TVALID" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C1_0:S2MM_INT" "S2MM_INT" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C1_0:T_AXI4S_TLAST" "CORETSN_C0_0:AXI4S0_O_AXI4S_TLAST" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C1_0:T_AXI4S_TREADY" "CORETSN_C0_0:AXI4S0_I_AXI4S_TREADY" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C1_0:T_AXI4S_TUSER" "CORETSN_C0_0:AXI4S0_O_AXI4S_TUSER" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C1_0:T_AXI4S_TVALID" "CORETSN_C0_0:AXI4S0_O_AXI4S_TVALID" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORESGMII_C0_0:MDC" "CORETSN_C0_0:MDC" "MDC" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORESGMII_C0_0:MDI" "CORETSN_C0_0:MDI" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORESGMII_C0_0:RESET" "INV_0:Y" }
@@ -588,8 +594,8 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"CORE1588_C0_0:TXD" "CORESGMII_C
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORE1588_C0_0:TXD_MAC" "CORETSN_C0_0:MII_TXD_OUT" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:I_AXI4S_TDATA" "CoreAXI4SInterconnect_C0_0:AXI4S_T0TDATA" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:I_AXI4S_TKEEP" "CoreAXI4SInterconnect_C0_0:AXI4S_T0TKEEP" "CoreAXI4SInterconnect_C0_0:AXI4S_T0TSTRB" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:T_AXI4S_TDATA" "CORETSN_C0_0:AXI4S0_O_AXI4S_TDATA" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:T_AXI4S_TKEEP" "CORETSN_C0_0:AXI4S0_O_AXI4S_TKEEP" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C1_0:T_AXI4S_TDATA" "CORETSN_C0_0:AXI4S0_O_AXI4S_TDATA" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C1_0:T_AXI4S_TKEEP" "CORETSN_C0_0:AXI4S0_O_AXI4S_TKEEP" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORESGMII_C0_0:RCG" "PF_IOD_CDR_C0_0:RX_DATA" "SSDetect_0:rx_data" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORESGMII_C0_0:TCG" "PF_IOD_CDR_C0_0:TX_DATA" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORETSN_C0_0:AXI4S0_I_AXI4S_TDATA" "CoreAXI4SInterconnect_C0_0:AXI4S_I0TDATA" }
@@ -607,9 +613,10 @@ sd_connect_pins -sd_name ${sd_name} -pin_names {"STR_NAT_CONV_0:Pkt_DATA_OUT" "p
 sd_connect_pins -sd_name ${sd_name} -pin_names {"APB_1588" "CORE1588_C0_0:APB" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4mmaster0" "FIC0_INITIATOR_0:AXI4mmaster0" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"AXI4mslave0" "DMA_INITIATOR_0:AXI4mslave0" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:AXI4L_TRGT" "FIC0_INITIATOR_0:AXI4mslave2" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:AXI4L_TRGT" "FIC0_INITIATOR_0:AXI4mslave5" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:MM2S_AXI4MM_INITR" "DMA_INITIATOR_0:AXI4mmaster1" }
-sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C0_0:S2MM_AXI4MM_INITR" "DMA_INITIATOR_0:AXI4mmaster2" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C1_0:AXI4L_TRGT" "FIC0_INITIATOR_0:AXI4mslave2" }
+sd_connect_pins -sd_name ${sd_name} -pin_names {"COREAXI4PROTOCONV_C1_0:S2MM_AXI4MM_INITR" "DMA_INITIATOR_0:AXI4mmaster2" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"CORETSN_C0_0:APB_SLAVE" "TSN_APB_SLAVE" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PCKT_GEN_APB_SLAVE" "pckt_generator_checker_0:BIF_1" }
 sd_connect_pins -sd_name ${sd_name} -pin_names {"PF_IOD_CDR_C0_0:CDR_CLOCKS" "PF_IOD_CDR_CCC_C0_0:CDR_CLOCKS" }
